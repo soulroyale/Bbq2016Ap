@@ -72,9 +72,12 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
-        cardUIList.add(new cardUI("1111", "Introducing BBQ Budy", R.drawable.sample));
-        cardUIList.add(new cardUI("1111", "Introducing BBQ Budy", R.drawable.sample));
-        cardUIList.add(new cardUI("1111", "Introducing BBQ Budy", R.drawable.sample));
+        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
 
     }
 
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
