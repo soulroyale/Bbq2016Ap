@@ -33,7 +33,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Feedback and Bugs" />
+                android:title="Feedback and Bug Reports" />
         </menu>
     </item>
 
