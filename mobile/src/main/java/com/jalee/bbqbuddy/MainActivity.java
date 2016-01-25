@@ -11,12 +11,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.support.v7.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    RecyclerView recyclerView;
+    CardAdapter adapter;
+    List<cardUI> cardUIList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +51,33 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //setContentView(R.layout.activity_main);
+        recyclerView=(RecyclerView)findViewById(R.id.cardList);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setHasFixedSize(true);
+        initializeData();
+        adapter = new CardAdapter(cardUIList);
+        recyclerView.setAdapter(adapter);
+
+
         if(Constants.type == Constants.Type.FREE) {
             Toast.makeText(getApplicationContext(),"Free App",Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(),"Paid App",Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    private void initializeData() {
+        cardUIList = new ArrayList<>();
+        cardUIList.add(new cardUI("1111", "Introducing BBQ Budy", R.drawable.sample));
+        cardUIList.add(new cardUI("1111", "Introducing BBQ Budy", R.drawable.sample));
+        cardUIList.add(new cardUI("1111", "Introducing BBQ Budy", R.drawable.sample));
+
+    }
+
 
     @Override
     public void onBackPressed() {
