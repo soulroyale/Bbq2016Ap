@@ -16,9 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-/**
- * Created by vrs on 3/9/15.
- */
+
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     List<cardUI> list = new ArrayList<>();
