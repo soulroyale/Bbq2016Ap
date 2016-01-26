@@ -69,12 +69,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             cardimage = (ImageView) itemView.findViewById(R.id.cardimage);
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
-            cardlikebtn = (Button) itemView.findViewById(R.id.btnLike);
-            cardlikebtn.setOnClickListener(this);
-            cardfavbutton = (Button) itemView.findViewById(R.id.btnFavourite);
-            cardfavbutton.setOnClickListener(this);
-            cardsharebutton = (Button) itemView.findViewById(R.id.btnShare);
-            cardsharebutton.setOnClickListener(this);
+            //cardlikebtn = (Button) itemView.findViewById(R.id.btnLike);
+            //cardlikebtn.setOnClickListener(this);
         }
 
 

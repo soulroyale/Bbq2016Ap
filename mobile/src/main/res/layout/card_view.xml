@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        android:paddingBottom="0dp"
+        android:paddingBottom="5dp"
         >
 
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/cardimage"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
 
             android:layout_marginRight="16dp"
@@ -30,56 +30,26 @@
             android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:id="@+id/cardtitle"
-            android:layout_toRightOf="@+id/cardimage"
             android:layout_alignParentTop="true"
             android:text="Sample Title Sample Title Sample Title Sample Title"
             android:textSize="18dp"
+            android:paddingLeft="5dp"
+            android:layout_toLeftOf="@+id/cardimage"
+            android:layout_toStartOf="@+id/cardimage"
+            android:layout_alignParentLeft="true"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/carddesc"
-            android:layout_toRightOf="@+id/cardimage"
             android:layout_below="@+id/cardtitle"
             android:layout_marginTop="8dp"
             android:text="Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, "
             android:textSize="12dp"
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Like"
-            android:id="@+id/btnLike"
-            android:layout_below="@+id/carddesc"
-            android:layout_alignParentLeft="true"
-            android:background="#00ffffff"
-            android:paddingTop="10dp"
-            android:clickable="true" />
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Favourite"
-            android:id="@+id/btnFavourite"
-            android:layout_below="@+id/carddesc"
-            android:layout_centerHorizontal="true"
-            android:background="#00ffffff"
-            android:paddingTop="10dp"
-            android:clickable="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Share"
-            android:id="@+id/btnShare"
-            android:layout_below="@id/carddesc"
-            android:layout_alignParentRight="true"
-            android:background="#00ffffff"
-            android:paddingTop="10dp"
-            android:clickable="true" />
+            android:paddingLeft="5dp"
+            android:layout_toLeftOf="@+id/cardimage"
+            android:layout_toStartOf="@+id/cardimage" />
 
     </RelativeLayout>
 
