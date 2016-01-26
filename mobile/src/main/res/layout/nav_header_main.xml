@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="#9e9e9e"
@@ -11,6 +11,7 @@
     android:paddingTop="0dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -19,4 +20,24 @@
         android:src="@drawable/drawerimage1"
         android:scaleType="centerCrop" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:text="Logged In User Email Address"
+        android:id="@+id/userEmail"
+        android:textSize="16sp" />/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/userEmail"
+        android:layout_alignParentLeft="true"
+        android:text="Username"
+        android:id="@+id/userName"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>
