@@ -77,6 +77,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             Log.i("Button Click","Button Pressed at: "  + getAdapterPosition());
+
         }
 
     }
