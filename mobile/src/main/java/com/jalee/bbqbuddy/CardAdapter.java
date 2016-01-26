@@ -4,6 +4,7 @@ package com.jalee.bbqbuddy;
  * Created by Aaron on 25/01/2016.
  */
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
@@ -63,21 +65,26 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         Button cardfavbutton;
         Button cardsharebutton;
         cardUI cardUI;
+        final Context context = itemView.getContext();
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardimage = (ImageView) itemView.findViewById(R.id.cardimage);
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
-            //cardlikebtn = (Button) itemView.findViewById(R.id.btnLike);
             //cardlikebtn.setOnClickListener(this);
+            cardimage.setOnClickListener(this);
+            cardtitle.setOnClickListener(this);
+            cardsubtitle.setOnClickListener(this);
         }
 
 
         @Override
         public void onClick(View v) {
             Log.i("Button Click","Button Pressed at: "  + getAdapterPosition());
-
+            final Intent intent;
+            intent =  new Intent(context, Main_DashDetail.class);
+            context.startActivity(intent);
         }
 
     }

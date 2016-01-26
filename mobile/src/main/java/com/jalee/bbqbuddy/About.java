@@ -14,12 +14,12 @@ public class About extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        overridePendingTransition(R.anim.slide_downin,R.anim.stationary);
+        overridePendingTransition(R.anim.slide_up,R.anim.stationary);
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.stationary, R.anim.slide_upout);
+        overridePendingTransition(R.anim.stationary, R.anim.slide_down);
     }
 }

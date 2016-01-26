@@ -9,5 +9,13 @@ public class Main_DashDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main__dash_detail);
+        overridePendingTransition(R.anim.slide_inright, R.anim.slide_outleft);
+
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_inleft, R.anim.slide_outright);
     }
 }
