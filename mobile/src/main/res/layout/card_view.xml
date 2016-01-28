@@ -22,7 +22,7 @@
             android:id="@+id/cardimage"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-
+            android:paddingLeft="5dp"
             android:layout_marginRight="16dp"
             />
 
@@ -34,8 +34,8 @@
             android:text="Sample Title Sample Title Sample Title Sample Title"
             android:textSize="18dp"
             android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:layout_toLeftOf="@+id/cardimage"
-            android:layout_toStartOf="@+id/cardimage"
             android:layout_alignParentLeft="true"
             />
 
@@ -48,8 +48,9 @@
             android:text="Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, Sample Description, "
             android:textSize="12dp"
             android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:layout_toLeftOf="@+id/cardimage"
-            android:layout_toStartOf="@+id/cardimage" />
+            />
 
     </RelativeLayout>
 

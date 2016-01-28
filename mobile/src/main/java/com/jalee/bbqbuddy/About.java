@@ -15,6 +15,7 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         overridePendingTransition(R.anim.slide_up,R.anim.stationary);
+        setTitle("About");
     }
 
     @Override

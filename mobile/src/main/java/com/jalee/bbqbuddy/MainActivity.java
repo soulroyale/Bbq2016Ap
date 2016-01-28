@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     CardAdapter adapter;
-    List<cardUI> cardUIList;
+    public static List<cardUI> cardUIList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +74,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
-        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
-        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
-        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
-        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
-        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
-        cardUIList.add(new cardUI("This is some sample text for testing Card UI and recycler", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron  ", "Introducing BBQ Buddy", R.drawable.sample));
 
     }
 
@@ -126,9 +121,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_dash) {
-            Toast.makeText(getApplicationContext(),"Feature Coming Soon!",Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_timer) {
-            Toast.makeText(getApplicationContext(),"Feature Coming Soon!",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, About.class);
+            startActivity(intent);
+            return true;
         } else if (id == R.id.nav_recipes) {
             Toast.makeText(getApplicationContext(),"Feature Coming Soon!",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_history) {

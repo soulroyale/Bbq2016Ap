@@ -21,6 +21,7 @@ import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
+    public static Integer cardIndex;
     List<cardUI> list = new ArrayList<>();
 
     public CardAdapter(List<cardUI> list) {
@@ -61,9 +62,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         ImageView cardimage;
         TextView cardtitle;
         TextView cardsubtitle;
-        Button cardlikebtn;
-        Button cardfavbutton;
-        Button cardsharebutton;
         cardUI cardUI;
         final Context context = itemView.getContext();
 
@@ -72,7 +70,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             cardimage = (ImageView) itemView.findViewById(R.id.cardimage);
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
-            //cardlikebtn.setOnClickListener(this);
             cardimage.setOnClickListener(this);
             cardtitle.setOnClickListener(this);
             cardsubtitle.setOnClickListener(this);
@@ -81,7 +78,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            Log.i("Button Click","Button Pressed at: "  + getAdapterPosition());
+            Log.i("Button Click", "Button Pressed at: " + getAdapterPosition());
+            cardIndex = (Integer) getAdapterPosition();
             final Intent intent;
             intent =  new Intent(context, Main_DashDetail.class);
             context.startActivity(intent);

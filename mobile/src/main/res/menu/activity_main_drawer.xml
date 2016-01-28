@@ -7,10 +7,6 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Dashboard" />
         <item
-            android:id="@+id/nav_timer"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Smart Timer" />
-        <item
             android:id="@+id/nav_recipes"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Recipes" />
