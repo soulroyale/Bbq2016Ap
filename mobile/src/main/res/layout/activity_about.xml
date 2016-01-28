@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BBQ Buddy is provided as is with no Warranty, all care is taken in its production and you are encouraged to report any issues. We will do everything possible to resolve any issues uncovered. Please enjoy the use of this app"
+        android:text="11 BBQ Buddy is provided as is with no Warranty, all care is taken in its production and you are encouraged to report any issues. We will do everything possible to resolve any issues uncovered. Please enjoy the use of this app"
         android:id="@+id/genAbout"
         android:textAlignment="center"
         android:layout_alignParentTop="true"
