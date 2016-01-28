@@ -19,7 +19,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".About" />
-        <activity android:name=".Main_DashDetail"></activity>
+        <activity android:name=".Main_DashDetail" />
+        <activity
+            android:name=".SmartTimer"
+            android:label="@string/title_activity_smart_timer"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jalee.bbqbuddy.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

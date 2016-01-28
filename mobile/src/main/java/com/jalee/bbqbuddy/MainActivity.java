@@ -37,10 +37,14 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Feature coming soon!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                launchTimer();
+
+                // Snackbar.make(view, "Feature coming soon!", Snackbar.LENGTH_LONG)
+                //       .setAction("Action", null).show();
             }
         });
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         recyclerView=(RecyclerView)findViewById(R.id.cardList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -71,6 +75,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void launchTimer() {
+        Intent intent = new Intent(this, SmartTimer.class);
+        startActivity(intent);
+    }
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
@@ -105,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
             Intent intent = new Intent(this, About.class);
             startActivity(intent);
             return true;
@@ -135,7 +143,7 @@ public class MainActivity extends AppCompatActivity
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
             i.putExtra(Intent.EXTRA_SUBJECT, "Check Out BBQ Buddy");
-            i.putExtra(Intent.EXTRA_TEXT   , "Go to the following link to try out BBQ Buddy: https://play.google.com/apps/testing/com.jalee.bbqbuddy");
+            i.putExtra(Intent.EXTRA_TEXT, "Go to the following link to try out BBQ Buddy: https://play.google.com/apps/testing/com.jalee.bbqbuddy");
             try {
                 startActivity(Intent.createChooser(i, "Share BBQ Buddy:"));
             } catch (android.content.ActivityNotFoundException ex) {
