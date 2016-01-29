@@ -1,8 +1,8 @@
 package com.jalee.bbqbuddy;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,11 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 public class SmartTimer extends AppCompatActivity {
 
@@ -52,6 +52,14 @@ public class SmartTimer extends AppCompatActivity {
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
 
+
+        /*
+       if(Constants.type == Constants.Type.FREE) {
+            AdView adView = (AdView) findViewById(R.id.adViewSmartTimer);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+        }
+        */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -72,7 +80,9 @@ public class SmartTimer extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
+                if(Constants.type == Constants.Type.FREE) {
+                    fullscreenAd();
+                }
 
                 new CountDownTimer(10000,1000) {
                     public void onTick(long millisecondsUntilDone) {
@@ -95,6 +105,27 @@ public class SmartTimer extends AppCompatActivity {
 
     }
 
+    private void fullscreenAd() {
+        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
+        final AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("YOUR_DEVICE_HASH")
+                .build();
+
+
+        new CountDownTimer(5000,1000) {
+            public void onTick(long millisecondsUntilDone) {
+                Log.i("test","testtt");
+            }
+            public void onFinish() {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+            }
+
+        }.start();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

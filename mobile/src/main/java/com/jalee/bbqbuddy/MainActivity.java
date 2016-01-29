@@ -17,6 +17,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -67,9 +69,11 @@ public class MainActivity extends AppCompatActivity
         //perhaps setup onclick manager here
 
 
-
         if(Constants.type == Constants.Type.FREE) {
             Toast.makeText(getApplicationContext(),"Free App",Toast.LENGTH_SHORT).show();
+            AdView adView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
         } else {
             Toast.makeText(getApplicationContext(),"Paid App",Toast.LENGTH_SHORT).show();
         }

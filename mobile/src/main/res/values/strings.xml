@@ -7,4 +7,7 @@
     <string name="action_settings">About</string>
     <string name="title_activity_smart_timer">SmartTimer</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="dash_banner_ad_unit_id">ca-app-pub-6523970465102586/9865404557</string>
+    <string name="dash_detail_banner_ad_unit_id">ca-app-pub-6523970465102586/2084785758</string>
+    <string name="smart_timer_banner_ad_unit_id">ca-app-pub-6523970465102586/3781844950</string>
 </resources>

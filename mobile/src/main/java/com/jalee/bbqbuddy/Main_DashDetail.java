@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class Main_DashDetail extends AppCompatActivity {
 
@@ -19,6 +23,13 @@ public class Main_DashDetail extends AppCompatActivity {
         content.setText((MainActivity.cardUIList.get(CardAdapter.cardIndex).subTitle));
         ImageView image = (ImageView) findViewById(R.id.bannerImage);
         image.setImageResource(MainActivity.cardUIList.get(CardAdapter.cardIndex).id);
+        if(Constants.type == Constants.Type.FREE) {
+            AdView adView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+        } else {
+
+        }
     }
 
     @Override

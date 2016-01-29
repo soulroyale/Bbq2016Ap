@@ -23,6 +23,7 @@ android {
         paid {
             applicationId "com.jalee.bbqbuddy.paid"
         }
+
     }
 }
 
@@ -35,4 +36,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.android.support:recyclerview-v7:23.0.+'
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
 }
