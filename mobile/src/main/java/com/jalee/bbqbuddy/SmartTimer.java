@@ -45,6 +45,7 @@ public class SmartTimer extends AppCompatActivity {
 
 
     private ViewPager mViewPager;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +53,16 @@ public class SmartTimer extends AppCompatActivity {
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
 
-
-        /*
        if(Constants.type == Constants.Type.FREE) {
-            AdView adView = (AdView) findViewById(R.id.adViewSmartTimer);
-            AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
+           mInterstitialAd = new InterstitialAd(this);
+           mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
+           AdRequest adRequest = new AdRequest.Builder()
+                   .addTestDevice("YOUR_DEVICE_HASH")
+                   .build();
+
+           mInterstitialAd.loadAd(adRequest);
         }
-        */
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +84,9 @@ public class SmartTimer extends AppCompatActivity {
                 Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 if(Constants.type == Constants.Type.FREE) {
-                    fullscreenAd();
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
                 }
 
                 new CountDownTimer(10000,1000) {
@@ -102,28 +107,6 @@ public class SmartTimer extends AppCompatActivity {
 
 
 
-
-    }
-
-    private void fullscreenAd() {
-        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
-        final AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("YOUR_DEVICE_HASH")
-                .build();
-
-
-        new CountDownTimer(5000,1000) {
-            public void onTick(long millisecondsUntilDone) {
-                Log.i("test","testtt");
-            }
-            public void onFinish() {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
-            }
-
-        }.start();
 
     }
 
@@ -213,7 +196,7 @@ public class SmartTimer extends AppCompatActivity {
                 case 0:
                     return "Smart Timer";
                 case 1:
-                    return "Recipe";
+                    return "Timeline";
                 case 2:
                     return "Notes";
             }
