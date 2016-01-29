@@ -1,6 +1,8 @@
 package com.jalee.bbqbuddy;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +41,9 @@ public class SmartTimer extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+
+
+
     private ViewPager mViewPager;
 
     @Override
@@ -64,16 +70,28 @@ public class SmartTimer extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+
+                new CountDownTimer(10000,1000) {
+                    public void onTick(long millisecondsUntilDone) {
+                        //Countdown method, runs at specified interval
+                        Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
+
+                    }
+                    public void onFinish() {
+                        //On Counter finished
+                        Log.i("Done","Done");
+
+                    }
+
+                }.start();
             }
         });
 
 
-        //ProgressBar pb = (ProgressBar) findViewById(R.id.smartTimer);
-        //Animation an = new RotateAnimation(0.0f, 90.0f, 250f, 273f);
-        //an.setFillAfter(true);
-        //pb.startAnimation(an);
+
 
     }
 

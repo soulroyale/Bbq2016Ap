@@ -8,20 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.jalee.bbqbuddy.SmartTimer$PlaceholderFragment">
 
-    <ProgressBar
-        android:id="@+id/smartTimer"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="250dp"
-        android:layout_height="273dp"
-        android:layout_centerInParent="true"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="90"
-        android:progressDrawable="@drawable/circular_progress_bar"/>
-
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
