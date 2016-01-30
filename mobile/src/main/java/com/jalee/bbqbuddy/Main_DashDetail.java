@@ -25,7 +25,9 @@ public class Main_DashDetail extends AppCompatActivity {
         image.setImageResource(MainActivity.cardUIList.get(CardAdapter.cardIndex).id);
         if(Constants.type == Constants.Type.FREE) {
             AdView adView = (AdView) findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                    .build();
             adView.loadAd(adRequest);
         } else {
 

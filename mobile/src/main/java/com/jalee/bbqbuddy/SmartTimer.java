@@ -43,7 +43,7 @@ public class SmartTimer extends AppCompatActivity {
      */
 
 
-
+    public Integer smartTimerMax;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
 
@@ -57,10 +57,19 @@ public class SmartTimer extends AppCompatActivity {
            mInterstitialAd = new InterstitialAd(this);
            mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
            AdRequest adRequest = new AdRequest.Builder()
-                   .addTestDevice("YOUR_DEVICE_HASH")
+                   .addTestDevice("2ED849A00EAE479CF470A821E825E638")
                    .build();
 
            mInterstitialAd.loadAd(adRequest);
+
+            /*
+           AdView bannerAdView = (AdView) findViewById(R.id.adViewSmartTimer);
+           AdRequest bannerAdRequest = new AdRequest.Builder()
+                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                    .build();
+           bannerAdView.loadAd(bannerAdRequest);
+           */
+
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,6 +86,9 @@ public class SmartTimer extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        smartTimerMax = 120000;
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,21 +96,23 @@ public class SmartTimer extends AppCompatActivity {
                 Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 if(Constants.type == Constants.Type.FREE) {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    }
                 }
-                }
+                final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+                txtSmartTimer.setText(String.valueOf((smartTimerMax / 1000) / 60));
 
-                new CountDownTimer(10000,1000) {
+                new CountDownTimer(smartTimerMax,1000) {
                     public void onTick(long millisecondsUntilDone) {
                         //Countdown method, runs at specified interval
                         Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
-
+                        txtSmartTimer.setText(String.valueOf((int) ((millisecondsUntilDone / (1000*60)) % 60) + ":" + (int) (millisecondsUntilDone / 1000) % 60));
                     }
                     public void onFinish() {
                         //On Counter finished
                         Log.i("Done","Done");
-
+                        txtSmartTimer.setText((int) ((smartTimerMax / (1000*60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
                     }
 
                 }.start();

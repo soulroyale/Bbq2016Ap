@@ -72,7 +72,9 @@ public class MainActivity extends AppCompatActivity
         if(Constants.type == Constants.Type.FREE) {
             Toast.makeText(getApplicationContext(),"Free App",Toast.LENGTH_SHORT).show();
             AdView adView = (AdView) findViewById(R.id.adView);
-            AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                    .build();
             adView.loadAd(adRequest);
         } else {
             Toast.makeText(getApplicationContext(),"Paid App",Toast.LENGTH_SHORT).show();
