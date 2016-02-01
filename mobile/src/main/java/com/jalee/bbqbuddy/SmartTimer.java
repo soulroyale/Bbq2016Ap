@@ -53,24 +53,7 @@ public class SmartTimer extends AppCompatActivity {
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
 
-       if(Constants.type == Constants.Type.FREE) {
-           mInterstitialAd = new InterstitialAd(this);
-           mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
-           AdRequest adRequest = new AdRequest.Builder()
-                   .addTestDevice("2ED849A00EAE479CF470A821E825E638")
-                   .build();
 
-           mInterstitialAd.loadAd(adRequest);
-
-            /*
-           AdView bannerAdView = (AdView) findViewById(R.id.adViewSmartTimer);
-           AdRequest bannerAdRequest = new AdRequest.Builder()
-                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
-                    .build();
-           bannerAdView.loadAd(bannerAdRequest);
-           */
-
-        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,6 +71,25 @@ public class SmartTimer extends AppCompatActivity {
 
         smartTimerMax = 120000;
 
+        if(Constants.type == Constants.Type.FREE) {
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                    .build();
+
+            mInterstitialAd.loadAd(adRequest);
+
+            /*
+           AdView bannerAdView = (AdView) findViewById(R.id.adViewSmartTimer);
+           AdRequest bannerAdRequest = new AdRequest.Builder()
+                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                    .build();
+           bannerAdView.loadAd(bannerAdRequest);
+           */
+
+        }
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +97,7 @@ public class SmartTimer extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                if(Constants.type == Constants.Type.FREE) {
+                if (Constants.type == Constants.Type.FREE) {
                     if (mInterstitialAd.isLoaded()) {
                         mInterstitialAd.show();
                     }
@@ -103,25 +105,21 @@ public class SmartTimer extends AppCompatActivity {
                 final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 txtSmartTimer.setText(String.valueOf((smartTimerMax / 1000) / 60));
 
-                new CountDownTimer(smartTimerMax,1000) {
+                new CountDownTimer(smartTimerMax, 1000) {
                     public void onTick(long millisecondsUntilDone) {
                         //Countdown method, runs at specified interval
                         Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
-                        txtSmartTimer.setText(String.valueOf((int) ((millisecondsUntilDone / (1000*60)) % 60) + ":" + (int) (millisecondsUntilDone / 1000) % 60));
-                    }
-                    public void onFinish() {
-                        //On Counter finished
-                        Log.i("Done","Done");
-                        txtSmartTimer.setText((int) ((smartTimerMax / (1000*60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
+                        txtSmartTimer.setText(String.valueOf((int) ((millisecondsUntilDone / (1000 * 60)) % 60) + ":" + (int) (millisecondsUntilDone / 1000) % 60));
                     }
 
+                    public void onFinish() {
+                        //On Counter finished
+                        Log.i("Done", "Done");
+                        txtSmartTimer.setText((int) ((smartTimerMax / (1000 * 60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
+                    }
                 }.start();
             }
         });
-
-
-
-
     }
 
     @Override
@@ -146,42 +144,7 @@ public class SmartTimer extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_smart_timer, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    /**
+      /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -194,8 +157,13 @@ public class SmartTimer extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+
+            switch(position) {
+                case 0: return SmartTimer_Timer.newInstance("");
+                case 1: return SmartTimer_TimeLine.newInstance("");
+                case 2: return SmartTimer_Notes.newInstance("");
+                default: return SmartTimer_Timer.newInstance("");
+            }
         }
 
         @Override
