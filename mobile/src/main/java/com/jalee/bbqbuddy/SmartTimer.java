@@ -28,21 +28,10 @@ import com.google.android.gms.ads.InterstitialAd;
 
 public class SmartTimer extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    Boolean timerActive = false;
+
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-
-
     public Integer smartTimerMax;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
@@ -52,8 +41,6 @@ public class SmartTimer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,7 +52,7 @@ public class SmartTimer extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        mViewPager.setOffscreenPageLimit(2);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -103,21 +90,28 @@ public class SmartTimer extends AppCompatActivity {
                     }
                 }
                 final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-                txtSmartTimer.setText(String.valueOf((smartTimerMax / 1000) / 60));
+                if (timerActive == false) {
+                    txtSmartTimer.setText(String.valueOf((smartTimerMax / 1000) / 60));
+                    new CountDownTimer(smartTimerMax, 1000) {
+                        public void onTick(long millisecondsUntilDone) {
+                            //Countdown method, runs at specified interval
+                            Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
+                            txtSmartTimer.setText(String.valueOf((int) ((millisecondsUntilDone / (1000 * 60)) % 60) + ":" + (int) (millisecondsUntilDone / 1000) % 60));
+                        }
 
-                new CountDownTimer(smartTimerMax, 1000) {
-                    public void onTick(long millisecondsUntilDone) {
-                        //Countdown method, runs at specified interval
-                        Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
-                        txtSmartTimer.setText(String.valueOf((int) ((millisecondsUntilDone / (1000 * 60)) % 60) + ":" + (int) (millisecondsUntilDone / 1000) % 60));
-                    }
+                        public void onFinish() {
+                            //On Counter finished
+                            Log.i("Done", "Done");
+                            txtSmartTimer.setText((int) ((smartTimerMax / (1000 * 60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
+                        }
+                    }.start();
+                    timerActive = true;
 
-                    public void onFinish() {
-                        //On Counter finished
-                        Log.i("Done", "Done");
-                        txtSmartTimer.setText((int) ((smartTimerMax / (1000 * 60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
-                    }
-                }.start();
+                } else {
+                    Snackbar.make(view, "Timer Already Active...", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+
             }
         });
     }
@@ -158,11 +152,20 @@ public class SmartTimer extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
 
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
             switch(position) {
-                case 0: return SmartTimer_Timer.newInstance("");
-                case 1: return SmartTimer_TimeLine.newInstance("");
-                case 2: return SmartTimer_Notes.newInstance("");
-                default: return SmartTimer_Timer.newInstance("");
+                case 0:
+                    //fab.show();
+                    return SmartTimer_Timer.newInstance("");
+                case 1:
+                    //fab.hide();
+                    return SmartTimer_TimeLine.newInstance("");
+                case 2:
+                    //fab.hide();
+                    return SmartTimer_Notes.newInstance("");
+                default:
+                    //fab.show();
+                    return SmartTimer_Timer.newInstance("");
             }
         }
 

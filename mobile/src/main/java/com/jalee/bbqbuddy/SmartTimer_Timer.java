@@ -12,18 +12,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Aaron on 1/02/2016.
  */
 public class SmartTimer_Timer extends Fragment {
-
+    private List<String> myData;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
-
+        View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
+        AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
+        AdRequest bannerAdRequest = new AdRequest.Builder()
+                .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                .build();
+        bannerAdView.loadAd(bannerAdRequest);
 
         return v;
     }
@@ -38,4 +47,12 @@ public class SmartTimer_Timer extends Fragment {
 
         return f;
     }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("list", (Serializable) myData);
+    }
+
+
 }

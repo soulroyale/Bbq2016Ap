@@ -1,6 +1,7 @@
 package com.jalee.bbqbuddy;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ public class SmartTimer_TimeLine extends Fragment {
 
         TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
         //tv.setText(getArguments().getString("msg"));
+
 
         return v;
     }
