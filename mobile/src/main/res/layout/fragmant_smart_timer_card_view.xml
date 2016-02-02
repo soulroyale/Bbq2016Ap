@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:ads="http://schemas.android.com/tools"
+    android:id="@+id/cv"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/cardimage"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="5dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_reorder_grey" />
+
+        <TextView
+            android:layout_width="80sp"
+            android:layout_height="40sp"
+            android:id="@+id/cardtitle"
+            android:layout_alignParentTop="true"
+            android:text="120"
+            android:textSize="36sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+
+            android:layout_alignParentLeft="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/carddesc"
+            android:text="Roast Meat"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:layout_alignTop="@+id/cardtitle"
+            android:layout_toLeftOf="@+id/cardimage"
+            android:layout_toRightOf="@+id/cardtitle"
+            android:layout_toEndOf="@+id/cardtitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="mins"
+            android:id="@+id/mins"
+            android:paddingLeft="10dp"
+            android:layout_below="@+id/cardtitle"
+            android:layout_alignParentLeft="true"
+            />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

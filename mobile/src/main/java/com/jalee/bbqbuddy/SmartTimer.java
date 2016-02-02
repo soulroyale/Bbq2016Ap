@@ -103,6 +103,7 @@ public class SmartTimer extends AppCompatActivity {
                             //On Counter finished
                             Log.i("Done", "Done");
                             txtSmartTimer.setText((int) ((smartTimerMax / (1000 * 60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
+                            timerActive=false;
                         }
                     }.start();
                     timerActive = true;

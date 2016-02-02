@@ -16,7 +16,7 @@ public class SmartTimer_Notes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_smart_timer_notes, container, false);
 
-        TextView tv = (TextView) v.findViewById(R.id.tvFragSecond);
+        //TextView tv = (TextView) v.findViewById(R.id.tvFragSecond);
         //tv.setText(getArguments().getString("msg"));
 
         return v;
