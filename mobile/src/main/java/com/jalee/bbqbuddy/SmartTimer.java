@@ -82,8 +82,6 @@ public class SmartTimer extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 if (Constants.type == Constants.Type.FREE) {
                     if (mInterstitialAd.isLoaded()) {
                         mInterstitialAd.show();
@@ -91,22 +89,42 @@ public class SmartTimer extends AppCompatActivity {
                 }
                 final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 if (timerActive == false) {
-                    txtSmartTimer.setText(String.valueOf((smartTimerMax / 1000) / 60));
                     new CountDownTimer(smartTimerMax, 1000) {
                         public void onTick(long millisecondsUntilDone) {
                             //Countdown method, runs at specified interval
-                            Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
-                            txtSmartTimer.setText(String.valueOf((int) ((millisecondsUntilDone / (1000 * 60)) % 60) + ":" + (int) (millisecondsUntilDone / 1000) % 60));
+                            //Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
+
+                            int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
+                            int seconds = (int) (millisecondsUntilDone / 1000) % 60;
+                            String secondsString;
+                            String minutesString;
+                            if (seconds < 10) {
+                                secondsString = "0" + String.valueOf(seconds);
+                            } else {
+                                secondsString = String.valueOf(seconds);
+                            }
+
+
+                            //Remove Minutes if no minutes left
+                            if (minutes < 1) {
+                                Log.i("Time left",secondsString);
+                                txtSmartTimer.setText(secondsString);
+                            } else {
+                                Log.i("Time left",String.valueOf(minutes) + ":" + secondsString);
+                                txtSmartTimer.setText(String.valueOf(minutes) + ":" + secondsString);
+                            }
                         }
 
                         public void onFinish() {
                             //On Counter finished
                             Log.i("Done", "Done");
-                            txtSmartTimer.setText((int) ((smartTimerMax / (1000 * 60)) % 60) + ":" + (int) (smartTimerMax / 1000) % 60);
+                            txtSmartTimer.setText("00:00");
                             timerActive=false;
                         }
                     }.start();
                     timerActive = true;
+                    Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
 
                 } else {
                     Snackbar.make(view, "Timer Already Active...", Snackbar.LENGTH_LONG)
