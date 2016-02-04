@@ -41,6 +41,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.SmartTimer_cardUI = getItem(position);
         holder.cardtitle.setText(list.get(position).name);
         holder.cardsubtitle.setText(list.get(position).subTitle);
+        holder.cardmins.setText(String.valueOf(list.get(position).id));
         //holder.cardimage.setImageResource(list.get(position).id);
     }
 
@@ -62,6 +63,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         ImageView cardimage;
         TextView cardtitle;
         TextView cardsubtitle;
+        TextView cardmins;
         SmartTimer_cardUI SmartTimer_cardUI;
         final Context context = itemView.getContext();
 
@@ -70,9 +72,11 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             cardimage = (ImageView) itemView.findViewById(R.id.cardimage);
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
+            cardmins = (TextView) itemView.findViewById(R.id.cardmins);
             cardimage.setOnClickListener(this);
             cardtitle.setOnClickListener(this);
             cardsubtitle.setOnClickListener(this);
+            cardmins.setOnClickListener(this);
         }
 
 

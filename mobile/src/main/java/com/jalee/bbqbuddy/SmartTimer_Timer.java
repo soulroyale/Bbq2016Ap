@@ -34,8 +34,11 @@ public class SmartTimer_Timer extends Fragment {
                 .build();
         bannerAdView.loadAd(bannerAdRequest);
 
+
+
         return v;
     }
+
 
     public static SmartTimer_Timer newInstance(String text) {
 

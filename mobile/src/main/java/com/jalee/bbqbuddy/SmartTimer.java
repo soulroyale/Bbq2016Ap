@@ -1,6 +1,10 @@
 package com.jalee.bbqbuddy;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -26,13 +30,15 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
+import java.util.concurrent.TimeUnit;
+
 public class SmartTimer extends AppCompatActivity {
 
     Boolean timerActive = false;
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    public Integer smartTimerMax;
+    public static Long smartTimerMax;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
 
@@ -55,8 +61,6 @@ public class SmartTimer extends AppCompatActivity {
         mViewPager.setOffscreenPageLimit(2);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        smartTimerMax = 120000;
 
         if(Constants.type == Constants.Type.FREE) {
             mInterstitialAd = new InterstitialAd(this);
@@ -89,6 +93,22 @@ public class SmartTimer extends AppCompatActivity {
                 }
                 final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 if (timerActive == false) {
+
+                    Intent intent = new Intent(getApplicationContext(),SmartTimer.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,0);
+
+                    Notification notification = new Notification.Builder(getApplicationContext())
+                            .setContentTitle("Timer is Active")
+                            .setContentText("00:00")
+                            .setContentIntent(pendingIntent)
+                            .addAction(R.drawable.cookingicon512px, "View",pendingIntent)
+                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .build();
+
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.notify(1,notification);
+
+
                     new CountDownTimer(smartTimerMax, 1000) {
                         public void onTick(long millisecondsUntilDone) {
                             //Countdown method, runs at specified interval
@@ -96,6 +116,9 @@ public class SmartTimer extends AppCompatActivity {
 
                             int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
                             int seconds = (int) (millisecondsUntilDone / 1000) % 60;
+                            int hours =  (int)((millisecondsUntilDone /1000) / 60) / 60;
+
+
                             String secondsString;
                             String minutesString;
                             if (seconds < 10) {
@@ -104,22 +127,27 @@ public class SmartTimer extends AppCompatActivity {
                                 secondsString = String.valueOf(seconds);
                             }
 
+                            if (minutes < 10) {
+                                minutesString = "0" + String.valueOf(minutes);
+                            } else {
+                                minutesString = String.valueOf(minutes);
+                            }
 
                             //Remove Minutes if no minutes left
                             if (minutes < 1) {
-                                Log.i("Time left",secondsString);
+                                Log.i("Time left", secondsString);
                                 txtSmartTimer.setText(secondsString);
                             } else {
-                                Log.i("Time left",String.valueOf(minutes) + ":" + secondsString);
-                                txtSmartTimer.setText(String.valueOf(minutes) + ":" + secondsString);
+                                Log.i("Time left", String.valueOf(hours) + ":" + minutesString + ":" + secondsString);
+                                txtSmartTimer.setText(String.valueOf(hours) + ":" + minutesString + ":" + secondsString);
                             }
                         }
 
                         public void onFinish() {
                             //On Counter finished
                             Log.i("Done", "Done");
-                            txtSmartTimer.setText("00:00");
-                            timerActive=false;
+                            txtSmartTimer.setText("0");
+                            timerActive = false;
                         }
                     }.start();
                     timerActive = true;

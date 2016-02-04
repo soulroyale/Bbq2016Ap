@@ -32,7 +32,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:id="@+id/carddesc"
             android:text="Roast Meat"
             android:textSize="18sp"
@@ -59,7 +59,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="mins"
             android:id="@+id/mins"
-            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
             android:layout_below="@+id/cardimage"
             android:layout_toRightOf="@+id/cardmins"
              />
@@ -71,7 +71,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:paddingLeft="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:src="@drawable/ic_reorder_grey" />
     </RelativeLayout>
 
