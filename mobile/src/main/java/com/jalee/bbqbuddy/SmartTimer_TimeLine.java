@@ -45,21 +45,19 @@ public class SmartTimer_TimeLine extends Fragment {
 
     private void initializeData() {
         TimelineList = new ArrayList<>();
-        TimelineList.add(new SmartTimer_cardUI("Prep","15",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Cook Meat","120",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Rest Meat","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-        TimelineList.add(new SmartTimer_cardUI("Drink Beer","20",R.drawable.sample));
-
-
+        TimelineList.add(new SmartTimer_cardUI("Prep the Meat for Cooking, i.e. using a rub","Prep",30));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Cook Meat","Cook Meat",240));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",30));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
     }
 
     public static SmartTimer_TimeLine newInstance(String text) {

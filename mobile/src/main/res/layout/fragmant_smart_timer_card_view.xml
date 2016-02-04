@@ -17,28 +17,18 @@
         android:paddingBottom="5dp"
         >
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:id="@+id/cardimage"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:paddingLeft="5dp"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/ic_reorder_grey" />
-
         <TextView
-            android:layout_width="80sp"
-            android:layout_height="40sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/cardtitle"
-            android:layout_alignParentTop="true"
-            android:text="120"
-            android:textSize="36sp"
+            android:text="Title"
+            android:textSize="22sp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            />
+            android:layout_alignRight="@+id/carddesc"
+            android:layout_alignEnd="@+id/carddesc" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,24 +36,43 @@
             android:id="@+id/carddesc"
             android:text="Roast Meat"
             android:textSize="18sp"
-            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:layout_alignTop="@+id/cardtitle"
-            android:layout_toLeftOf="@+id/cardimage"
-            android:layout_toRightOf="@+id/cardtitle"
-            android:layout_toEndOf="@+id/cardtitle" />
+            android:layout_below="@+id/cardtitle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/cardmins"
+            android:layout_toStartOf="@+id/cardmins" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardmins"
+            android:text="120"
+            android:textSize="44sp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/cardimage"
+            android:layout_toStartOf="@+id/cardimage" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="mins"
             android:id="@+id/mins"
-            android:paddingLeft="10dp"
-            android:layout_below="@+id/cardtitle"
-            android:layout_alignParentLeft="true"
-            />
+            android:paddingLeft="6dp"
+            android:layout_below="@+id/cardimage"
+            android:layout_toRightOf="@+id/cardmins"
+             />
 
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/cardimage"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_reorder_grey" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
