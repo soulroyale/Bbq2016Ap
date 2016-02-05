@@ -1,5 +1,9 @@
 package com.jalee.bbqbuddy;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +26,9 @@ import java.util.List;
  * Created by Aaron on 1/02/2016.
  */
 public class SmartTimer_Timer extends Fragment {
+
     private List<String> myData;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +39,6 @@ public class SmartTimer_Timer extends Fragment {
                 .addTestDevice("2ED849A00EAE479CF470A821E825E638")
                 .build();
         bannerAdView.loadAd(bannerAdRequest);
-
-
-
         return v;
     }
 

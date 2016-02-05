@@ -24,6 +24,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -37,9 +39,9 @@ public class SmartTimer extends AppCompatActivity {
     Boolean timerActive = false;
     Boolean timerPaused = false;
     Boolean timerCancel = false;
+    public static Long smartTimerMax;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    public static Long smartTimerMax;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
 
@@ -83,7 +85,7 @@ public class SmartTimer extends AppCompatActivity {
         }
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,11 +96,9 @@ public class SmartTimer extends AppCompatActivity {
                 }
                 final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 if (timerActive == false) {
-
+                    fab.setImageResource(R.drawable.ic_media_pause);
                     new CountDownTimer(smartTimerMax, 1000) {
                         public void onTick(long millisecondsUntilDone) {
-
-
 
                             //setup Notification
 
@@ -154,10 +154,21 @@ public class SmartTimer extends AppCompatActivity {
                             notificationManager.notify(1,timerNotification);
 
                             if (timerPaused == true) {
-                                cancel();
+                                fab.setImageResource(R.drawable.ic_media_play);
                                 timerActive = false;
-                                smartTimerMax = smartTimerMax - millisecondsUntilDone;
+                                timerPaused = false;
+                                smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
+                                cancel();
 
+                            }
+                            if (timerCancel == true) {
+                                fab.setImageResource(R.drawable.ic_media_play);
+                                timerActive = false;
+                                timerPaused = false;
+                                timerCancel = false;
+                                cancel();
+                                notificationManager.cancel(1);
+                                txtSmartTimer.setText("0");
                             }
                         }
 
@@ -166,6 +177,7 @@ public class SmartTimer extends AppCompatActivity {
                             Log.i("Done", "Done");
                             txtSmartTimer.setText("0");
                             timerActive = false;
+                            timerCancel = true;
                             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                             notificationManager.cancel(1);
                         }
@@ -178,6 +190,7 @@ public class SmartTimer extends AppCompatActivity {
                     if (timerPaused == false) {
                         timerPaused = true;
                     }
+
                     /*
                     Snackbar.make(view, "Timer Already Active...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -185,6 +198,19 @@ public class SmartTimer extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                timerCancel = true;
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.cancel(1);
+                SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
+                TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+                txtSmartTimer.setText("0");
+                return true;
             }
         });
     }
@@ -224,14 +250,19 @@ public class SmartTimer extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+            if (SmartTimer_TimeLine.fabHidden == true) {
+                SmartTimer_TimeLine.fabHidden = false;
+                floatingActionButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
             switch(position) {
                 case 0:
                     //fab.show();
                     return SmartTimer_Timer.newInstance("");
                 case 1:
                     //fab.hide();
+
+
                     return SmartTimer_TimeLine.newInstance("");
                 case 2:
                     //fab.hide();
