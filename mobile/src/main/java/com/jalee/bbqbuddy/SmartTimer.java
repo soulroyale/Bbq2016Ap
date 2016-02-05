@@ -35,7 +35,8 @@ import java.util.concurrent.TimeUnit;
 public class SmartTimer extends AppCompatActivity {
 
     Boolean timerActive = false;
-
+    Boolean timerPaused = false;
+    Boolean timerCancel = false;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     public static Long smartTimerMax;
@@ -94,25 +95,15 @@ public class SmartTimer extends AppCompatActivity {
                 final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 if (timerActive == false) {
 
-                    Intent intent = new Intent(getApplicationContext(),SmartTimer.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,0);
-
-                    Notification notification = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("Timer is Active")
-                            .setContentText("00:00")
-                            .setContentIntent(pendingIntent)
-                            .addAction(R.drawable.cookingicon512px, "View",pendingIntent)
-                            .setSmallIcon(R.drawable.cookingicon512px)
-                            .build();
-
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.notify(1,notification);
-
-
                     new CountDownTimer(smartTimerMax, 1000) {
                         public void onTick(long millisecondsUntilDone) {
-                            //Countdown method, runs at specified interval
-                            //Log.i("Seconds Left: ", String.valueOf(millisecondsUntilDone / 1000));
+
+
+
+                            //setup Notification
+
+                            String timerText = "";
+                            //String timerNotText = "";
 
                             int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
                             int seconds = (int) (millisecondsUntilDone / 1000) % 60;
@@ -135,11 +126,38 @@ public class SmartTimer extends AppCompatActivity {
 
                             //Remove Minutes if no minutes left
                             if (minutes < 1) {
-                                Log.i("Time left", secondsString);
-                                txtSmartTimer.setText(secondsString);
+                                timerText =secondsString;
+
                             } else {
-                                Log.i("Time left", String.valueOf(hours) + ":" + minutesString + ":" + secondsString);
-                                txtSmartTimer.setText(String.valueOf(hours) + ":" + minutesString + ":" + secondsString);
+                                if (hours < 1) {
+                                    timerText = minutesString + ":" + secondsString;
+                                } else {
+                                    timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
+                                }
+                            }
+
+                            txtSmartTimer.setText(timerText);
+
+                            //Update Notification
+                            Intent intent = new Intent(getApplicationContext(),SmartTimer.class);
+                            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,0);
+
+                            Notification timerNotification = new Notification.Builder(getApplicationContext())
+                                    .setContentTitle("Time Remaining:")
+                                    .setContentText(timerText)
+                                    .setContentIntent(pendingIntent)
+                                    .setOngoing(true)
+                                    .setSmallIcon(R.drawable.cookingicon512px)
+                                    .build();
+
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.notify(1,timerNotification);
+
+                            if (timerPaused == true) {
+                                cancel();
+                                timerActive = false;
+                                smartTimerMax = smartTimerMax - millisecondsUntilDone;
+
                             }
                         }
 
@@ -148,6 +166,8 @@ public class SmartTimer extends AppCompatActivity {
                             Log.i("Done", "Done");
                             txtSmartTimer.setText("0");
                             timerActive = false;
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.cancel(1);
                         }
                     }.start();
                     timerActive = true;
@@ -155,9 +175,15 @@ public class SmartTimer extends AppCompatActivity {
                             .setAction("Action", null).show();
 
                 } else {
+                    if (timerPaused == false) {
+                        timerPaused = true;
+                    }
+                    /*
                     Snackbar.make(view, "Timer Already Active...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                    */
                 }
+
 
             }
         });
