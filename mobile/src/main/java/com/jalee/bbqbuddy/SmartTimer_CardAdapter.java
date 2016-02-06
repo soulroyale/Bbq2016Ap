@@ -4,8 +4,13 @@ package com.jalee.bbqbuddy;
  * Created by Aaron on 25/01/2016.
  */
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,11 +90,32 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         public void onClick(View v) {
             Log.i("Button Click", "Button Pressed at: " + getAdapterPosition());
             cardIndex = (Integer) getAdapterPosition();
-            //final Intent intent;
-            //intent =  new Intent(context, Main_DashDetail.class);
-            //context.startActivity(intent);
-        }
 
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+            alertDialogBuilder.setMessage("Would you like to Delete the selected item from the timeline?");
+
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    Log.i("Selected", "You salected yes");
+                    SmartTimer_TimeLine.TimelineList.remove(getAdapterPosition());
+                    SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                }
+            });
+
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("Selected", "You salected no");
+                }
+
+            });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
+        }
     }
+
 
 }

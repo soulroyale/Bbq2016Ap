@@ -25,8 +25,8 @@ public class SmartTimer_TimeLine extends Fragment {
     public static Boolean fabHidden = false;
 
     public static List<SmartTimer_cardUI> TimelineList;
-    RecyclerView recyclerView;
-    SmartTimer_CardAdapter adapter;
+    public static RecyclerView recyclerView;
+    public static SmartTimer_CardAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
