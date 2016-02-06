@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class SmartTimer extends AppCompatActivity {
     Boolean timerActive = false;
     Boolean timerPaused = false;
     Boolean timerCancel = false;
+    Boolean onTimeline = false;
     public static Long smartTimerMax;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -51,6 +54,7 @@ public class SmartTimer extends AppCompatActivity {
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
 
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,6 +66,53 @@ public class SmartTimer extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                // if listener is set - when using an indicator, must update that here
+                if (position == 0) {
+                    if (SmartTimer_TimeLine.fabHidden == true) {
+                        SmartTimer_TimeLine.fabHidden = false;
+                        if (timerActive == true) {
+                            fab.setImageResource(R.drawable.ic_media_pause);
+                        } else {
+                            fab.setImageResource(R.drawable.ic_media_play);
+                        }
+                        fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                    } else {
+                        if (timerActive == true) {
+                            fab.setImageResource(R.drawable.ic_media_pause);
+                        } else {
+                            fab.setImageResource(R.drawable.ic_media_play);
+                        }
+                    }
+                    onTimeline = false;
+                }
+                if (position == 1) {
+                    fab.setImageResource(R.drawable.plus64);
+                    fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                    onTimeline = true;
+                }
+                if (position == 2) {
+                    if (SmartTimer_TimeLine.fabHidden == false) {
+                        SmartTimer_TimeLine.fabHidden = true;
+                        fab.animate().translationY(fab.getHeight() + 70).setInterpolator(new AccelerateInterpolator(2)).start();
+                    }
+                    onTimeline = true;
+                }
+                String msg = "onPageSelected - position: " + position;
+                Log.i("debug1", "Page = " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            @Override
+            public void onPageScrolled(int position, float arg1, int arg2) {
+            }
+        });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -84,120 +135,121 @@ public class SmartTimer extends AppCompatActivity {
 
         }
 
-
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Constants.type == Constants.Type.FREE) {
-                    if (mInterstitialAd.isLoaded()) {
-                        mInterstitialAd.show();
+                if (onTimeline == false) {
+                    if (Constants.type == Constants.Type.FREE) {
+                        if (mInterstitialAd.isLoaded()) {
+                            mInterstitialAd.show();
+                        }
                     }
-                }
-                final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-                if (timerActive == false) {
-                    fab.setImageResource(R.drawable.ic_media_pause);
-                    new CountDownTimer(smartTimerMax, 1000) {
-                        public void onTick(long millisecondsUntilDone) {
+                    final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+                    if (timerActive == false) {
+                        fab.setImageResource(R.drawable.ic_media_pause);
+                        new CountDownTimer(smartTimerMax, 1000) {
+                            public void onTick(long millisecondsUntilDone) {
 
-                            //setup Notification
+                                //setup Notification
 
-                            String timerText = "";
-                            //String timerNotText = "";
+                                String timerText = "";
+                                //String timerNotText = "";
 
-                            int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
-                            int seconds = (int) (millisecondsUntilDone / 1000) % 60;
-                            int hours =  (int)((millisecondsUntilDone /1000) / 60) / 60;
+                                int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
+                                int seconds = (int) (millisecondsUntilDone / 1000) % 60;
+                                int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
 
 
-                            String secondsString;
-                            String minutesString;
-                            if (seconds < 10) {
-                                secondsString = "0" + String.valueOf(seconds);
-                            } else {
-                                secondsString = String.valueOf(seconds);
-                            }
-
-                            if (minutes < 10) {
-                                minutesString = "0" + String.valueOf(minutes);
-                            } else {
-                                minutesString = String.valueOf(minutes);
-                            }
-
-                            //Remove Minutes if no minutes left
-                            if (minutes < 1) {
-                                timerText =secondsString;
-
-                            } else {
-                                if (hours < 1) {
-                                    timerText = minutesString + ":" + secondsString;
+                                String secondsString;
+                                String minutesString;
+                                if (seconds < 10) {
+                                    secondsString = "0" + String.valueOf(seconds);
                                 } else {
-                                    timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
+                                    secondsString = String.valueOf(seconds);
+                                }
+
+                                if (minutes < 10) {
+                                    minutesString = "0" + String.valueOf(minutes);
+                                } else {
+                                    minutesString = String.valueOf(minutes);
+                                }
+
+                                //Remove Minutes if no minutes left
+                                if (minutes < 1) {
+                                    timerText = secondsString;
+
+                                } else {
+                                    if (hours < 1) {
+                                        timerText = minutesString + ":" + secondsString;
+                                    } else {
+                                        timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
+                                    }
+                                }
+
+                                txtSmartTimer.setText(timerText);
+
+                                //Update Notification
+                                Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
+
+                                Notification timerNotification = new Notification.Builder(getApplicationContext())
+                                        .setContentTitle("Time Remaining:")
+                                        .setContentText(timerText)
+                                        .setContentIntent(pendingIntent)
+                                        .setOngoing(true)
+                                        .setSmallIcon(R.drawable.cookingicon512px)
+                                        .build();
+
+                                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                notificationManager.notify(1, timerNotification);
+
+                                if (timerPaused == true) {
+                                    fab.setImageResource(R.drawable.ic_media_play);
+                                    timerActive = false;
+                                    timerPaused = false;
+                                    smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
+                                    cancel();
+
+                                }
+                                if (timerCancel == true) {
+                                    fab.setImageResource(R.drawable.ic_media_play);
+                                    timerActive = false;
+                                    timerPaused = false;
+                                    timerCancel = false;
+                                    cancel();
+                                    notificationManager.cancel(1);
+                                    txtSmartTimer.setText("0");
                                 }
                             }
 
-                            txtSmartTimer.setText(timerText);
-
-                            //Update Notification
-                            Intent intent = new Intent(getApplicationContext(),SmartTimer.class);
-                            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),1,intent,0);
-
-                            Notification timerNotification = new Notification.Builder(getApplicationContext())
-                                    .setContentTitle("Time Remaining:")
-                                    .setContentText(timerText)
-                                    .setContentIntent(pendingIntent)
-                                    .setOngoing(true)
-                                    .setSmallIcon(R.drawable.cookingicon512px)
-                                    .build();
-
-                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.notify(1,timerNotification);
-
-                            if (timerPaused == true) {
-                                fab.setImageResource(R.drawable.ic_media_play);
-                                timerActive = false;
-                                timerPaused = false;
-                                smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
-                                cancel();
-
-                            }
-                            if (timerCancel == true) {
-                                fab.setImageResource(R.drawable.ic_media_play);
-                                timerActive = false;
-                                timerPaused = false;
-                                timerCancel = false;
-                                cancel();
-                                notificationManager.cancel(1);
+                            public void onFinish() {
+                                //On Counter finished
+                                Log.i("Done", "Done");
                                 txtSmartTimer.setText("0");
+                                timerActive = false;
+                                timerCancel = false;
+                                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                notificationManager.cancel(1);
                             }
-                        }
+                        }.start();
+                        timerActive = true;
+                        Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
 
-                        public void onFinish() {
-                            //On Counter finished
-                            Log.i("Done", "Done");
-                            txtSmartTimer.setText("0");
-                            timerActive = false;
-                            timerCancel = true;
-                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.cancel(1);
+                    } else {
+                        if (timerPaused == false) {
+                            timerPaused = true;
                         }
-                    }.start();
-                    timerActive = true;
-                    Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-
-                } else {
-                    if (timerPaused == false) {
-                        timerPaused = true;
-                    }
 
                     /*
                     Snackbar.make(view, "Timer Already Active...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     */
+                    }
+
+                } else {
+                    Log.i("Info","ON Timeline, perform add");
                 }
-
-
             }
         });
 
@@ -250,18 +302,12 @@ public class SmartTimer extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-            if (SmartTimer_TimeLine.fabHidden == true) {
-                SmartTimer_TimeLine.fabHidden = false;
-                floatingActionButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-            }
             switch(position) {
                 case 0:
                     //fab.show();
                     return SmartTimer_Timer.newInstance("");
                 case 1:
                     //fab.hide();
-
 
                     return SmartTimer_TimeLine.newInstance("");
                 case 2:

@@ -46,7 +46,7 @@ public class SmartTimer_TimeLine extends Fragment {
                         Log.i("scroll","Scrolling up");
                         fabHidden = true;
                         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-                        floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 50).setInterpolator(new AccelerateInterpolator(2)).start();
+                        floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 70).setInterpolator(new AccelerateInterpolator(2)).start();
                     }
 
                 } else {
