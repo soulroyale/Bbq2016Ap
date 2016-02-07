@@ -135,9 +135,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_dash) {
-            Intent intent = new Intent(this, About.class);
-            startActivity(intent);
-            return true;
+
+
         } else if (id == R.id.nav_recipes) {
             Toast.makeText(getApplicationContext(),"Feature Coming Soon!",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_history) {
@@ -149,7 +148,7 @@ public class MainActivity extends AppCompatActivity
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
             i.putExtra(Intent.EXTRA_SUBJECT, "Check Out BBQ Buddy");
-            i.putExtra(Intent.EXTRA_TEXT, "Go to the following link to try out BBQ Buddy: https://play.google.com/apps/testing/com.jalee.bbqbuddy");
+            i.putExtra(Intent.EXTRA_TEXT, "Check Out BBQ Buddy, Join the below Google Plus group to gain access to the Alpha or Beta Realese of BBQ Buddy: https://plus.google.com/u/0/communities/111930892923034410128");
             try {
                 startActivity(Intent.createChooser(i, "Share BBQ Buddy:"));
             } catch (android.content.ActivityNotFoundException ex) {

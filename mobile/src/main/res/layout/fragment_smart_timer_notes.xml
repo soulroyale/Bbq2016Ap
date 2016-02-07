@@ -34,7 +34,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="Enter cooking notes here"
+        android:text="Enter cooking notes here\nThese are currently not saved"
         android:textAlignment="center"
         android:singleLine="false" />
 

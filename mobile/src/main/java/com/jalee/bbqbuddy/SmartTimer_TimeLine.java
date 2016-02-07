@@ -1,8 +1,10 @@
 package com.jalee.bbqbuddy;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,7 +36,7 @@ public class SmartTimer_TimeLine extends Fragment {
 
         //TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
         //tv.setText(getArguments().getString("msg"));
-
+        fabHidden = false;
         recyclerView=(RecyclerView) v.findViewById(R.id.smarttimer_timeline_cardrecycler);
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -43,7 +45,7 @@ public class SmartTimer_TimeLine extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     if (fabHidden == false) {
-                        Log.i("scroll","Scrolling up");
+                        Log.i("scroll", "Scrolling up");
                         fabHidden = true;
                         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
                         floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 70).setInterpolator(new AccelerateInterpolator(2)).start();
@@ -74,9 +76,10 @@ public class SmartTimer_TimeLine extends Fragment {
     }
 
 
-    private void initializeData() {
+    public void initializeData() {
         TimelineList = new ArrayList<>();
-        TimelineList.add(new SmartTimer_cardUI("Prep the Meat for Cooking, i.e. using a rub","Prep",30));
+        /*
+        TimelineList.add(new SmartTimer_cardUI("Prep the Meat for Cooking, i.e. using a rub", "Prep", 30));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
         TimelineList.add(new SmartTimer_cardUI("Cook Meat","Cook Meat",240));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
@@ -89,6 +92,7 @@ public class SmartTimer_TimeLine extends Fragment {
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        */
         SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
     }
 

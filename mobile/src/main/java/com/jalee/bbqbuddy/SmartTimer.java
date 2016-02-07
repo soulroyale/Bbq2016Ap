@@ -44,6 +44,7 @@ public class SmartTimer extends AppCompatActivity {
     Boolean onTimeline = false;
     public static Long smartTimerMax;
 
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
@@ -144,6 +145,7 @@ public class SmartTimer extends AppCompatActivity {
                             mInterstitialAd.show();
                         }
                     }
+
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     if (timerActive == false) {
                         fab.setImageResource(R.drawable.ic_media_pause);
@@ -249,6 +251,8 @@ public class SmartTimer extends AppCompatActivity {
 
                 } else {
                     Log.i("Info","ON Timeline, perform add");
+                    Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
+                    startActivity(intent);
                 }
             }
         });

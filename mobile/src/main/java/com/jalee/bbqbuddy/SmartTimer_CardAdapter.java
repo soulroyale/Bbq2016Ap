@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_CardAdapter.ViewHolder> {
@@ -100,6 +101,12 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     Log.i("Selected", "You salected yes");
                     SmartTimer_TimeLine.TimelineList.remove(getAdapterPosition());
                     SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                    Integer newSmartTimerValue = 0;
+                    for (int i = 0; i < SmartTimer_TimeLine.TimelineList.size(); i++) {
+                        newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_TimeLine.TimelineList.get(i).id;
+                        System.out.println(newSmartTimerValue);
+                    }
+                    SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
                 }
             });
 
@@ -109,6 +116,37 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     Log.i("Selected", "You salected no");
                 }
 
+            });
+            alertDialogBuilder.setNeutralButton("Delete All", new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    AlertDialog.Builder alertDialogBuilderdelAll = new AlertDialog.Builder(context);
+                    alertDialogBuilderdelAll.setMessage("WARNING!! This will clear the entire timeline, are you sure?");
+                    alertDialogBuilderdelAll.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Log.i("Selected", "You salected yes");
+                            SmartTimer_TimeLine.TimelineList.clear();
+                            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                            Integer newSmartTimerValue = 0;
+                            for (int i = 0; i < SmartTimer_TimeLine.TimelineList.size(); i++) {
+                                newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_TimeLine.TimelineList.get(i).id;
+                                System.out.println(newSmartTimerValue);
+                            }
+                            SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                        }
+                    });
+
+                    alertDialogBuilderdelAll.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.i("Selected", "You salected no");
+                        }
+
+                    });
+                    AlertDialog alertDialog = alertDialogBuilderdelAll.create();
+                    alertDialog.show();
+                }
             });
 
             AlertDialog alertDialog = alertDialogBuilder.create();
