@@ -36,7 +36,7 @@ public class SmartTimer_Timer extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
         AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
         AdRequest bannerAdRequest = new AdRequest.Builder()
-                .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+                .addTestDevice("4183AA4B7DBD269E1F1D0D51DF9FB52B")
                 .build();
         bannerAdView.loadAd(bannerAdRequest);
         return v;
