@@ -93,7 +93,7 @@ public class SmartTimer_TimeLine extends Fragment {
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
         */
-        SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
+        MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
     }
 
     public static SmartTimer_TimeLine newInstance(String text) {

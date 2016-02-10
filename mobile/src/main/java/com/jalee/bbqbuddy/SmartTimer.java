@@ -34,20 +34,37 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.TimeUnit;
 
 public class SmartTimer extends AppCompatActivity {
 
-    Boolean timerActive = false;
-    Boolean timerPaused = false;
-    Boolean timerCancel = false;
+
     Boolean onTimeline = false;
-    public static Long smartTimerMax;
+
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
+    final Handler handler = new Handler();
+
+    //Setup runable for updating timer text
+    private Runnable run = new Runnable() {
+        @Override
+        public void run() {
+            final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            if (MainActivity.timerActive == true) {
+                fab.setImageResource(R.drawable.ic_media_pause);
+            } else {
+                fab.setImageResource(R.drawable.ic_media_play);
+            }
+            TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+            txtSmartTimer.setText(MainActivity.timerText);
+            handler.postDelayed(this,500);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +80,9 @@ public class SmartTimer extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        // Start Runable for updating timerText
+        handler.post(run);
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -74,14 +94,14 @@ public class SmartTimer extends AppCompatActivity {
                 if (position == 0) {
                     if (SmartTimer_TimeLine.fabHidden == true) {
                         SmartTimer_TimeLine.fabHidden = false;
-                        if (timerActive == true) {
+                        if (MainActivity.timerActive == true) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
                         }
                         fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     } else {
-                        if (timerActive == true) {
+                        if (MainActivity.timerActive == true) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
@@ -147,108 +167,14 @@ public class SmartTimer extends AppCompatActivity {
                     }
 
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-                    if (timerActive == false) {
-                        fab.setImageResource(R.drawable.ic_media_pause);
-                        new CountDownTimer(smartTimerMax, 1000) {
-                            public void onTick(long millisecondsUntilDone) {
-
-                                //setup Notification
-
-                                String timerText = "";
-                                //String timerNotText = "";
-
-                                int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
-                                int seconds = (int) (millisecondsUntilDone / 1000) % 60;
-                                int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
-
-
-                                String secondsString;
-                                String minutesString;
-                                if (seconds < 10) {
-                                    secondsString = "0" + String.valueOf(seconds);
-                                } else {
-                                    secondsString = String.valueOf(seconds);
-                                }
-
-                                if (minutes < 10) {
-                                    minutesString = "0" + String.valueOf(minutes);
-                                } else {
-                                    minutesString = String.valueOf(minutes);
-                                }
-
-                                //Remove Minutes if no minutes left
-                                if (minutes < 1) {
-                                    timerText = secondsString;
-
-                                } else {
-                                    if (hours < 1) {
-                                        timerText = minutesString + ":" + secondsString;
-                                    } else {
-                                        timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
-                                    }
-                                }
-
-                                txtSmartTimer.setText(timerText);
-
-                                //Update Notification
-                                Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
-
-                                Notification timerNotification = new Notification.Builder(getApplicationContext())
-                                        .setContentTitle("Time Remaining:")
-                                        .setContentText(timerText)
-                                        .setContentIntent(pendingIntent)
-                                        .setOngoing(true)
-                                        .setSmallIcon(R.drawable.cookingicon512px)
-                                        .build();
-
-                                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                notificationManager.notify(1, timerNotification);
-
-                                if (timerPaused == true) {
-                                    fab.setImageResource(R.drawable.ic_media_play);
-                                    timerActive = false;
-                                    timerPaused = false;
-                                    smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
-                                    cancel();
-
-                                }
-                                if (timerCancel == true) {
-                                    fab.setImageResource(R.drawable.ic_media_play);
-                                    timerActive = false;
-                                    timerPaused = false;
-                                    timerCancel = false;
-                                    cancel();
-                                    notificationManager.cancel(1);
-                                    txtSmartTimer.setText("0");
-                                }
-                            }
-
-                            public void onFinish() {
-                                //On Counter finished
-                                Log.i("Done", "Done");
-                                txtSmartTimer.setText("0");
-                                timerActive = false;
-                                timerCancel = false;
-                                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                notificationManager.cancel(1);
-                            }
-                        }.start();
-                        timerActive = true;
-                        Snackbar.make(view, "Timer Started", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-
+                    MainActivity mainActivity = new MainActivity();
+                    if (MainActivity.timerActive == false) {
+                        Log.i("Info","Timer Active");
+                        mainActivity.SmartTimerFunc(getApplicationContext());
                     } else {
-                        if (timerPaused == false) {
-                            timerPaused = true;
-                        }
-
-                    /*
-                    Snackbar.make(view, "Timer Already Active...", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                    */
+                        Log.i("Info","Timer Inactive");
+                        mainActivity.timerPaused = true;
                     }
-
                 } else {
                     Log.i("Info","ON Timeline, perform add");
                     Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
@@ -260,10 +186,10 @@ public class SmartTimer extends AppCompatActivity {
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                timerCancel = true;
+                MainActivity.timerCancel = true;
                 NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.cancel(1);
-                SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
+                MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
                 TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 txtSmartTimer.setText("0");
                 return true;
@@ -343,9 +269,13 @@ public class SmartTimer extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void finish() {
+        //remove handler for updating timer text
+        handler.removeCallbacks(run);
         super.finish();
+
         overridePendingTransition(R.anim.stationary, R.anim.slide_down);
     }
 }

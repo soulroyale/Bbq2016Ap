@@ -1,9 +1,15 @@
 package com.jalee.bbqbuddy;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +34,11 @@ public class MainActivity extends AppCompatActivity
     RecyclerView recyclerView;
     CardAdapter adapter;
     public static List<cardUI> cardUIList;
+    public static Long smartTimerMax;
+    public static Boolean timerActive = false;
+    public static Boolean timerPaused = false;
+    public static Boolean timerCancel = false;
+    public static String timerText = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +77,6 @@ public class MainActivity extends AppCompatActivity
         initializeData();
         adapter = new CardAdapter(cardUIList);
         recyclerView.setAdapter(adapter);
-        //perhaps setup onclick manager here
-
 
         if(Constants.type == Constants.Type.FREE) {
             Toast.makeText(getApplicationContext(),"Free App",Toast.LENGTH_SHORT).show();
@@ -170,5 +179,98 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void SmartTimerFunc(final Context context){
+        if (timerActive == false) {
+            new CountDownTimer(smartTimerMax, 1000) {
+                public void onTick(long millisecondsUntilDone) {
+
+                    //setup Notification
+
+
+                    int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
+                    int seconds = (int) (millisecondsUntilDone / 1000) % 60;
+                    int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
+
+                    String secondsString;
+                    String minutesString;
+                    if (seconds < 10) {
+                        secondsString = "0" + String.valueOf(seconds);
+                    } else {
+                        secondsString = String.valueOf(seconds);
+                    }
+
+                    if (minutes < 10) {
+                        minutesString = "0" + String.valueOf(minutes);
+                    } else {
+                        minutesString = String.valueOf(minutes);
+                    }
+
+                    //Remove Minutes if no minutes left
+                    if (minutes < 1) {
+                        timerText = secondsString;
+
+                    } else {
+                        if (hours < 1) {
+                            timerText = minutesString + ":" + secondsString;
+                        } else {
+                            timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
+                        }
+                    }
+
+                    //Update Notification
+                    Intent intent = new Intent(context, SmartTimer.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
+
+                    Notification timerNotification = new Notification.Builder(context)
+                            .setContentTitle("Time Remaining:")
+                            .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
+                            .addAction(R.drawable.ic_media_play,"Cancel",pendingIntent)
+                            .setContentText(timerText)
+                            .setContentIntent(pendingIntent)
+                            .setOngoing(true)
+                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .build();
+
+                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.notify(1, timerNotification);
+
+                    if (timerPaused == true) {
+                        timerActive = false;
+                        timerPaused = false;
+                        smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
+                        cancel();
+
+                    }
+                    if (timerCancel == true) {
+                        timerActive = false;
+                        timerPaused = false;
+                        timerCancel = false;
+                        cancel();
+                        notificationManager.cancel(1);
+                    }
+                }
+
+                public void onFinish() {
+                    //On Counter finished
+                    timerActive = false;
+                    timerCancel = false;
+                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.cancel(1);
+                }
+            }.start();
+            timerActive = true;
+
+        } else {
+
+        }
+    }
+
+    public void finish() {
+        //remove handler for updating timer text
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(1);
+        super.finish();
     }
 }

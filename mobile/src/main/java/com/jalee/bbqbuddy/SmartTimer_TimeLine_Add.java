@@ -54,7 +54,7 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity implements Adapte
                     newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_TimeLine.TimelineList.get(i).id;
                     System.out.println(newSmartTimerValue);
                 }
-                SmartTimer.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
                 finish();
             }
         });
