@@ -42,9 +42,6 @@ public class SmartTimer extends AppCompatActivity {
 
 
     Boolean onTimeline = false;
-
-
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
@@ -55,14 +52,18 @@ public class SmartTimer extends AppCompatActivity {
         @Override
         public void run() {
             final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            if (MainActivity.timerActive == true) {
-                fab.setImageResource(R.drawable.ic_media_pause);
-            } else {
-                fab.setImageResource(R.drawable.ic_media_play);
+            if (!onTimeline) {
+                if (MainActivity.timerActive) {
+                    fab.setImageResource(R.drawable.ic_media_pause);
+                } else {
+                    fab.setImageResource(R.drawable.ic_media_play);
+                }
             }
             TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-            txtSmartTimer.setText(MainActivity.timerText);
-            handler.postDelayed(this,500);
+            if (txtSmartTimer != null) {
+                txtSmartTimer.setText(MainActivity.timerText);
+            }
+            handler.postDelayed(this, 500);
         }
     };
 
@@ -92,16 +93,16 @@ public class SmartTimer extends AppCompatActivity {
             public void onPageSelected(int position) {
                 // if listener is set - when using an indicator, must update that here
                 if (position == 0) {
-                    if (SmartTimer_TimeLine.fabHidden == true) {
+                    if (SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = false;
-                        if (MainActivity.timerActive == true) {
+                        if (MainActivity.timerActive) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
                         }
                         fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     } else {
-                        if (MainActivity.timerActive == true) {
+                        if (MainActivity.timerActive) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
@@ -115,7 +116,7 @@ public class SmartTimer extends AppCompatActivity {
                     onTimeline = true;
                 }
                 if (position == 2) {
-                    if (SmartTimer_TimeLine.fabHidden == false) {
+                    if (!SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = true;
                         fab.animate().translationY(fab.getHeight() + 70).setInterpolator(new AccelerateInterpolator(2)).start();
                     }
@@ -159,7 +160,7 @@ public class SmartTimer extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (onTimeline == false) {
+                if (!onTimeline) {
                     if (Constants.type == Constants.Type.FREE) {
                         if (mInterstitialAd.isLoaded()) {
                             mInterstitialAd.show();
@@ -168,7 +169,7 @@ public class SmartTimer extends AppCompatActivity {
 
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     MainActivity mainActivity = new MainActivity();
-                    if (MainActivity.timerActive == false) {
+                    if (!MainActivity.timerActive) {
                         Log.i("Info","Timer Active");
                         mainActivity.SmartTimerFunc(getApplicationContext());
                     } else {

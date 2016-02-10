@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     public static Boolean timerActive = false;
     public static Boolean timerPaused = false;
     public static Boolean timerCancel = false;
-    public static String timerText = "";
+    public static String timerText = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,19 +222,32 @@ public class MainActivity extends AppCompatActivity
                     //Update Notification
                     Intent intent = new Intent(context, SmartTimer.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
+                    if (timerPaused) {
+                        Notification timerNotification = new Notification.Builder(context)
+                                .setContentTitle("BBQ Buddy - Smart Timer")
+                                .addAction(R.drawable.ic_media_play, "Play", pendingIntent)
+                                .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
+                                .setContentText(timerText + " remaining until next event")
+                                .setContentIntent(pendingIntent)
+                                .setOngoing(true)
+                                .setSmallIcon(R.drawable.cookingicon512px)
+                                .build();
+                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                        notificationManager.notify(1, timerNotification);
+                    } else {
+                        Notification timerNotification = new Notification.Builder(context)
+                                .setContentTitle("BBQ Buddy - Smart Timer")
+                                .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
+                                .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
+                                .setContentText(timerText + " remaining until next event")
+                                .setContentIntent(pendingIntent)
+                                .setOngoing(true)
+                                .setSmallIcon(R.drawable.cookingicon512px)
+                                .build();
+                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                        notificationManager.notify(1, timerNotification);
+                    }
 
-                    Notification timerNotification = new Notification.Builder(context)
-                            .setContentTitle("Time Remaining:")
-                            .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
-                            .addAction(R.drawable.ic_media_play,"Cancel",pendingIntent)
-                            .setContentText(timerText)
-                            .setContentIntent(pendingIntent)
-                            .setOngoing(true)
-                            .setSmallIcon(R.drawable.cookingicon512px)
-                            .build();
-
-                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.notify(1, timerNotification);
 
                     if (timerPaused == true) {
                         timerActive = false;
@@ -248,6 +261,7 @@ public class MainActivity extends AppCompatActivity
                         timerPaused = false;
                         timerCancel = false;
                         cancel();
+                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                         notificationManager.cancel(1);
                     }
                 }
@@ -256,8 +270,21 @@ public class MainActivity extends AppCompatActivity
                     //On Counter finished
                     timerActive = false;
                     timerCancel = false;
+
+                    Intent intent = new Intent(context, SmartTimer.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
+
+                    Notification timerNotification = new Notification.Builder(context)
+                            .setContentTitle("BBQ Buddy")
+                            .setContentText("Your Smart Timer timeline has completed")
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
+                            .setOngoing(false)
+                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .build();
+
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.cancel(1);
+                    notificationManager.notify(1, timerNotification);
                 }
             }.start();
             timerActive = true;

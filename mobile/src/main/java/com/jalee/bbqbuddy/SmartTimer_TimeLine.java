@@ -34,8 +34,6 @@ public class SmartTimer_TimeLine extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_smart_timer_timeline, container, false);
 
-        //TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
-        //tv.setText(getArguments().getString("msg"));
         fabHidden = false;
         recyclerView=(RecyclerView) v.findViewById(R.id.smarttimer_timeline_cardrecycler);
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -106,21 +104,5 @@ public class SmartTimer_TimeLine extends Fragment {
 
         return f;
     }
-    /*
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
 
-        // Make sure that we are currently visible
-        if (this.isVisible()) {
-
-            if (!isVisibleToUser) {
-                Log.d("MyFragment", "Not visible anymore.  Stopping audio.");
-                // TODO stop audio playback
-                FloatingActionButton fab = (FloatingActionButton) getView().findViewById(R.id.fab);
-                fab.setImageResource(R.drawable.ic_media_play);
-            }
-        }
-    }
-    */
 }
