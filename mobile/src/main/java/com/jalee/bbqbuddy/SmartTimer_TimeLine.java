@@ -26,7 +26,6 @@ public class SmartTimer_TimeLine extends Fragment {
 
     public static Boolean fabHidden = false;
 
-    public static List<SmartTimer_cardUI> TimelineList;
     public static RecyclerView recyclerView;
     public static SmartTimer_CardAdapter adapter;
 
@@ -67,32 +66,14 @@ public class SmartTimer_TimeLine extends Fragment {
         linman.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linman);
         recyclerView.setHasFixedSize(true);
-        initializeData();
-        adapter = new SmartTimer_CardAdapter(TimelineList);
+
+        adapter = new SmartTimer_CardAdapter(MainActivity.TimelineList);
         recyclerView.setAdapter(adapter);
         return v;
     }
 
 
-    public void initializeData() {
-        TimelineList = new ArrayList<>();
-        /*
-        TimelineList.add(new SmartTimer_cardUI("Prep the Meat for Cooking, i.e. using a rub", "Prep", 30));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
-        TimelineList.add(new SmartTimer_cardUI("Cook Meat","Cook Meat",240));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
-        TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",30));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-        */
-        MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
-    }
+
 
     public static SmartTimer_TimeLine newInstance(String text) {
 

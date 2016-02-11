@@ -47,11 +47,11 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity implements Adapte
                 TextView txtTitle = (TextView)findViewById(R.id.txtTitle);
                 TextView txtDesc = (TextView)findViewById(R.id.txtDesc);
 
-                SmartTimer_TimeLine.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
+                MainActivity.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
                 SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                 Integer newSmartTimerValue = 0;
-                for (int i = 0; i < SmartTimer_TimeLine.TimelineList.size(); i++) {
-                    newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_TimeLine.TimelineList.get(i).id;
+                for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
+                    newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
                     System.out.println(newSmartTimerValue);
                 }
                 MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);

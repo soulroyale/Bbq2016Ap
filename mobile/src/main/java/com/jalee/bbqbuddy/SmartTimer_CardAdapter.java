@@ -99,11 +99,11 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     Log.i("Selected", "You salected yes");
-                    SmartTimer_TimeLine.TimelineList.remove(getAdapterPosition());
+                    MainActivity.TimelineList.remove(getAdapterPosition());
                     SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                     Integer newSmartTimerValue = 0;
-                    for (int i = 0; i < SmartTimer_TimeLine.TimelineList.size(); i++) {
-                        newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_TimeLine.TimelineList.get(i).id;
+                    for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
+                        newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
                         System.out.println(newSmartTimerValue);
                     }
                     MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
@@ -126,11 +126,11 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             Log.i("Selected", "You salected yes");
-                            SmartTimer_TimeLine.TimelineList.clear();
+                            MainActivity.TimelineList.clear();
                             SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                             Integer newSmartTimerValue = 0;
-                            for (int i = 0; i < SmartTimer_TimeLine.TimelineList.size(); i++) {
-                                newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_TimeLine.TimelineList.get(i).id;
+                            for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
+                                newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
                                 System.out.println(newSmartTimerValue);
                             }
                             MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);

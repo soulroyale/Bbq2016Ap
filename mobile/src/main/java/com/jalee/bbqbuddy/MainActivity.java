@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
@@ -26,8 +27,12 @@ import android.support.v7.widget.RecyclerView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     CardAdapter adapter;
     public static List<cardUI> cardUIList;
     public static Long smartTimerMax;
+    public static List<SmartTimer_cardUI> TimelineList;
     public static Boolean timerActive = false;
     public static Boolean timerPaused = false;
     public static Boolean timerCancel = false;
@@ -46,6 +52,31 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //initialise timeline data
+
+        TimelineList = new ArrayList<>();
+
+        TimelineList.add(new SmartTimer_cardUI("Prep the Meat for Cooking, i.e. using a rub", "Prep", 30));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Cook Meat","Cook Meat",240));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",30));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+
+
+        Integer newSmartTimerValue = 0;
+        for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
+            newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
+        }
+        MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -296,8 +327,9 @@ public class MainActivity extends AppCompatActivity
 
     public void finish() {
         //remove handler for updating timer text
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(1);
+
+
+
         super.finish();
     }
 }
