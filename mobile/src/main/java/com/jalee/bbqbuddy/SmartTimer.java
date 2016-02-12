@@ -62,9 +62,20 @@ public class SmartTimer extends AppCompatActivity {
             }
             TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
             TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
-            if (txtSmartTimer != null) {
-                txtSmartTimer.setText(MainActivity.timerText);
-                txtSmartTimerNext.setText(String.valueOf(MainActivity.minsRemaining) + ":" + MainActivity.secondsString);
+            if (MainActivity.timerActive) {
+                if (txtSmartTimer != null) {
+                    txtSmartTimer.setText(MainActivity.timerText);
+                    if (MainActivity.minsRemaining < 1) {
+                        txtSmartTimerNext.setText(MainActivity.secondsString);
+                    } else {
+                        txtSmartTimerNext.setText(String.valueOf(MainActivity.minsRemaining) + ":" + MainActivity.secondsString);
+                    }
+                }
+            }else {
+                if (MainActivity.timerPaused) {
+                    txtSmartTimer.setText("0");
+                    txtSmartTimerNext.setText("0");
+                }
             }
             handler.postDelayed(this, 500);
         }
@@ -195,7 +206,9 @@ public class SmartTimer extends AppCompatActivity {
                 notificationManager.cancel(1);
                 MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
                 TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+                TextView txtSmartTimernext = (TextView) findViewById(R.id.txtSmartTimerNext);
                 txtSmartTimer.setText("0");
+                txtSmartTimernext.setText("0");
                 return true;
             }
         });

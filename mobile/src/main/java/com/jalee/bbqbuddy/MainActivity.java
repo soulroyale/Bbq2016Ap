@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -46,9 +48,11 @@ public class MainActivity extends AppCompatActivity
     public static Boolean timerCancel = false;
     public static String timerText = "0";
     public static Integer nextEventindex = 0;
-    public static Long minsRemaining;
+    public static Long minsRemaining = 0L;
+    public static Long minRemainingElapsed = 0L;
     public static String secondsString;
     public static String minutesString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,15 +234,45 @@ public class MainActivity extends AppCompatActivity
                     int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
 
                     //Check next event
-                    minsRemaining = (TimelineList.get(nextEventindex).getId()) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone));
+                    minsRemaining = ((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone));
 
-                    if (TimelineList.get(nextEventindex).getId() == TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) {
-
-                        Log.i("title","Event reached" + minsRemaining);
-                    } else {
-                        Log.i("title","Remaining: " + String.valueOf(minsRemaining));
+                    //next near next event
+                    if (TimelineList.get(nextEventindex).getId() == (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) - 2) {
+                        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                        if (vibrator.hasVibrator()) {
+                            int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+                            int dash = 500;     // Length of a Morse Code "dash" in milliseconds
+                            int short_gap = 200;    // Length of Gap Between dots/dashes
+                            int medium_gap = 500;   // Length of Gap Between Letters
+                            int long_gap = 1000;    // Length of Gap Between Words
+                            long[] pattern = {
+                                    0,  // Start immediately
+                                    dot, dot
+                            };
+                            vibrator.vibrate(pattern,-1);
+                        }
                     }
 
+                    //next event occured
+                    if (TimelineList.get(nextEventindex).getId() == TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) {
+                        minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
+                        nextEventindex++;
+                        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                        if (vibrator.hasVibrator()) {
+                            if (vibrator.hasVibrator()) {
+                                int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+                                int dash = 500;     // Length of a Morse Code "dash" in milliseconds
+                                int short_gap = 200;    // Length of Gap Between dots/dashes
+                                int medium_gap = 500;   // Length of Gap Between Letters
+                                int long_gap = 1000;    // Length of Gap Between Words
+                                long[] pattern = {
+                                        0,  // Start immediately
+                                        dash, short_gap, dash
+                                };
+                                vibrator.vibrate(pattern,-1);
+                            }
+                        }
+                    }
 
                     if (seconds < 10) {
                         secondsString = "0" + String.valueOf(seconds);
@@ -246,11 +280,7 @@ public class MainActivity extends AppCompatActivity
                         secondsString = String.valueOf(seconds);
                     }
 
-                    if (minutes < 10) {
-                        minutesString = "0" + String.valueOf(minutes);
-                    } else {
-                        minutesString = String.valueOf(minutes);
-                    }
+                    minutesString = String.valueOf(minutes);
 
                     //Remove Minutes if no minutes left
                     if (minutes < 1) {
@@ -268,32 +298,64 @@ public class MainActivity extends AppCompatActivity
                     //Update Notification
                     Intent intent = new Intent(context, SmartTimer.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
-                    if (timerPaused) {
-                        Notification timerNotification = new Notification.Builder(context)
-                                .setContentTitle("BBQ Buddy - Smart Timer")
-                                .addAction(R.drawable.ic_media_play, "Play", pendingIntent)
-                                .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
-                                .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " remaining until next event")
-                                .setContentIntent(pendingIntent)
-                                .setOngoing(true)
-                                .setSmallIcon(R.drawable.cookingicon512px)
-                                .build();
-                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                        notificationManager.notify(1, timerNotification);
-                    } else {
-                        Notification timerNotification = new Notification.Builder(context)
-                                .setContentTitle("BBQ Buddy - Smart Timer")
-                                .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
-                                .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
-                                .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " remaining until next event")
-                                .setContentIntent(pendingIntent)
-                                .setOngoing(true)
-                                .setSmallIcon(R.drawable.cookingicon512px)
-                                .build();
-                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                        notificationManager.notify(1, timerNotification);
-                    }
+                    Log.i("info", String.valueOf(nextEventindex));
+                    Log.i("info", String.valueOf(TimelineList.size()));
+                    if (nextEventindex + 1 == TimelineList.size()) {
+                        if (timerPaused) {
+                            Notification timerNotification = new Notification.Builder(context)
+                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .addAction(R.drawable.ic_media_play, "Play", pendingIntent)
+                                    .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
+                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " " + TimelineList.get(nextEventindex).getName())
+                                    .setContentIntent(pendingIntent)
+                                    .setOngoing(true)
+                                    .setSmallIcon(R.drawable.cookingicon512px)
+                                    .build();
+                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.notify(1, timerNotification);
+                        } else {
+                            Notification timerNotification = new Notification.Builder(context)
+                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
+                                    .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
+                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " " + TimelineList.get(nextEventindex).getName())
+                                    .setContentIntent(pendingIntent)
+                                    .setOngoing(true)
+                                    .setSmallIcon(R.drawable.cookingicon512px)
+                                    .build();
+                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.notify(1, timerNotification);
+                        }
 
+                    } else {
+                        if (timerPaused) {
+                            Notification timerNotification = new Notification.Builder(context)
+                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .addAction(R.drawable.ic_media_play, "Play", pendingIntent)
+                                    .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
+                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " " + TimelineList.get(nextEventindex + 1).getName())
+                                    .setContentIntent(pendingIntent)
+                                    .setOngoing(true)
+                                    .setSmallIcon(R.drawable.cookingicon512px)
+                                   // .setColor(getResources().getColor(R.color.colorPrimary))
+                                    .build();
+                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.notify(1, timerNotification);
+                        } else {
+                            Notification timerNotification = new Notification.Builder(context)
+                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
+                                    .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
+                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " " + TimelineList.get(nextEventindex + 1).getName())
+                                    .setContentIntent(pendingIntent)
+                                    .setOngoing(true)
+                                    .setSmallIcon(R.drawable.cookingicon512px)
+                                   // .setColor(getResources().getColor(R.color.colorPrimary))
+                                    .build();
+                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                            notificationManager.notify(1, timerNotification);
+                        }
+                    }
 
                     if (timerPaused == true) {
                         timerActive = false;
@@ -307,6 +369,7 @@ public class MainActivity extends AppCompatActivity
                         timerPaused = false;
                         timerCancel = false;
                         nextEventindex = 0;
+                        minRemainingElapsed = 0L;
                         cancel();
                         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                         notificationManager.cancel(1);
@@ -328,10 +391,26 @@ public class MainActivity extends AppCompatActivity
                             .setAutoCancel(true)
                             .setOngoing(false)
                             .setSmallIcon(R.drawable.cookingicon512px)
+                            //.setColor(getResources().getColor(R.color.colorPrimary))
                             .build();
 
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                     notificationManager.notify(1, timerNotification);
+                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    if (vibrator.hasVibrator()) {
+                        if (vibrator.hasVibrator()) {
+                            int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+                            int dash = 500;     // Length of a Morse Code "dash" in milliseconds
+                            int short_gap = 200;    // Length of Gap Between dots/dashes
+                            int medium_gap = 500;   // Length of Gap Between Letters
+                            int long_gap = 1000;    // Length of Gap Between Words
+                            long[] pattern = {
+                                    0,  // Start immediately
+                                    dash, short_gap, dash
+                            };
+                            vibrator.vibrate(pattern,-1);
+                        }
+                    }
                 }
             }.start();
             timerActive = true;
@@ -344,7 +423,7 @@ public class MainActivity extends AppCompatActivity
     public void finish() {
         //remove handler for updating timer text
 
-
+        
 
         super.finish();
     }
