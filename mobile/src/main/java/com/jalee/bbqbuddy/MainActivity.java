@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity
     public static Boolean timerPaused = false;
     public static Boolean timerCancel = false;
     public static String timerText = "0";
+    public static Integer nextEventindex = 0;
+    public static Long minsRemaining;
+    public static String secondsString;
+    public static String minutesString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +221,7 @@ public class MainActivity extends AppCompatActivity
             new CountDownTimer(smartTimerMax, 1000) {
                 public void onTick(long millisecondsUntilDone) {
 
+
                     //setup Notification
 
 
@@ -224,8 +229,17 @@ public class MainActivity extends AppCompatActivity
                     int seconds = (int) (millisecondsUntilDone / 1000) % 60;
                     int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
 
-                    String secondsString;
-                    String minutesString;
+                    //Check next event
+                    minsRemaining = (TimelineList.get(nextEventindex).getId()) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone));
+
+                    if (TimelineList.get(nextEventindex).getId() == TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) {
+
+                        Log.i("title","Event reached" + minsRemaining);
+                    } else {
+                        Log.i("title","Remaining: " + String.valueOf(minsRemaining));
+                    }
+
+
                     if (seconds < 10) {
                         secondsString = "0" + String.valueOf(seconds);
                     } else {
@@ -250,6 +264,7 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
 
+
                     //Update Notification
                     Intent intent = new Intent(context, SmartTimer.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
@@ -258,7 +273,7 @@ public class MainActivity extends AppCompatActivity
                                 .setContentTitle("BBQ Buddy - Smart Timer")
                                 .addAction(R.drawable.ic_media_play, "Play", pendingIntent)
                                 .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
-                                .setContentText(timerText + " remaining until next event")
+                                .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " remaining until next event")
                                 .setContentIntent(pendingIntent)
                                 .setOngoing(true)
                                 .setSmallIcon(R.drawable.cookingicon512px)
@@ -270,7 +285,7 @@ public class MainActivity extends AppCompatActivity
                                 .setContentTitle("BBQ Buddy - Smart Timer")
                                 .addAction(R.drawable.ic_media_pause, "Pause", pendingIntent)
                                 .addAction(R.drawable.places_ic_clear, "Cancel", pendingIntent)
-                                .setContentText(timerText + " remaining until next event")
+                                .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " remaining until next event")
                                 .setContentIntent(pendingIntent)
                                 .setOngoing(true)
                                 .setSmallIcon(R.drawable.cookingicon512px)
@@ -291,6 +306,7 @@ public class MainActivity extends AppCompatActivity
                         timerActive = false;
                         timerPaused = false;
                         timerCancel = false;
+                        nextEventindex = 0;
                         cancel();
                         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                         notificationManager.cancel(1);

@@ -25,22 +25,23 @@
     </com.google.android.gms.ads.AdView>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="0"
         android:id="@+id/txtSmartTimer"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="90sp" />
+        android:textSize="90sp"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/txtSmartTimerNext"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Time Remaining"
+        android:text="Total Time Remaining"
         android:id="@+id/textView"
-        android:layout_above="@+id/txtSmartTimer"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <com.google.android.gms.ads.AdView
@@ -53,4 +54,24 @@
         android:layout_centerHorizontal="true"
         >
     </com.google.android.gms.ads.AdView>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:id="@+id/txtSmartTimerNext"
+        android:textSize="90sp"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Time Until Next Event"
+        android:id="@+id/textView3"
+        android:layout_above="@+id/txtSmartTimerNext"
+        android:layout_alignStart="@+id/textView" />
 </RelativeLayout>

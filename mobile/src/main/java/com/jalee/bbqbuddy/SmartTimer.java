@@ -33,6 +33,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.internal.request.StringParcel;
 
 import org.w3c.dom.Text;
 
@@ -60,8 +61,10 @@ public class SmartTimer extends AppCompatActivity {
                 }
             }
             TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+            TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
             if (txtSmartTimer != null) {
                 txtSmartTimer.setText(MainActivity.timerText);
+                txtSmartTimerNext.setText(String.valueOf(MainActivity.minsRemaining) + ":" + MainActivity.secondsString);
             }
             handler.postDelayed(this, 500);
         }
