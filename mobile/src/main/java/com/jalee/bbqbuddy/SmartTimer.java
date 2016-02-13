@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -62,6 +64,10 @@ public class SmartTimer extends AppCompatActivity {
             }
             TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
             TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
+            if (MainActivity.timerComplete == true) {
+                txtSmartTimer.setText("0");
+                txtSmartTimerNext.setText("0");
+            }
             if (MainActivity.timerActive) {
                 if (txtSmartTimer != null) {
                     txtSmartTimer.setText(MainActivity.timerText);
@@ -82,10 +88,22 @@ public class SmartTimer extends AppCompatActivity {
     };
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.getStringExtra("methodName").equals("play"))
+        {
+            //trying to recieve intent
+            Log.i("Info","Play");
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
+
+
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -184,16 +202,28 @@ public class SmartTimer extends AppCompatActivity {
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     MainActivity mainActivity = new MainActivity();
                     if (!MainActivity.timerActive) {
-                        Log.i("Info","Timer Active");
                         mainActivity.SmartTimerFunc(getApplicationContext());
                     } else {
-                        Log.i("Info","Timer Inactive");
                         mainActivity.timerPaused = true;
                     }
                 } else {
-                    Log.i("Info","ON Timeline, perform add");
-                    Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
-                    startActivity(intent);
+                    if (MainActivity.timerActive == true) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SmartTimer.this);
+                        alertDialogBuilder.setMessage("Cannot currently edit timeline while timer is active");
+                        alertDialogBuilder.setCancelable(false);
+                        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+
+                            }
+                        });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    } else {
+                        //Launch add activity
+                        Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -285,6 +315,8 @@ public class SmartTimer extends AppCompatActivity {
             return null;
         }
     }
+
+
 
 
     @Override
