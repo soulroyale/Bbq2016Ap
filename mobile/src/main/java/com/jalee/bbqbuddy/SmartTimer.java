@@ -87,15 +87,7 @@ public class SmartTimer extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if(intent.getStringExtra("methodName").equals("play"))
-        {
-            //trying to recieve intent
-            Log.i("Info","Play");
-        }
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
