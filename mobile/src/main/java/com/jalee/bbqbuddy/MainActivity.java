@@ -299,8 +299,8 @@ public class MainActivity extends AppCompatActivity
                     PendingIntent playIntent = PendingIntent.getActivity(context, 3, intent, 0);
                     PendingIntent cancelIntent = PendingIntent.getActivity(context, 4, intent, 0);
 
-                    Log.i("info", String.valueOf(nextEventindex));
-                    Log.i("info", String.valueOf(TimelineList.size()));
+                    int notiColour = context.getResources().getColor(R.color.colorPrimary);
+
                     if (nextEventindex + 1 == TimelineList.size()) {
                         if (timerPaused) {
                             Notification timerNotification = new Notification.Builder(context)
@@ -311,6 +311,7 @@ public class MainActivity extends AppCompatActivity
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
+                                    .setColor(notiColour)
                                     .build();
                             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                             notificationManager.notify(1, timerNotification);
@@ -323,6 +324,7 @@ public class MainActivity extends AppCompatActivity
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
+                                    .setColor(notiColour)
                                     .build();
                             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                             notificationManager.notify(1, timerNotification);
@@ -338,7 +340,7 @@ public class MainActivity extends AppCompatActivity
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
-                                   // .setColor(getResources().getColor(R.color.colorPrimary))
+                                    .setColor(notiColour)
                                     .build();
                             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                             notificationManager.notify(1, timerNotification);
@@ -351,7 +353,7 @@ public class MainActivity extends AppCompatActivity
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
-                                   // .setColor(getResources().getColor(R.color.colorPrimary))
+                                    .setColor(notiColour)
                                     .build();
                             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                             notificationManager.notify(1, timerNotification);
@@ -390,7 +392,7 @@ public class MainActivity extends AppCompatActivity
 
                     Intent intent = new Intent(context, SmartTimer.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
-
+                    int notiColour = context.getResources().getColor(R.color.colorPrimary);
                     Notification timerNotification = new Notification.Builder(context)
                             .setContentTitle("BBQ Buddy")
                             .setContentText("Your Smart Timer timeline has completed")
@@ -398,7 +400,7 @@ public class MainActivity extends AppCompatActivity
                             .setAutoCancel(true)
                             .setOngoing(false)
                             .setSmallIcon(R.drawable.cookingicon512px)
-                            //.setColor(getResources().getColor(R.color.colorPrimary))
+                            .setColor(notiColour)
                             .build();
 
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);

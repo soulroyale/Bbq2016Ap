@@ -311,6 +311,7 @@ public class SmartTimer extends AppCompatActivity {
 
 
 
+
     @Override
     public void finish() {
         //remove handler for updating timer text
