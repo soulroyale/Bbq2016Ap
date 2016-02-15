@@ -166,7 +166,7 @@ public class SmartTimer extends AppCompatActivity {
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
             AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice("4183AA4B7DBD269E1F1D0D51DF9FB52B")
+                    .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
                     .build();
 
             mInterstitialAd.loadAd(adRequest);
@@ -307,9 +307,6 @@ public class SmartTimer extends AppCompatActivity {
             return null;
         }
     }
-
-
-
 
 
     @Override

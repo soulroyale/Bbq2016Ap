@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity
 
         TimelineList = new ArrayList<>();
 
-        TimelineList.add(new SmartTimer_cardUI("Using a rub", "Prep Steak", 30));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
         TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7));
         TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 2",7));
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         if(Constants.type == Constants.Type.FREE) {
             AdView adView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice("4183AA4B7DBD269E1F1D0D51DF9FB52B")
+                    .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
                     .build();
             adView.loadAd(adRequest);
         }
@@ -232,7 +231,7 @@ public class MainActivity extends AppCompatActivity
                     //next near next event
                     if (TimelineList.get(nextEventindex).getId() == (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) - 1) {
                         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                        if (seconds < 1) {
+                        if (seconds == 1) {
                             if (vibrator.hasVibrator()) {
                                 int dot = 200;      // Length of a Morse Code "dot" in milliseconds
                                 int dash = 500;     // Length of a Morse Code "dash" in milliseconds
@@ -250,7 +249,7 @@ public class MainActivity extends AppCompatActivity
 
                     //next event occured
                     if (TimelineList.get(nextEventindex).getId() == TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) {
-                        if (seconds == 0) {
+                        if (seconds == 1) {
                             minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
                             nextEventindex = nextEventindex + 1;
                             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);

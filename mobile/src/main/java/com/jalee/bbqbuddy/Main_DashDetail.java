@@ -28,7 +28,7 @@ public class Main_DashDetail extends AppCompatActivity {
         if(Constants.type == Constants.Type.FREE) {
             AdView adView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice("4183AA4B7DBD269E1F1D0D51DF9FB52B")
+                    .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
                     .build();
             adView.loadAd(adRequest);
         } else {
