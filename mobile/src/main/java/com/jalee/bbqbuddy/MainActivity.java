@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
 
@@ -84,10 +85,21 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchTimer();
+                launchSmartTimerActivity();
 
                 // Snackbar.make(view, "Feature coming soon!", Snackbar.LENGTH_LONG)
                 //       .setAction("Action", null).show();
+            }
+        });
+
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (!timerActive) {
+                    SmartTimerFunc(getApplicationContext());
+                    launchSmartTimerActivity();
+                }
+                return true;
             }
         });
 
@@ -120,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void launchTimer() {
+    private void launchSmartTimerActivity() {
         Intent intent = new Intent(this, SmartTimer.class);
         startActivity(intent);
     }
@@ -234,10 +246,11 @@ public class MainActivity extends AppCompatActivity
                     //Check next event
                     minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
-                    //next near next event
-                    if (TimelineList.get(nextEventindex).getId() == (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) - 1) {
-                        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                        if (seconds == 1) {
+                    //next near next event 1 min out
+                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint) {
+
+                        if (seconds == 0) {
+                            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             if (vibrator.hasVibrator()) {
                                 int dot = 200;      // Length of a Morse Code "dot" in milliseconds
                                 int dash = 500;     // Length of a Morse Code "dash" in milliseconds
@@ -256,8 +269,9 @@ public class MainActivity extends AppCompatActivity
                     //next event occured
 
 
-                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone) +1) == timerEventsElapsTotalint) {
+                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -1) {
                         Log.i("Info","Mins reached");
+                        Log.i("info",String.valueOf(seconds));
                         if (seconds == 0) {
                             minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
                             nextEventindex = nextEventindex + 1;
