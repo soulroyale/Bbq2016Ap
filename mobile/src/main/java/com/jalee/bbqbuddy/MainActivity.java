@@ -23,7 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.media.MediaPlayer;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
     private void initializeData() {
         cardUIList = new ArrayList<>();
         cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron  ", "Introducing BBQ Buddy", R.drawable.sample));
-
+        //cardUIList.add(new cardUI("About 20 minutes before grilling, remove the steaks from the refrigerator and let sit, covered, at room temperature. \\nHeat your grill to high. Brush the steaks on both sides with oil and season liberally with salt and pepper. Place the steaks on the grill and cook until golden brown and slightly charred, 4 to 5 minutes. Turn the steaks over and continue to grill 3 to 5 minutes for medium-rare (an internal temperature of 135 degrees F), 5 to 7 minutes for medium (140 degrees F) or 8 to 10 minutes for medium-well (150 degrees F).\\nTransfer the steaks to a cutting board or platter, tent loosely with foil and let rest 5 minutes before slicing.", "Medium Rare Steak", R.drawable.steak));
     }
 
 
@@ -251,14 +251,14 @@ public class MainActivity extends AppCompatActivity
                         if (seconds == 0) {
                             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             if (vibrator.hasVibrator()) {
-                                int dot = 200;      // Length of a Morse Code "dot" in milliseconds
-                                int dash = 500;     // Length of a Morse Code "dash" in milliseconds
+                                int dot = 1000;      // Length of a Morse Code "dot" in milliseconds
+                                int dash = 3000;     // Length of a Morse Code "dash" in milliseconds
                                 int short_gap = 200;    // Length of Gap Between dots/dashes
                                 int medium_gap = 500;   // Length of Gap Between Letters
                                 int long_gap = 1000;    // Length of Gap Between Words
                                 long[] pattern = {
                                         0,  // Start immediately
-                                        dot, dot
+                                        dash, short_gap, dash
                                 };
                                 vibrator.vibrate(pattern, -1);
                             }
@@ -275,11 +275,14 @@ public class MainActivity extends AppCompatActivity
                             minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
                             nextEventindex = nextEventindex + 1;
                             Log.i("Info","Increase Next event index");
+                            MediaPlayer mplayer = MediaPlayer.create(context, R.raw.ding);
+                            mplayer.start();
+
                             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             if (vibrator.hasVibrator()) {
                                 if (vibrator.hasVibrator()) {
-                                    int dot = 200;      // Length of a Morse Code "dot" in milliseconds
-                                    int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
+                                    int dot = 1000;      // Length of a Morse Code "dot" in milliseconds
+                                    int dash = 3000;     // Length of a Morse Code "dash" in milliseconds
                                     int short_gap = 200;    // Length of Gap Between dots/dashes
                                     int medium_gap = 500;   // Length of Gap Between Letters
                                     int long_gap = 1000;    // Length of Gap Between Words
@@ -431,17 +434,20 @@ public class MainActivity extends AppCompatActivity
 
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
                     notificationManager.notify(1, timerNotification);
+
+                    MediaPlayer mplayer = MediaPlayer.create(context, R.raw.ding);
+                    mplayer.start();
                     Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                     if (vibrator.hasVibrator()) {
                         if (vibrator.hasVibrator()) {
                             int dot = 200;      // Length of a Morse Code "dot" in milliseconds
-                            int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
+                            int dash = 3000;     // Length of a Morse Code "dash" in milliseconds
                             int short_gap = 200;    // Length of Gap Between dots/dashes
                             int medium_gap = 500;   // Length of Gap Between Letters
                             int long_gap = 1000;    // Length of Gap Between Words
                             long[] pattern = {
                                     0,  // Start immediately
-                                    dash, short_gap, dash
+                                    dash
                             };
                             vibrator.vibrate(pattern,-1);
                         }
