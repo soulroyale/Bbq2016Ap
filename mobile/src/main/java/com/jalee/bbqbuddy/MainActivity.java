@@ -217,16 +217,22 @@ public class MainActivity extends AppCompatActivity
             new CountDownTimer(smartTimerMax, 1000) {
                 public void onTick(long millisecondsUntilDone) {
 
+                    Long timerEventsElapsTotal = 0L;
+                    Integer timerEventsElapsTotalint = 0;
+                    for (int i = 0; i < TimelineList.size(); i++) {
+                        if (i <= nextEventindex) {
+                            timerEventsElapsTotalint = timerEventsElapsTotalint + (Integer) TimelineList.get(i).id;
+                        }
+                    }
+                    timerEventsElapsTotal = TimeUnit.MINUTES.toMillis(timerEventsElapsTotalint);
 
-                    //setup Notification
-
-
+                    //Retrieve hours Minutes seconds remaining
                     int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
                     int seconds = (int) (millisecondsUntilDone / 1000) % 60;
                     int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
 
                     //Check next event
-                    minsRemaining = ((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone));
+                    minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
                     //next near next event
                     if (TimelineList.get(nextEventindex).getId() == (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) - 1) {
@@ -248,10 +254,14 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     //next event occured
-                    if (TimelineList.get(nextEventindex).getId() == TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)) {
-                        if (seconds == 1) {
+
+
+                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone) +1) == timerEventsElapsTotalint) {
+                        Log.i("Info","Mins reached");
+                        if (seconds == 0) {
                             minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
                             nextEventindex = nextEventindex + 1;
+                            Log.i("Info","Increase Next event index");
                             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             if (vibrator.hasVibrator()) {
                                 if (vibrator.hasVibrator()) {
@@ -269,7 +279,8 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
                     }
-
+                    Log.i("Info",String.valueOf(TimeUnit.MILLISECONDS.toMinutes(smartTimerMax - millisecondsUntilDone)));
+                    Log.i("Info",String.valueOf(timerEventsElapsTotalint));
                     if (seconds < 10) {
                         secondsString = "0" + String.valueOf(seconds);
                     } else {
