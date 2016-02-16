@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity
                             timerEventsElapsTotalint = timerEventsElapsTotalint + (Integer) TimelineList.get(i).id;
                         }
                     }
-                    timerEventsElapsTotal = TimeUnit.MINUTES.toMillis(timerEventsElapsTotalint);
 
                     //Retrieve hours Minutes seconds remaining
                     int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
@@ -293,15 +292,18 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
                     }
-                    Log.i("Info",String.valueOf(TimeUnit.MILLISECONDS.toMinutes(smartTimerMax - millisecondsUntilDone)));
-                    Log.i("Info",String.valueOf(timerEventsElapsTotalint));
                     if (seconds < 10) {
                         secondsString = "0" + String.valueOf(seconds);
                     } else {
                         secondsString = String.valueOf(seconds);
                     }
 
-                    minutesString = String.valueOf(minutes);
+                    if (minutes < 10) {
+                        minutesString = "0" + String.valueOf(minutes);
+                    } else {
+                        minutesString = String.valueOf(minutes);
+                    }
+
 
                     //Remove Minutes if no minutes left
                     if (minutes < 1) {
