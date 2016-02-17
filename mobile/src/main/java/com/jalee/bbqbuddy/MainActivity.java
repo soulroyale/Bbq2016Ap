@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
-        cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron  ", "Introducing BBQ Buddy", R.drawable.sample));
-        //cardUIList.add(new cardUI("About 20 minutes before grilling, remove the steaks from the refrigerator and let sit, covered, at room temperature. \\nHeat your grill to high. Brush the steaks on both sides with oil and season liberally with salt and pepper. Place the steaks on the grill and cook until golden brown and slightly charred, 4 to 5 minutes. Turn the steaks over and continue to grill 3 to 5 minutes for medium-rare (an internal temperature of 135 degrees F), 5 to 7 minutes for medium (140 degrees F) or 8 to 10 minutes for medium-well (150 degrees F).\\nTransfer the steaks to a cutting board or platter, tent loosely with foil and let rest 5 minutes before slicing.", "Medium Rare Steak", R.drawable.steak));
+        cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron  \n \n \n \n \n \n \n \n test data For Scroll test", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("About 20 minutes before grilling, remove the steaks from the refrigerator and let sit, covered, at room temperature. \n\nHeat your grill to high. Brush the steaks on both sides with oil and season liberally with salt and pepper.\nPlace the steaks on the grill and cook until golden brown and slightly charred, 4 to 5 minutes. Turn the steaks over and continue to grill:\n\n3 to 5 minutes for medium-rare (an internal temperature of 57 degrees Celsius or 135 degrees F)\n5 to 7 minutes for medium (60 degrees Celsius or 140 degrees F)\n8 to 10 minutes for medium-well (65 degrees Celsius or 150 degrees F)\n\nTransfer the steaks to a cutting board or platter, tent loosely with foil and let rest 5 minutes before slicing.", "Medium Rare Steak", R.raw.steak));
     }
 
 
@@ -281,8 +281,8 @@ public class MainActivity extends AppCompatActivity
                             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             if (vibrator.hasVibrator()) {
                                 if (vibrator.hasVibrator()) {
-                                    int dot = 1000;      // Length of a Morse Code "dot" in milliseconds
-                                    int dash = 3000;     // Length of a Morse Code "dash" in milliseconds
+                                    int dot = 500;      // Length of a Morse Code "dot" in milliseconds
+                                    int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
                                     int short_gap = 200;    // Length of Gap Between dots/dashes
                                     int medium_gap = 500;   // Length of Gap Between Letters
                                     int long_gap = 1000;    // Length of Gap Between Words
@@ -441,13 +441,13 @@ public class MainActivity extends AppCompatActivity
                     if (vibrator.hasVibrator()) {
                         if (vibrator.hasVibrator()) {
                             int dot = 200;      // Length of a Morse Code "dot" in milliseconds
-                            int dash = 3000;     // Length of a Morse Code "dash" in milliseconds
+                            int dash = 2000;     // Length of a Morse Code "dash" in milliseconds
                             int short_gap = 200;    // Length of Gap Between dots/dashes
                             int medium_gap = 500;   // Length of Gap Between Letters
                             int long_gap = 1000;    // Length of Gap Between Words
                             long[] pattern = {
                                     0,  // Start immediately
-                                    dash
+                                    dash, short_gap, dash
                             };
                             vibrator.vibrate(pattern,-1);
                         }

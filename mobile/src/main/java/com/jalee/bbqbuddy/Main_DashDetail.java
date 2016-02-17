@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -19,12 +20,14 @@ public class Main_DashDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main__dash_detail);
         overridePendingTransition(R.anim.slide_inright, R.anim.slide_outleft);
-        TextView title = (TextView) findViewById(R.id.txtTitle);
-        title.setText(MainActivity.cardUIList.get(CardAdapter.cardIndex).getName());
+        setTitle(MainActivity.cardUIList.get(CardAdapter.cardIndex).getName());
         TextView content = (TextView) findViewById(R.id.txtContent);
-        content.setText((MainActivity.cardUIList.get(CardAdapter.cardIndex).subTitle));
+        content.setText((MainActivity.cardUIList.get(CardAdapter.cardIndex).subTitle) + "\n\n\n");
         ImageView image = (ImageView) findViewById(R.id.bannerImage);
         image.setImageResource(MainActivity.cardUIList.get(CardAdapter.cardIndex).id);
+        ScrollView sv = (ScrollView) findViewById(R.id.dashDetailScrollView);
+        sv.setVerticalScrollBarEnabled(false);
+        sv.setHorizontalScrollBarEnabled(false);
         if(Constants.type == Constants.Type.FREE) {
             AdView adView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()

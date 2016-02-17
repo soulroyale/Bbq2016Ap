@@ -10,7 +10,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="140dp"
         android:id="@+id/bannerImage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -18,52 +18,8 @@
         android:scaleType="centerCrop" />
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Title for Detail View"
-        android:id="@+id/txtTitle"
-        android:layout_below="@+id/bannerImage"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="15dp"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_below="@+id/txtTitle"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content "
-            android:id="@+id/txtContent"
-            android:textSize="16dp"/>
-
-    </ScrollView>
-    <com.google.android.gms.ads.AdView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/adView"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/dash_detail_banner_ad_unit_id"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        >
-    </com.google.android.gms.ads.AdView>
-
-    <TextView
         android:layout_width="150dp"
-        android:layout_height="120dp"
+        android:layout_height="140dp"
         android:text=""
         android:id="@+id/transBGTop"
         android:layout_alignParentTop="true"
@@ -111,5 +67,48 @@
         android:layout_alignStart="@+id/transBGTop"
         android:paddingLeft="5dp"
         android:textColor="#ffffff" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dashDetailScrollView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+
+        android:scrollIndicators="none"
+        android:layout_below="@+id/bannerImage"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sample Content Sample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample ContentSample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content Sample Content "
+                android:id="@+id/txtContent"
+                android:textSize="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/adView"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/dash_detail_banner_ad_unit_id"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
