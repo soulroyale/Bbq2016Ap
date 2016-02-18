@@ -77,12 +77,19 @@ public class SmartTimer extends AppCompatActivity {
                         txtSmartTimerNext.setText(String.valueOf(MainActivity.minsRemaining) + ":" + MainActivity.secondsString);
                     }
                 }
+                TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
+                if (MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() != "") {
+                    txtuntilnext.setText(MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() + " starts in");
+                } else {
+                    txtuntilnext.setText("Next event starts in");
+                }
             }else {
                 if (MainActivity.timerPaused) {
                     txtSmartTimer.setText("0");
                     txtSmartTimerNext.setText("0");
                 }
             }
+
             handler.postDelayed(this, 500);
         }
     };
@@ -163,22 +170,21 @@ public class SmartTimer extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         if(Constants.type == Constants.Type.FREE) {
-            mInterstitialAd = new InterstitialAd(this);
-            mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
+            /*
+            AdView adView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
                     .build();
+            adView.loadAd(adRequest);
+            */
 
-            mInterstitialAd.loadAd(adRequest);
-
-            /*
-           AdView bannerAdView = (AdView) findViewById(R.id.adViewSmartTimer);
-           AdRequest bannerAdRequest = new AdRequest.Builder()
-                    .addTestDevice("2ED849A00EAE479CF470A821E825E638")
+            mInterstitialAd = new InterstitialAd(this);
+            mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
+            AdRequest IadRequest = new AdRequest.Builder()
+                    .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
                     .build();
-           bannerAdView.loadAd(bannerAdRequest);
-           */
 
+            mInterstitialAd.loadAd(IadRequest);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {

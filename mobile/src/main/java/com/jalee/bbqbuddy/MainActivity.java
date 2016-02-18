@@ -24,6 +24,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.media.MediaPlayer;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
 
@@ -238,15 +239,21 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     //Retrieve hours Minutes seconds remaining
+                    /* Old way
                     int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
                     int seconds = (int) (millisecondsUntilDone / 1000) % 60;
                     int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
+                    */
+                    int hours = (int) TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone);
+                    int minutes = (int) (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone)));
+                    int seconds = (int) (TimeUnit.MILLISECONDS.toSeconds(millisecondsUntilDone) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
-                    //Check next event
+
+                    //obtain remaining minutes
                     minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
                     //next near next event 1 min out
-                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint) {
+                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -2) {
 
                         if (seconds == 0) {
                             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -266,8 +273,6 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     //next event occured
-
-
                     if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -1) {
                         Log.i("Info","Mins reached");
                         Log.i("info",String.valueOf(seconds));
@@ -333,10 +338,10 @@ public class MainActivity extends AppCompatActivity
                     if (nextEventindex + 1 == TimelineList.size()) {
                         if (timerPaused) {
                             Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .setContentTitle(TimelineList.get(nextEventindex).getName())
                                     .addAction(R.drawable.ic_media_play, "Play", pauseIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " until finished")
+                                    .setContentText("Finishes in " + String.valueOf(minsRemaining) + ":" + secondsString)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -346,10 +351,10 @@ public class MainActivity extends AppCompatActivity
                             notificationManager.notify(1, timerNotification);
                         } else {
                             Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .setContentTitle(TimelineList.get(nextEventindex).getName())
                                     .addAction(R.drawable.ic_media_pause, "Pause", playIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " until finished")
+                                    .setContentText("Finishes in " + String.valueOf(minsRemaining) + ":" + secondsString)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -362,10 +367,10 @@ public class MainActivity extends AppCompatActivity
                     } else {
                         if (timerPaused) {
                             Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .setContentTitle(TimelineList.get(nextEventindex + 1).getName())
                                     .addAction(R.drawable.ic_media_play, "Play", pauseIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " " + TimelineList.get(nextEventindex + 1).getName())
+                                    .setContentText("Starts in " + String.valueOf(minsRemaining) + ":" + secondsString)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -375,10 +380,10 @@ public class MainActivity extends AppCompatActivity
                             notificationManager.notify(1, timerNotification);
                         } else {
                             Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle("BBQ Buddy - Smart Timer")
+                                    .setContentTitle(TimelineList.get(nextEventindex + 1).getName())
                                     .addAction(R.drawable.ic_media_pause, "Pause", playIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText(String.valueOf(minsRemaining) + ":" + secondsString + " " + TimelineList.get(nextEventindex + 1).getName())
+                                    .setContentText("Starts in " + String.valueOf(minsRemaining) + ":" + secondsString)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
