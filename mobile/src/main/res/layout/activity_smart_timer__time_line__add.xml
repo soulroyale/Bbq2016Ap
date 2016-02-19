@@ -52,7 +52,6 @@
         android:text="Hours"
         android:id="@+id/lblHours"
         android:layout_below="@+id/txtDesc"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -80,24 +79,31 @@
         android:text="Minutes"
         android:paddingLeft="10dp"
         android:id="@+id/lblMinutes"
-        android:layout_below="@+id/txtDesc"
-        android:layout_toRightOf="@+id/lblHours"
-        android:layout_toEndOf="@+id/lblHours" />
+        android:layout_alignTop="@+id/lblHours"
+        android:layout_alignEnd="@+id/linearLayout" />
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerHours"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
         android:layout_below="@+id/lblHours"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnOk">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerMinutes"
-        android:layout_alignTop="@+id/spinnerHours"
-        android:layout_toRightOf="@+id/lblHours"
-        android:layout_toEndOf="@+id/lblHours" />
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listHours"
+            android:choiceMode="singleChoice"
+            android:layout_weight="1" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listMinutes"
+            android:choiceMode="singleChoice"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </RelativeLayout>

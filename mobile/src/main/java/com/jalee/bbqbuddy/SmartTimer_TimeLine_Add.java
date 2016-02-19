@@ -1,20 +1,18 @@
 package com.jalee.bbqbuddy;
 
-import android.app.Activity;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.concurrent.TimeUnit;
 
-public class SmartTimer_TimeLine_Add extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class SmartTimer_TimeLine_Add extends AppCompatActivity {
 
     Integer hours;
     Integer minutes;
@@ -28,18 +26,32 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity implements Adapte
         minutes = 0;
         hours = 0;
 
-        Spinner spinHours = (Spinner)findViewById(R.id.spinnerHours);
-        ArrayAdapter adapterHours=ArrayAdapter.createFromResource(this,R.array.timerHours,android.R.layout.simple_spinner_dropdown_item);
-        spinHours.setAdapter(adapterHours);
-        spinHours.setOnItemSelectedListener(this);
+        final ListView listHours = (ListView)findViewById(R.id.listHours);
+        ArrayAdapter adapterHours=ArrayAdapter.createFromResource(this,R.array.timerHours,android.R.layout.simple_list_item_activated_1);
+        listHours.setAdapter(adapterHours);
+        listHours.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Resources res = getResources();
+                TypedArray hour = res.obtainTypedArray(R.array.timerHours);
+                hours = hour.getInt(position,0);
+                listHours.smoothScrollToPosition(position);
 
-        Spinner spinMins = (Spinner)findViewById(R.id.spinnerMinutes);
-        ArrayAdapter adapterMin=ArrayAdapter.createFromResource(this,R.array.timerMinutes,android.R.layout.simple_spinner_dropdown_item);
-        spinMins.setAdapter(adapterMin);
-        spinMins.setOnItemSelectedListener(this);
+            }
+        });
 
-
-
+        final ListView listMins = (ListView)findViewById(R.id.listMinutes);
+        ArrayAdapter adapterMin=ArrayAdapter.createFromResource(this,R.array.timerMinutes,android.R.layout.simple_list_item_activated_1);
+        listMins.setAdapter(adapterMin);
+        listMins.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Resources res = getResources();
+                TypedArray min = res.obtainTypedArray(R.array.timerMinutes);
+                minutes = min.getInt(position, 0);
+                listMins.smoothScrollToPosition(position);
+            }
+        });
 
         final Button btnOk = (Button) findViewById(R.id.btnOk);
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +76,7 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity implements Adapte
                 finish();
             }
         });
-
     }
-
 
     @Override
     public void finish() {
@@ -74,23 +84,4 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity implements Adapte
         overridePendingTransition(R.anim.stationary, R.anim.slide_down);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        TextView selMins = (TextView) view;
-        Spinner spinner = (Spinner) parent;
-        if(spinner.getId() == R.id.spinnerHours)
-        {
-            hours = Integer.parseInt(selMins.getText().toString());
-        }
-        else if(spinner.getId() == R.id.spinnerMinutes)
-        {
-            minutes = Integer.parseInt(selMins.getText().toString());
-        }
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }
