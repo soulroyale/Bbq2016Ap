@@ -24,7 +24,7 @@
         android:id="@+id/transBGTop"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="#43000000" />
+        android:background="#6e000000" />
 
     <TextView
         android:layout_width="wrap_content"

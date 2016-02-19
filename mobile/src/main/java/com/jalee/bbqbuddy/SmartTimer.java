@@ -78,8 +78,12 @@ public class SmartTimer extends AppCompatActivity {
                     }
                 }
                 TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
-                if (MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() != "") {
-                    txtuntilnext.setText(MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() + " starts in");
+                if (MainActivity.nextEventindex + 1 < MainActivity.TimelineList.size()) {
+                    if (MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() != "") {
+                        txtuntilnext.setText(MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() + " starts in");
+                    } else {
+                        txtuntilnext.setText("Next event starts in");
+                    }
                 } else {
                     txtuntilnext.setText("Next event starts in");
                 }
