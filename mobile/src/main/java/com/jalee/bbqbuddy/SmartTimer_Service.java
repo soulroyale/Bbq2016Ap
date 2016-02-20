@@ -271,6 +271,7 @@ public class SmartTimer_Service extends Service {
                     minRemainingElapsed = 0L;
                     timerComplete = true;
 
+
                     Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
                     PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
                     int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
