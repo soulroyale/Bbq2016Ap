@@ -67,7 +67,7 @@ public class SmartTimer_TimeLine extends Fragment {
         recyclerView.setLayoutManager(linman);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new SmartTimer_CardAdapter(MainActivity.TimelineList);
+        adapter = new SmartTimer_CardAdapter(SmartTimer_Service.TimelineList);
         recyclerView.setAdapter(adapter);
         return v;
     }

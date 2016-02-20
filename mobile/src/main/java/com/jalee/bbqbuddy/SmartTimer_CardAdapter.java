@@ -90,7 +90,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         @Override
         public void onClick(View v) {
             Log.i("Button Click", "Button Pressed at: " + getAdapterPosition());
-            if (MainActivity.timerActive == true) {
+            if (SmartTimer_Service.timerActive == true) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setMessage("Cannot currently edit timeline while timer is active");
                 alertDialogBuilder.setCancelable(false);
@@ -114,14 +114,14 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         Log.i("Selected", "You salected yes");
-                        MainActivity.TimelineList.remove(getAdapterPosition());
+                        SmartTimer_Service.TimelineList.remove(getAdapterPosition());
                         SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                         Integer newSmartTimerValue = 0;
-                        for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
-                            newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
+                        for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                            newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
                             System.out.println(newSmartTimerValue);
                         }
-                        MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                        SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
                     }
                 });
 
@@ -141,14 +141,14 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 Log.i("Selected", "You salected yes");
-                                MainActivity.TimelineList.clear();
+                                SmartTimer_Service.TimelineList.clear();
                                 SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                                 Integer newSmartTimerValue = 0;
-                                for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
-                                    newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
+                                for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                                    newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
                                     System.out.println(newSmartTimerValue);
                                 }
-                                MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                                SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
                             }
                         });
 

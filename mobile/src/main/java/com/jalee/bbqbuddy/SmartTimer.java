@@ -1,44 +1,28 @@
 package com.jalee.bbqbuddy;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.internal.request.StringParcel;
-
-import org.w3c.dom.Text;
-
 import java.util.concurrent.TimeUnit;
 
 public class SmartTimer extends AppCompatActivity {
@@ -49,64 +33,65 @@ public class SmartTimer extends AppCompatActivity {
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
     final Handler handler = new Handler();
+    private Boolean closingActivity = false;
 
-    //Setup runable for updating timer text
+    //Setup runnable for updating timer text
     private Runnable run = new Runnable() {
         @Override
         public void run() {
-            final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            if (!onTimeline) {
-                if (MainActivity.timerActive) {
-                    fab.setImageResource(R.drawable.ic_media_pause);
-                } else {
-                    fab.setImageResource(R.drawable.ic_media_play);
-                }
-            }
-            TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-            TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
-            if (MainActivity.timerComplete == true) {
-                txtSmartTimer.setText("0");
-                txtSmartTimerNext.setText("0");
-            }
-            if (MainActivity.timerActive) {
-                if (txtSmartTimer != null) {
-                    txtSmartTimer.setText(MainActivity.timerText);
-                    if (MainActivity.minsRemaining < 1) {
-                        txtSmartTimerNext.setText(MainActivity.secondsString);
+            //checking if activity has started to close and if so bypassing
+            if (!closingActivity) {
+
+                final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                if (!onTimeline) {
+                    if (SmartTimer_Service.timerActive) {
+                        fab.setImageResource(R.drawable.ic_media_pause);
                     } else {
-                        txtSmartTimerNext.setText(String.valueOf(MainActivity.minsRemaining) + ":" + MainActivity.secondsString);
+                        fab.setImageResource(R.drawable.ic_media_play);
                     }
                 }
-                TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
-                if (MainActivity.nextEventindex + 1 < MainActivity.TimelineList.size()) {
-                    if (MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() != "") {
-                        txtuntilnext.setText(MainActivity.TimelineList.get(MainActivity.nextEventindex + 1).getName() + " starts in");
+                TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+                TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
+                if (SmartTimer_Service.timerComplete) {
+                    txtSmartTimer.setText("0");
+                    txtSmartTimerNext.setText("0");
+                }
+                if (SmartTimer_Service.timerActive) {
+                    if (txtSmartTimer != null) {
+                        txtSmartTimer.setText(SmartTimer_Service.timerText);
+                        if (SmartTimer_Service.minsRemaining < 1) {
+                            txtSmartTimerNext.setText(SmartTimer_Service.secondsString);
+                        } else {
+                            txtSmartTimerNext.setText(String.valueOf(SmartTimer_Service.minsRemaining) + ":" + SmartTimer_Service.secondsString);
+                        }
+                    }
+                    TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
+                    if (SmartTimer_Service.nextEventindex + 1 < SmartTimer_Service.TimelineList.size()) {
+                        if (SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() != "") {
+                            txtuntilnext.setText(SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() + " starts in");
+                        } else {
+                            txtuntilnext.setText("Next event starts in");
+                        }
                     } else {
                         txtuntilnext.setText("Next event starts in");
                     }
                 } else {
-                    txtuntilnext.setText("Next event starts in");
+                    if (SmartTimer_Service.timerPaused) {
+                        txtSmartTimer.setText("0");
+                        txtSmartTimerNext.setText("0");
+                    }
                 }
-            }else {
-                if (MainActivity.timerPaused) {
-                    txtSmartTimer.setText("0");
-                    txtSmartTimerNext.setText("0");
-                }
-            }
 
-            handler.postDelayed(this, 500);
+                handler.postDelayed(this, 300);
+            }
         }
     };
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_timer);
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
-
-
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -130,14 +115,14 @@ public class SmartTimer extends AppCompatActivity {
                 if (position == 0) {
                     if (SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = false;
-                        if (MainActivity.timerActive) {
+                        if (SmartTimer_Service.timerActive) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
                         }
                         fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     } else {
-                        if (MainActivity.timerActive) {
+                        if (SmartTimer_Service.timerActive) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
@@ -203,13 +188,15 @@ public class SmartTimer extends AppCompatActivity {
 
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     MainActivity mainActivity = new MainActivity();
-                    if (!MainActivity.timerActive) {
-                        mainActivity.SmartTimerFunc(getApplicationContext());
+                    if (!SmartTimer_Service.timerActive) {
+                        //Trial start service
+                        SmartTimer_Service.startTimer =true;
+                        Log.i("info","Set start variable to " + SmartTimer_Service.startTimer);
                     } else {
-                        mainActivity.timerPaused = true;
+                        SmartTimer_Service.timerPaused = true;
                     }
                 } else {
-                    if (MainActivity.timerActive == true) {
+                    if (SmartTimer_Service.timerActive == true) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SmartTimer.this);
                         alertDialogBuilder.setMessage("Cannot currently edit timeline while timer is active");
                         alertDialogBuilder.setCancelable(false);
@@ -233,10 +220,10 @@ public class SmartTimer extends AppCompatActivity {
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                MainActivity.timerCancel = true;
+                SmartTimer_Service.timerCancel = true;
                 NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.cancel(1);
-                MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
+                SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
                 TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 TextView txtSmartTimernext = (TextView) findViewById(R.id.txtSmartTimerNext);
                 txtSmartTimer.setText("0");
@@ -244,6 +231,7 @@ public class SmartTimer extends AppCompatActivity {
                 return true;
             }
         });
+        closingActivity = false;
     }
 
     @Override
@@ -318,13 +306,19 @@ public class SmartTimer extends AppCompatActivity {
         }
     }
 
-
     @Override
     public void finish() {
         //remove handler for updating timer text
-        handler.removeCallbacks(run);
+        closingActivity = true;
+        handler.removeCallbacksAndMessages(run);
         super.finish();
-
         overridePendingTransition(R.anim.stationary, R.anim.slide_down);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closingActivity = true;
+        handler.removeCallbacksAndMessages(run);
     }
 }

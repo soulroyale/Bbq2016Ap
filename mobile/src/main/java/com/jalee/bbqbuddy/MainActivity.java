@@ -1,17 +1,8 @@
 package com.jalee.bbqbuddy;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.SystemClock;
-import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,39 +14,18 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.media.MediaPlayer;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.RecyclerView;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     CardAdapter adapter;
     public static List<cardUI> cardUIList;
-    public static Long smartTimerMax;
-    public static List<SmartTimer_cardUI> TimelineList;
-    public static Boolean timerActive = false;
-    public static Boolean timerPaused = false;
-    public static Boolean timerCancel = false;
-    public static Boolean timerComplete = false;
-    public static String timerText = "0";
-    public static Integer nextEventindex = 0;
-    public static Long minsRemaining = 0L;
-    public static Long minRemainingElapsed = 0L;
-    public static String secondsString;
-    public static String minutesString;
-
 
 
     @Override
@@ -65,28 +35,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //initialise timeline data
-
-        TimelineList = new ArrayList<>();
-
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
-        TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7));
-        TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 2",7));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
-        TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",5));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",10));
-
-        Integer newSmartTimerValue = 0;
-        for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
-            newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
-        }
-        MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+        startService(new Intent(getApplicationContext(), SmartTimer_Service.class));
+        Log.i("Info", "SmartTimer service started");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchSmartTimerActivity();
+                Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
+                startActivity(intent);
 
                 // Snackbar.make(view, "Feature coming soon!", Snackbar.LENGTH_LONG)
                 //       .setAction("Action", null).show();
@@ -96,9 +53,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (!timerActive) {
-                    SmartTimerFunc(getApplicationContext());
-                    launchSmartTimerActivity();
+                if (!SmartTimer_Service.timerActive) {
+                    SmartTimer_Service.startTimer =true;
+                    Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
+                    startActivity(intent);
                 }
                 return true;
             }
@@ -131,11 +89,20 @@ public class MainActivity extends AppCompatActivity
                     .build();
             adView.loadAd(adRequest);
         }
+        if (SmartTimer_Service.timerActive) {
+            Intent intent = new Intent(this, SmartTimer.class);
+            startActivity(intent);
+        }
     }
 
-    private void launchSmartTimerActivity() {
-        Intent intent = new Intent(this, SmartTimer.class);
-        startActivity(intent);
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //If Timer already active, display it
+        if (SmartTimer_Service.timerActive) {
+            Intent reloadIntent = new Intent(this, SmartTimer.class);
+            startActivity(reloadIntent);
+        }
     }
 
     private void initializeData() {
@@ -151,10 +118,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -187,7 +153,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_dash) {
-
 
         } else if (id == R.id.nav_recipes) {
             Toast.makeText(getApplicationContext(),"Feature Coming Soon!",Toast.LENGTH_SHORT).show();
@@ -224,252 +189,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void SmartTimerFunc(final Context context){
-        if (timerActive == false) {
-            timerComplete =false;
-            new CountDownTimer(smartTimerMax, 1000) {
-                public void onTick(long millisecondsUntilDone) {
-
-                    Long timerEventsElapsTotal = 0L;
-                    Integer timerEventsElapsTotalint = 0;
-                    for (int i = 0; i < TimelineList.size(); i++) {
-                        if (i <= nextEventindex) {
-                            timerEventsElapsTotalint = timerEventsElapsTotalint + (Integer) TimelineList.get(i).id;
-                        }
-                    }
-
-                    //Retrieve hours Minutes seconds remaining
-                    /* Old way
-                    int minutes = (int) ((millisecondsUntilDone / (1000 * 60)) % 60);
-                    int seconds = (int) (millisecondsUntilDone / 1000) % 60;
-                    int hours = (int) ((millisecondsUntilDone / 1000) / 60) / 60;
-                    */
-                    int hours = (int) TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone);
-                    int minutes = (int) (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone)));
-                    int seconds = (int) (TimeUnit.MILLISECONDS.toSeconds(millisecondsUntilDone) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
-
-
-                    //obtain remaining minutes
-                    minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
-
-                    //next near next event 1 min out
-                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -2) {
-
-                        if (seconds == 0) {
-                            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                            if (vibrator.hasVibrator()) {
-                                int dot = 1000;      // Length of a Morse Code "dot" in milliseconds
-                                int dash = 3000;     // Length of a Morse Code "dash" in milliseconds
-                                int short_gap = 200;    // Length of Gap Between dots/dashes
-                                int medium_gap = 500;   // Length of Gap Between Letters
-                                int long_gap = 1000;    // Length of Gap Between Words
-                                long[] pattern = {
-                                        0,  // Start immediately
-                                        dash, short_gap, dash
-                                };
-                                vibrator.vibrate(pattern, -1);
-                            }
-                        }
-                    }
-
-                    //next event occured
-                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -1) {
-                        Log.i("Info","Mins reached");
-                        Log.i("info",String.valueOf(seconds));
-                        if (seconds == 0) {
-                            minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
-                            nextEventindex = nextEventindex + 1;
-                            Log.i("Info","Increase Next event index");
-                            MediaPlayer mplayer = MediaPlayer.create(context, R.raw.ding);
-                            mplayer.start();
-
-                            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                            if (vibrator.hasVibrator()) {
-                                if (vibrator.hasVibrator()) {
-                                    int dot = 500;      // Length of a Morse Code "dot" in milliseconds
-                                    int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
-                                    int short_gap = 200;    // Length of Gap Between dots/dashes
-                                    int medium_gap = 500;   // Length of Gap Between Letters
-                                    int long_gap = 1000;    // Length of Gap Between Words
-                                    long[] pattern = {
-                                            0,  // Start immediately
-                                            dash, short_gap, dash
-                                    };
-                                    vibrator.vibrate(pattern, -1);
-                                }
-                            }
-                        }
-                    }
-                    if (seconds < 10) {
-                        secondsString = "0" + String.valueOf(seconds);
-                    } else {
-                        secondsString = String.valueOf(seconds);
-                    }
-
-                    if (minutes < 10) {
-                        minutesString = "0" + String.valueOf(minutes);
-                    } else {
-                        minutesString = String.valueOf(minutes);
-                    }
-
-
-                    //Remove Minutes if no minutes left
-                    if (minutes < 1) {
-                        timerText = secondsString;
-
-                    } else {
-                        if (hours < 1) {
-                            timerText = minutesString + ":" + secondsString;
-                        } else {
-                            timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
-                        }
-                    }
-
-
-                    //Update Notification
-                    Intent intent = new Intent(context, SmartTimer.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
-                    PendingIntent pauseIntent = PendingIntent.getActivity(context, 2, intent, 0);
-                    PendingIntent playIntent = PendingIntent.getActivity(context, 3, intent, 0);
-                    PendingIntent cancelIntent = PendingIntent.getActivity(context, 4, intent, 0);
-
-                    int notiColour = context.getResources().getColor(R.color.colorPrimary);
-
-                    if (nextEventindex + 1 == TimelineList.size()) {
-                        if (timerPaused) {
-                            Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle(TimelineList.get(nextEventindex).getName())
-                                    .addAction(R.drawable.ic_media_play, "Play", pauseIntent)
-                                    .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Finishes in " + String.valueOf(minsRemaining) + ":" + secondsString)
-                                    .setContentIntent(pendingIntent)
-                                    .setOngoing(true)
-                                    .setSmallIcon(R.drawable.cookingicon512px)
-                                    .setColor(notiColour)
-                                    .build();
-                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.notify(1, timerNotification);
-                        } else {
-                            Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle(TimelineList.get(nextEventindex).getName())
-                                    .addAction(R.drawable.ic_media_pause, "Pause", playIntent)
-                                    .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Finishes in " + String.valueOf(minsRemaining) + ":" + secondsString)
-                                    .setContentIntent(pendingIntent)
-                                    .setOngoing(true)
-                                    .setSmallIcon(R.drawable.cookingicon512px)
-                                    .setColor(notiColour)
-                                    .build();
-                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.notify(1, timerNotification);
-                        }
-
-                    } else {
-                        if (timerPaused) {
-                            Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle(TimelineList.get(nextEventindex + 1).getName())
-                                    .addAction(R.drawable.ic_media_play, "Play", pauseIntent)
-                                    .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Starts in " + String.valueOf(minsRemaining) + ":" + secondsString)
-                                    .setContentIntent(pendingIntent)
-                                    .setOngoing(true)
-                                    .setSmallIcon(R.drawable.cookingicon512px)
-                                    .setColor(notiColour)
-                                    .build();
-                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.notify(1, timerNotification);
-                        } else {
-                            Notification timerNotification = new Notification.Builder(context)
-                                    .setContentTitle(TimelineList.get(nextEventindex + 1).getName())
-                                    .addAction(R.drawable.ic_media_pause, "Pause", playIntent)
-                                    .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Starts in " + String.valueOf(minsRemaining) + ":" + secondsString)
-                                    .setContentIntent(pendingIntent)
-                                    .setOngoing(true)
-                                    .setSmallIcon(R.drawable.cookingicon512px)
-                                    .setColor(notiColour)
-                                    .build();
-                            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                            notificationManager.notify(1, timerNotification);
-                        }
-                    }
-
-                    if (timerPaused == true) {
-                        timerActive = false;
-                        timerPaused = false;
-                        smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
-                        cancel();
-
-                    }
-                    if (timerCancel == true) {
-                        timerActive = false;
-                        timerPaused = false;
-                        timerCancel = false;
-                        nextEventindex = 0;
-                        minsRemaining = 0L;
-                        minRemainingElapsed = 0L;
-                        cancel();
-                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                        notificationManager.cancel(1);
-                    }
-                }
-
-                public void onFinish() {
-                    //On Counter finished
-                    timerActive = false;
-                    timerPaused = false;
-                    timerCancel = false;
-                    nextEventindex = 0;
-                    minsRemaining = 0L;
-                    minRemainingElapsed = 0L;
-                    timerComplete = true;
-
-                    Intent intent = new Intent(context, SmartTimer.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
-                    int notiColour = context.getResources().getColor(R.color.colorPrimary);
-                    Notification timerNotification = new Notification.Builder(context)
-                            .setContentTitle("BBQ Buddy")
-                            .setContentText("Your Smart Timer timeline has completed")
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true)
-                            .setOngoing(false)
-                            .setSmallIcon(R.drawable.cookingicon512px)
-                            .setColor(notiColour)
-                            .build();
-
-                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.notify(1, timerNotification);
-
-                    MediaPlayer mplayer = MediaPlayer.create(context, R.raw.ding);
-                    mplayer.start();
-                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    if (vibrator.hasVibrator()) {
-                        if (vibrator.hasVibrator()) {
-                            int dot = 200;      // Length of a Morse Code "dot" in milliseconds
-                            int dash = 2000;     // Length of a Morse Code "dash" in milliseconds
-                            int short_gap = 200;    // Length of Gap Between dots/dashes
-                            int medium_gap = 500;   // Length of Gap Between Letters
-                            int long_gap = 1000;    // Length of Gap Between Words
-                            long[] pattern = {
-                                    0,  // Start immediately
-                                    dash, short_gap, dash
-                            };
-                            vibrator.vibrate(pattern,-1);
-                        }
-                    }
-                }
-            }.start();
-            timerActive = true;
-
-        } else {
-
-        }
-    }
-
     public void finish() {
         //remove handler for updating timer text
-
-        
 
         super.finish();
     }

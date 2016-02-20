@@ -59,14 +59,14 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity {
                 TextView txtTitle = (TextView)findViewById(R.id.txtTitle);
                 TextView txtDesc = (TextView)findViewById(R.id.txtDesc);
 
-                MainActivity.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
                 SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                 Integer newSmartTimerValue = 0;
-                for (int i = 0; i < MainActivity.TimelineList.size(); i++) {
-                    newSmartTimerValue = newSmartTimerValue + (Integer) MainActivity.TimelineList.get(i).id;
+                for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                    newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
                     System.out.println(newSmartTimerValue);
                 }
-                MainActivity.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
                 finish();
             }
         });
