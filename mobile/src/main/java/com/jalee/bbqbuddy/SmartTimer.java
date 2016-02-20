@@ -1,5 +1,6 @@
 package com.jalee.bbqbuddy;
 
+import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -190,8 +194,8 @@ public class SmartTimer extends AppCompatActivity {
                     MainActivity mainActivity = new MainActivity();
                     if (!SmartTimer_Service.timerActive) {
                         //Trial start service
-                        SmartTimer_Service.startTimer =true;
-                        Log.i("info","Set start variable to " + SmartTimer_Service.startTimer);
+                        SmartTimer_Service.startTimer = true;
+                        Log.i("info", "Set start variable to " + SmartTimer_Service.startTimer);
                     } else {
                         SmartTimer_Service.timerPaused = true;
                     }
@@ -232,6 +236,7 @@ public class SmartTimer extends AppCompatActivity {
             }
         });
         closingActivity = false;
+
     }
 
     @Override

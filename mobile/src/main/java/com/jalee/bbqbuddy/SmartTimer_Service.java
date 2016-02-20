@@ -70,7 +70,7 @@ public class SmartTimer_Service extends Service {
             @Override
             public void run() {
                 if (startTimer) {
-                    Log.i("Info", "Start variable found, starting timer");
+                    Log.i(TAG, "Start variable found, starting timer");
                     timer();
                     startTimer = false;
                 }
@@ -106,30 +106,32 @@ public class SmartTimer_Service extends Service {
                     //next near next event 1 min out
                     if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -2) {
                         Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                        if (vibrator.hasVibrator()) {
+                        if (seconds == 0) {
+                            Log.i(TAG, "1 min until next interval");
                             if (vibrator.hasVibrator()) {
-                                int dot = 500;      // Length of a Morse Code "dot" in milliseconds
-                                int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
-                                int short_gap = 200;    // Length of Gap Between dots/dashes
-                                int medium_gap = 500;   // Length of Gap Between Letters
-                                int long_gap = 1000;    // Length of Gap Between Words
-                                long[] pattern = {
-                                        0,  // Start immediately
-                                        dash, short_gap, dash
-                                };
-                                vibrator.vibrate(pattern, -1);
+                                if (vibrator.hasVibrator()) {
+                                    int dot = 500;      // Length of a Morse Code "dot" in milliseconds
+                                    int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
+                                    int short_gap = 200;    // Length of Gap Between dots/dashes
+                                    int medium_gap = 500;   // Length of Gap Between Letters
+                                    int long_gap = 1000;    // Length of Gap Between Words
+                                    long[] pattern = {
+                                            0,  // Start immediately
+                                            dash, short_gap, dash
+                                    };
+                                    vibrator.vibrate(pattern, -1);
+                                }
                             }
                         }
                     }
 
                     //next event occured
                     if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -1) {
-                        Log.i("Info","Mins reached");
-                        Log.i("info",String.valueOf(seconds));
                         if (seconds == 0) {
                             minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
                             nextEventindex = nextEventindex + 1;
-                            Log.i("Info","Increase Next event index");
+                            Log.i(TAG, "Next Interval occured");
+                            Log.i(TAG,"Increase Next event index");
                             MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
                             mplayer.start();
 
