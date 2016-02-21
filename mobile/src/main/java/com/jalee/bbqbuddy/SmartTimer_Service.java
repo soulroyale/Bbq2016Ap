@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class SmartTimer_Service extends Service {
     public static String secondsString;
     public static String minutesString;
     public static Long smartTimerMax;
+    public static Long smartTimerCurrentMax;
+    public static Integer timerEventsRem = 0;
+
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";
     Intent bi = new Intent(COUNTDOWN_BR);
@@ -56,6 +60,7 @@ public class SmartTimer_Service extends Service {
         TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",5));
         TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
 
+
         //Build Max timer integer
         Integer newSmartTimerValue = 0;
         for (int i = 0; i < TimelineList.size(); i++) {
@@ -63,6 +68,7 @@ public class SmartTimer_Service extends Service {
         }
         //COnvert to Milliseconds for use in timer
         smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+        smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(0).getId()));
 
         final Handler handler = new Handler();
 
@@ -71,7 +77,7 @@ public class SmartTimer_Service extends Service {
             public void run() {
                 if (startTimer) {
                     Log.i(TAG, "Start variable found, starting timer");
-                    timer();
+                    intTimer();
                     startTimer = false;
                 }
                 handler.postDelayed(this,500);
@@ -80,79 +86,27 @@ public class SmartTimer_Service extends Service {
         handler.post(run);
     }
 
-    public void timer() {
+    public void intTimer() {
         Log.i(TAG, "Starting timer...");
-        if (!timerActive) {
             timerComplete =false;
-            new CountDownTimer(smartTimerMax, 1000) {
+            new CountDownTimer(smartTimerCurrentMax, 1000) {
                 public void onTick(long millisecondsUntilDone) {
-
-                    Long timerEventsElapsTotal = 0L;
-                    Integer timerEventsElapsTotalint = 0;
-                    for (int i = 0; i < TimelineList.size(); i++) {
-                        if (i <= nextEventindex) {
-                            timerEventsElapsTotalint = timerEventsElapsTotalint + (Integer) TimelineList.get(i).id;
-                        }
-                    }
 
                     int hours = (int) TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone);
                     int minutes = (int) (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone)));
                     int seconds = (int) (TimeUnit.MILLISECONDS.toSeconds(millisecondsUntilDone) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
+                    timerEventsRem = minutes;
+                    for (int i = 0; i < TimelineList.size(); i++) {
+                        if (i > nextEventindex) {
+                            timerEventsRem = timerEventsRem + (Integer) TimelineList.get(i).id;
+                        }
+                    }
 
                     //obtain remaining minutes
                     minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
-                    //next near next event 1 min out
-                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -2) {
-                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                        if (seconds == 0) {
-                            Log.i(TAG, "1 min until next interval");
-                            if (vibrator.hasVibrator()) {
-                                if (vibrator.hasVibrator()) {
-                                    int dot = 500;      // Length of a Morse Code "dot" in milliseconds
-                                    int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
-                                    int short_gap = 200;    // Length of Gap Between dots/dashes
-                                    int medium_gap = 500;   // Length of Gap Between Letters
-                                    int long_gap = 1000;    // Length of Gap Between Words
-                                    long[] pattern = {
-                                            0,  // Start immediately
-                                            dash, short_gap, dash
-                                    };
-                                    vibrator.vibrate(pattern, -1);
-                                }
-                            }
-                        }
-                    }
 
-                    //next event occured
-                    if (TimeUnit.MILLISECONDS.toMinutes((smartTimerMax - millisecondsUntilDone)) == timerEventsElapsTotalint -1) {
-                        if (seconds == 0) {
-                            minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
-                            nextEventindex = nextEventindex + 1;
-                            Log.i(TAG, "Next Interval occured");
-                            Log.i(TAG,"Increase Next event index");
-                            MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
-                            mplayer.start();
-
-
-                            Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            if (vibrator.hasVibrator()) {
-                                if (vibrator.hasVibrator()) {
-                                    int dot = 500;      // Length of a Morse Code "dot" in milliseconds
-                                    int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
-                                    int short_gap = 200;    // Length of Gap Between dots/dashes
-                                    int medium_gap = 500;   // Length of Gap Between Letters
-                                    int long_gap = 1000;    // Length of Gap Between Words
-                                    long[] pattern = {
-                                            0,  // Start immediately
-                                            dash, short_gap, dash
-                                    };
-                                    vibrator.vibrate(pattern, -1);
-                                }
-                            }
-                        }
-                    }
                     if (seconds < 10) {
                         secondsString = "0" + String.valueOf(seconds);
                     } else {
@@ -191,7 +145,7 @@ public class SmartTimer_Service extends Service {
                                     .setContentTitle(TimelineList.get(nextEventindex).getName())
                                     .addAction(R.drawable.ic_media_play, "Play", pauseIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Finishes in " + String.valueOf(minsRemaining) + ":" + secondsString)
+                                    .setContentText("Finishes in " + timerText)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -204,7 +158,7 @@ public class SmartTimer_Service extends Service {
                                     .setContentTitle(TimelineList.get(nextEventindex).getName())
                                     .addAction(R.drawable.ic_media_pause, "Pause", playIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Finishes in " + String.valueOf(minsRemaining) + ":" + secondsString)
+                                    .setContentText("Finishes in " + timerText)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -219,7 +173,7 @@ public class SmartTimer_Service extends Service {
                                     .setContentTitle(TimelineList.get(nextEventindex + 1).getName())
                                     .addAction(R.drawable.ic_media_play, "Play", pauseIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Starts in " + String.valueOf(minsRemaining) + ":" + secondsString)
+                                    .setContentText("Starts in " + timerText)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -232,7 +186,7 @@ public class SmartTimer_Service extends Service {
                                     .setContentTitle(TimelineList.get(nextEventindex + 1).getName())
                                     .addAction(R.drawable.ic_media_pause, "Pause", playIntent)
                                     .addAction(R.drawable.places_ic_clear, "Cancel", cancelIntent)
-                                    .setContentText("Starts in " + String.valueOf(minsRemaining) + ":" + secondsString)
+                                    .setContentText("Starts in " + timerText)
                                     .setContentIntent(pendingIntent)
                                     .setOngoing(true)
                                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -264,61 +218,95 @@ public class SmartTimer_Service extends Service {
                 }
 
                 public void onFinish() {
-                    //On Counter finished
-                    timerActive = false;
-                    timerPaused = false;
-                    timerCancel = false;
-                    nextEventindex = 0;
-                    minsRemaining = 0L;
-                    minRemainingElapsed = 0L;
-                    timerComplete = true;
+
+                    if (nextEventindex + 1 < TimelineList.size()) {
+                        minRemainingElapsed = minRemainingElapsed + TimelineList.get(nextEventindex).getId();
+                        nextEventindex = nextEventindex + 1;
+                        Log.i(TAG, "Next Interval occured");
+                        Log.i(TAG, "Increase Next event index");
+                        MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
+                        mplayer.start();
 
 
-                    Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
-                    int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
-                    Notification timerNotification = new Notification.Builder(getApplicationContext())
-                            .setContentTitle("BBQ Buddy")
-                            .setContentText("Your Smart Timer timeline has completed")
-                            .setContentIntent(pendingIntent)
-                            .setAutoCancel(true)
-                            .setOngoing(false)
-                            .setSmallIcon(R.drawable.cookingicon512px)
-                            .setColor(notiColour)
-                            .build();
-
-                    NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.notify(1, timerNotification);
-
-                    MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
-                    mplayer.start();
-                    Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                    if (vibrator.hasVibrator()) {
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                         if (vibrator.hasVibrator()) {
-                            int dot = 200;      // Length of a Morse Code "dot" in milliseconds
-                            int dash = 2000;     // Length of a Morse Code "dash" in milliseconds
-                            int short_gap = 200;    // Length of Gap Between dots/dashes
-                            int medium_gap = 500;   // Length of Gap Between Letters
-                            int long_gap = 1000;    // Length of Gap Between Words
-                            long[] pattern = {
-                                    0,  // Start immediately
-                                    dash, short_gap, dash
-                            };
-                            vibrator.vibrate(pattern,-1);
+                            if (vibrator.hasVibrator()) {
+                                int dot = 500;      // Length of a Morse Code "dot" in milliseconds
+                                int dash = 1000;     // Length of a Morse Code "dash" in milliseconds
+                                int short_gap = 200;    // Length of Gap Between dots/dashes
+                                int medium_gap = 500;   // Length of Gap Between Letters
+                                int long_gap = 1000;    // Length of Gap Between Words
+                                long[] pattern = {
+                                        0,  // Start immediately
+                                        dash, short_gap, dash
+                                };
+                                vibrator.vibrate(pattern, -1);
+                            }
+                        }
+                        smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(nextEventindex).getId()));
+                        Log.i(TAG, "Launch timerStarter");
+
+                        Log.i(TAG, "timeStarter Launched");
+
+                        intTimer();
+                    } else {
+                        Log.i(TAG, "Timer completed all intervals, resetting");
+                        //On Counter finished
+                        timerActive = false;
+                        timerPaused = false;
+                        timerCancel = false;
+                        nextEventindex = 0;
+                        minsRemaining = 0L;
+                        minRemainingElapsed = 0L;
+                        timerComplete = true;
+
+
+                        Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
+                        int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
+                        Notification timerNotification = new Notification.Builder(getApplicationContext())
+                                .setContentTitle("BBQ Buddy")
+                                .setContentText("Your Smart Timer timeline has completed")
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true)
+                                .setOngoing(false)
+                                .setSmallIcon(R.drawable.cookingicon512px)
+                                .setColor(notiColour)
+                                .build();
+
+                        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                        notificationManager.notify(1, timerNotification);
+
+                        MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
+                        mplayer.start();
+                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        if (vibrator.hasVibrator()) {
+                            if (vibrator.hasVibrator()) {
+                                int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+                                int dash = 2000;     // Length of a Morse Code "dash" in milliseconds
+                                int short_gap = 200;    // Length of Gap Between dots/dashes
+                                int medium_gap = 500;   // Length of Gap Between Letters
+                                int long_gap = 1000;    // Length of Gap Between Words
+                                long[] pattern = {
+                                        0,  // Start immediately
+                                        dash, short_gap, dash
+                                };
+                                vibrator.vibrate(pattern, -1);
+                            }
                         }
                     }
                 }
             }.start();
             timerActive = true;
-        }
     }
-
-
 
     @Override
     public void onDestroy() {
         cdt.cancel();
         Log.i(TAG, "Timer cancelled");
+        PowerManager powerManager = (PowerManager)  getApplicationContext().getSystemService(POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MyWakeLockTag");
+        wakeLock.release();
         super.onDestroy();
     }
 

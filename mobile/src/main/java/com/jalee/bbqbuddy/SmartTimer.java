@@ -1,6 +1,5 @@
 package com.jalee.bbqbuddy;
 
-import android.animation.ObjectAnimator;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,10 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.RotateAnimation;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -62,12 +58,8 @@ public class SmartTimer extends AppCompatActivity {
                 }
                 if (SmartTimer_Service.timerActive) {
                     if (txtSmartTimer != null) {
-                        txtSmartTimer.setText(SmartTimer_Service.timerText);
-                        if (SmartTimer_Service.minsRemaining < 1) {
-                            txtSmartTimerNext.setText(SmartTimer_Service.secondsString);
-                        } else {
-                            txtSmartTimerNext.setText(String.valueOf(SmartTimer_Service.minsRemaining) + ":" + SmartTimer_Service.secondsString);
-                        }
+                        txtSmartTimer.setText(String.valueOf(SmartTimer_Service.timerEventsRem) + ":" + SmartTimer_Service.secondsString);
+                        txtSmartTimerNext.setText(SmartTimer_Service.timerText);
                     }
                     TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
                     if (SmartTimer_Service.nextEventindex + 1 < SmartTimer_Service.TimelineList.size()) {
@@ -174,7 +166,7 @@ public class SmartTimer extends AppCompatActivity {
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
             AdRequest IadRequest = new AdRequest.Builder()
-                    .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
+                    .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
                     .build();
 
             mInterstitialAd.loadAd(IadRequest);

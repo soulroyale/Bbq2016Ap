@@ -36,12 +36,11 @@ public class SmartTimer_Timer extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
         AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
         AdRequest bannerAdRequest = new AdRequest.Builder()
-                .addTestDevice("4183AA4B7DBD269E1F1D0D51DF9FB52B")
+                .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
                 .build();
         bannerAdView.loadAd(bannerAdRequest);
         return v;
     }
-
 
     public static SmartTimer_Timer newInstance(String text) {
 
@@ -59,6 +58,5 @@ public class SmartTimer_Timer extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putSerializable("list", (Serializable) myData);
     }
-
 
 }
