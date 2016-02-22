@@ -26,7 +26,6 @@ public class SmartTimer_Service extends Service {
     private final static String TAG = "SmartTimer_Service";
     public static List<SmartTimer_cardUI> TimelineList;
     public static Boolean startTimer = false;
-    public static Boolean stopTimer = false;
     public static Boolean timerActive = false;
     public static Boolean timerPaused = false;
     public static Boolean timerCancel = false;
@@ -66,7 +65,7 @@ public class SmartTimer_Service extends Service {
         for (int i = 0; i < TimelineList.size(); i++) {
             newSmartTimerValue = newSmartTimerValue + (Integer) TimelineList.get(i).id;
         }
-        //COnvert to Milliseconds for use in timer
+        //Convert to Milliseconds for use in timer
         smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
         smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(0).getId()));
 
@@ -77,6 +76,13 @@ public class SmartTimer_Service extends Service {
             public void run() {
                 if (startTimer) {
                     Log.i(TAG, "Start variable found, starting timer");
+                    //rebuild start values
+                    Integer newSmartTimerValue = 0;
+                    for (int i = 0; i < TimelineList.size(); i++) {
+                        newSmartTimerValue = newSmartTimerValue + (Integer) TimelineList.get(i).id;
+                    }
+                    smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                    smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(0).getId()));
                     intTimer();
                     startTimer = false;
                 }
@@ -200,7 +206,7 @@ public class SmartTimer_Service extends Service {
                     if (timerPaused) {
                         timerActive = false;
                         timerPaused = false;
-                        smartTimerMax = smartTimerMax - (smartTimerMax - millisecondsUntilDone);
+                        smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
                         cancel();
 
                     }
@@ -208,9 +214,14 @@ public class SmartTimer_Service extends Service {
                         timerActive = false;
                         timerPaused = false;
                         timerCancel = false;
+                        timerEventsRem = 0;
                         nextEventindex = 0;
                         minsRemaining = 0L;
                         minRemainingElapsed = 0L;
+                        secondsString = "0";
+                        minutesString = "0";
+                        timerText = "0";
+
                         cancel();
                         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                         notificationManager.cancel(1);
@@ -259,6 +270,7 @@ public class SmartTimer_Service extends Service {
                         minsRemaining = 0L;
                         minRemainingElapsed = 0L;
                         timerComplete = true;
+                        timerEventsRem = 0;
 
 
                         Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
