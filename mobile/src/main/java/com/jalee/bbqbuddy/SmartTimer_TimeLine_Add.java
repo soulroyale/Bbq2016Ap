@@ -67,6 +67,9 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity {
                     System.out.println(newSmartTimerValue);
                 }
                 SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+
+                SmartTimer_Service  ST= new SmartTimer_Service();
+                ST.saveTimeline(getApplicationContext());
                 finish();
             }
         });

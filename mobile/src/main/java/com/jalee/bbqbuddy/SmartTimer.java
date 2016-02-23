@@ -72,10 +72,7 @@ public class SmartTimer extends AppCompatActivity {
                         txtuntilnext.setText("Next event starts in");
                     }
                 } else {
-                    if (SmartTimer_Service.timerPaused) {
-                        txtSmartTimer.setText("0");
-                        txtSmartTimerNext.setText("0");
-                    }
+
                 }
 
                 handler.postDelayed(this, 300);

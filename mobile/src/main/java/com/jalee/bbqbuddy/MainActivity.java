@@ -1,7 +1,10 @@
 package com.jalee.bbqbuddy;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity
 
         startService(new Intent(getApplicationContext(), SmartTimer_Service.class));
         Log.i("Info", "SmartTimer service started");
+        SmartTimer_Service  ST= new SmartTimer_Service();
+        ST.loadTimeLine(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity
     private void initializeData() {
         cardUIList = new ArrayList<>();
         cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron  \n \n \n \n \n \n \n \n test data For Scroll test", "Introducing BBQ Buddy", R.drawable.sample));
-        cardUIList.add(new cardUI("About 20 minutes before grilling, remove the steaks from the refrigerator and let sit, covered, at room temperature. \n\nHeat your grill to high. Brush the steaks on both sides with oil and season liberally with salt and pepper.\nPlace the steaks on the grill and cook until golden brown and slightly charred, 4 to 5 minutes. Turn the steaks over and continue to grill:\n\n3 to 5 minutes for medium-rare (an internal temperature of 57 degrees Celsius or 135 degrees F)\n5 to 7 minutes for medium (60 degrees Celsius or 140 degrees F)\n8 to 10 minutes for medium-well (65 degrees Celsius or 150 degrees F)\n\nTransfer the steaks to a cutting board or platter, tent loosely with foil and let rest 5 minutes before slicing.", "Medium Rare Steak", R.raw.steak));
+        //cardUIList.add(new cardUI("About 20 minutes before grilling, remove the steaks from the refrigerator and let sit, covered, at room temperature. \n\nHeat your grill to high. Brush the steaks on both sides with oil and season liberally with salt and pepper.\nPlace the steaks on the grill and cook until golden brown and slightly charred, 4 to 5 minutes. Turn the steaks over and continue to grill:\n\n3 to 5 minutes for medium-rare (an internal temperature of 57 degrees Celsius or 135 degrees F)\n5 to 7 minutes for medium (60 degrees Celsius or 140 degrees F)\n8 to 10 minutes for medium-well (65 degrees Celsius or 150 degrees F)\n\nTransfer the steaks to a cutting board or platter, tent loosely with foil and let rest 5 minutes before slicing.", "Medium Rare Steak", R.raw.steak));
     }
 
 

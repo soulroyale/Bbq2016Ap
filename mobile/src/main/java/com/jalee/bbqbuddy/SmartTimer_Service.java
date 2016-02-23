@@ -1,18 +1,21 @@
 package com.jalee.bbqbuddy;
 
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,25 +52,6 @@ public class SmartTimer_Service extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //initialise timeline data
-        TimelineList = new ArrayList<>();
-        //Populate Sample data
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
-        TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7));
-        TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 2",7));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
-        TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",5));
-        TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
-
-
-        //Build Max timer integer
-        Integer newSmartTimerValue = 0;
-        for (int i = 0; i < TimelineList.size(); i++) {
-            newSmartTimerValue = newSmartTimerValue + (Integer) TimelineList.get(i).id;
-        }
-        //Convert to Milliseconds for use in timer
-        smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
-        smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(0).getId()));
 
         final Handler handler = new Handler();
 
@@ -76,13 +60,17 @@ public class SmartTimer_Service extends Service {
             public void run() {
                 if (startTimer) {
                     Log.i(TAG, "Start variable found, starting timer");
-                    //rebuild start values
-                    Integer newSmartTimerValue = 0;
-                    for (int i = 0; i < TimelineList.size(); i++) {
-                        newSmartTimerValue = newSmartTimerValue + (Integer) TimelineList.get(i).id;
-                    }
-                    smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
-                    smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(0).getId()));
+                   if (!timerPaused) {
+                       //rebuild start values
+                       Integer newSmartTimerValue = 0;
+                       for (int i = 0; i < TimelineList.size(); i++) {
+                           newSmartTimerValue = newSmartTimerValue + (Integer) TimelineList.get(i).id;
+                       }
+                       smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                       smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(0).getId()));
+                   }else {
+                       timerPaused = false;
+                   }
                     intTimer();
                     startTimer = false;
                 }
@@ -205,7 +193,6 @@ public class SmartTimer_Service extends Service {
 
                     if (timerPaused) {
                         timerActive = false;
-                        timerPaused = false;
                         smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
                         cancel();
 
@@ -317,9 +304,44 @@ public class SmartTimer_Service extends Service {
         cdt.cancel();
         Log.i(TAG, "Timer cancelled");
         PowerManager powerManager = (PowerManager)  getApplicationContext().getSystemService(POWER_SERVICE);
-        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MyWakeLockTag");
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLockTag");
         wakeLock.release();
         super.onDestroy();
+    }
+
+
+    public void saveTimeline(Context cntxt) {
+        SharedPreferences sharedPreferences = cntxt.getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+
+        sharedPreferences.edit().putInt("timeLineListSize",SmartTimer_Service.TimelineList.size()).apply();
+        Integer newSmartTimerValue = 0;
+        for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+            sharedPreferences.edit().putInt("ID"+i,SmartTimer_Service.TimelineList.get(i).getId()).apply();
+            sharedPreferences.edit().putString("title" + i, SmartTimer_Service.TimelineList.get(i).getName()).apply();
+            sharedPreferences.edit().putString("desc" + i, SmartTimer_Service.TimelineList.get(i).getsubTitle()).apply();
+        }
+    }
+
+    public void loadTimeLine(Context cntxt) {
+        SharedPreferences sharedPreferences = cntxt.getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+
+        int timeLineSize = sharedPreferences.getInt("timeLineListSize", 0);
+
+        //initialise timeline data
+        TimelineList = new ArrayList<>();
+        if (timeLineSize == 0) {
+            //Populate Sample data
+            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
+            TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7));
+            TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 2",7));
+            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
+            TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",5));
+            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10));
+        } else {
+            for (int i = 0; i < timeLineSize; i++) {
+                TimelineList.add(new SmartTimer_cardUI(sharedPreferences.getString("desc" + i,""), sharedPreferences.getString("title" + i,""), sharedPreferences.getInt("ID" + i,0)));
+            }
+        }
     }
 
     @Override
