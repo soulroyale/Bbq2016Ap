@@ -1,11 +1,14 @@
 package com.jalee.bbqbuddy;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -23,6 +26,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,8 +42,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        startService(new Intent(getApplicationContext(), SmartTimer_Service.class));
+        Intent startIntent = new Intent(MainActivity.this, SmartTimer_Service.class);
+        startIntent.setAction("Start Foreground");
+        startService(startIntent);
+
         Log.i("Info", "SmartTimer service started");
+
         SmartTimer_Service  ST= new SmartTimer_Service();
         ST.loadTimeLine(getApplicationContext());
 
@@ -94,21 +102,26 @@ public class MainActivity extends AppCompatActivity
                     .build();
             adView.loadAd(adRequest);
         }
+
         if (SmartTimer_Service.timerActive) {
             Intent intent = new Intent(this, SmartTimer.class);
             startActivity(intent);
         }
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //If Timer already active, display it
+
         if (SmartTimer_Service.timerActive) {
             Intent reloadIntent = new Intent(this, SmartTimer.class);
             startActivity(reloadIntent);
         }
+
     }
+
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
@@ -124,6 +137,31 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             //super.onBackPressed();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Would you like to exit BBQ Buddy?");
+
+            alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    Log.i("Selected", "You salected yes");
+                    Intent stopIntent = new Intent(MainActivity.this, SmartTimer_Service.class);
+                    stopIntent.setAction("stop");
+                    startService(stopIntent);
+                    //finish();
+
+                }
+            });
+
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Log.i("Selected", "You salected no");
+                }
+
+            });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
     }
 

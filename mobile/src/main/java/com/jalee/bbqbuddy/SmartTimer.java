@@ -167,6 +167,7 @@ public class SmartTimer extends AppCompatActivity {
                     .build();
 
             mInterstitialAd.loadAd(IadRequest);
+
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -214,8 +215,6 @@ public class SmartTimer extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 SmartTimer_Service.timerCancel = true;
-                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                notificationManager.cancel(1);
                 SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(4);
                 TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                 TextView txtSmartTimernext = (TextView) findViewById(R.id.txtSmartTimerNext);
