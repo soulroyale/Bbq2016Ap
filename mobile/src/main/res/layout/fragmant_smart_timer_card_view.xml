@@ -13,13 +13,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="0dp"
         >
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:id="@+id/cardtitle"
             android:text="Title"
             android:textSize="22sp"
@@ -32,7 +32,7 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:id="@+id/carddesc"
             android:text="Roast Meat"
             android:textSize="18sp"
@@ -51,8 +51,7 @@
             android:text="120"
             android:textSize="44sp"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/cardimage"
-            android:layout_toStartOf="@+id/cardimage" />
+            android:layout_toLeftOf="@id/cardimage"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,9 +59,10 @@
             android:text="mins"
             android:id="@+id/mins"
             android:paddingRight="6dp"
-            android:layout_below="@+id/cardimage"
-            android:layout_toRightOf="@+id/cardmins"
-             />
+            android:textSize="10sp"
+            android:layout_alignBaseline="@+id/cardmins"
+            android:layout_alignBottom="@+id/cardmins"
+            android:layout_alignEnd="@+id/cardimage" />
 
         <ImageView
             android:layout_width="35dp"

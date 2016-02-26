@@ -55,24 +55,33 @@ public class SmartTimer_Service extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction().equals("Start Foreground")) {
-            Log.i(TAG, "Received Start Foreground Intent ");
-            updateNotification();
-        } else if (intent.getAction().equals("pause")) {
-            Log.i(TAG, "Clicked Previous");
-            timerPaused = true;
-        } else if (intent.getAction().equals("play")) {
-            Log.i(TAG, "Clicked Play");
-            startTimer = true;
-        } else if (intent.getAction().equals("next")) {
-            Log.i(TAG, "Clicked Skip");
-            timerSkip = true;
-        } else if (intent.getAction().equals(
-                "stop")) {
-            Log.i(TAG, "Received Stop Foreground Intent");
-            stopForeground(true);
-            stopSelf();
+        if(intent != null && intent.getAction() != null) {
+            if (intent.getAction().equals("Start Foreground")) {
+                Log.i(TAG, "Received Start Foreground Intent ");
+                updateNotification();
+            } else if (intent.getAction().equals("pause")) {
+                Log.i(TAG, "Clicked Previous");
+                timerPaused = true;
+            } else if (intent.getAction().equals("play")) {
+                Log.i(TAG, "Clicked Play");
+                startTimer = true;
+            } else if (intent.getAction().equals("next")) {
+                Log.i(TAG, "Clicked Skip");
+                timerSkip = true;
+            } else if (intent.getAction().equals(
+                    "stop")) {
+                Log.i(TAG, "Received Stop Foreground Intent");
+                stopForeground(true);
+                stopSelf();
+            }
+        } else {
+            //if no in intnet, service must have crashed, relaunch with last known data
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+            smartTimerCurrentMax = sharedPreferences.getLong("curMilli", 0);
+            nextEventindex = sharedPreferences.getInt("curIndex", 0);
+            intTimer();
         }
+
         return START_STICKY;
     }
 
@@ -242,6 +251,11 @@ public class SmartTimer_Service extends Service {
         new CountDownTimer(smartTimerCurrentMax, 1000) {
             public void onTick(long millisecondsUntilDone) {
 
+                //saving current state
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+                sharedPreferences.edit().putLong("curMilli", millisecondsUntilDone);
+                sharedPreferences.edit().putInt("curIndex", nextEventindex);
+
                 int hours = (int) TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone);
                 int minutes = (int) (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone)));
                 int seconds = (int) (TimeUnit.MILLISECONDS.toSeconds(millisecondsUntilDone) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
@@ -313,6 +327,7 @@ public class SmartTimer_Service extends Service {
                     updateNotification();
                 }
             }
+
 
             public void onFinish() {
 
@@ -429,7 +444,7 @@ public class SmartTimer_Service extends Service {
 
         //initialise timeline data
         TimelineList = new ArrayList<>();
-        if (timeLineSize == 0) {
+        if (timeLineSize < 1) {
             //Populate Sample data
             TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
             TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7));

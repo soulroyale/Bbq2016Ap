@@ -184,9 +184,10 @@ public class SmartTimer extends AppCompatActivity {
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     MainActivity mainActivity = new MainActivity();
                     if (!SmartTimer_Service.timerActive) {
-                        //Trial start service
-                        SmartTimer_Service.startTimer = true;
-                        Log.i("info", "Set start variable to " + SmartTimer_Service.startTimer);
+                        if (SmartTimer_Service.TimelineList.size() > 0) {
+                            SmartTimer_Service.startTimer = true;
+                            Log.i("info", "Set start variable to " + SmartTimer_Service.startTimer);
+                        }
                     } else {
                         SmartTimer_Service.timerPaused = true;
                     }
