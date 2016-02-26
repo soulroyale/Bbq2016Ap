@@ -124,6 +124,7 @@ public class SmartTimer extends AppCompatActivity {
                     onTimeline = false;
                 }
                 if (position == 1) {
+                    SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                     fab.setImageResource(R.drawable.plus64);
                     fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     onTimeline = true;

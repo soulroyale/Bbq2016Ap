@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -49,6 +50,12 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.cardtitle.setText(list.get(position).name);
         holder.cardsubtitle.setText(list.get(position).subTitle);
         holder.cardmins.setText(String.valueOf(list.get(position).id));
+        if (position < SmartTimer_Service.nextEventindex) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
+            holder.cardtitle.setTextColor(Color.parseColor("#9E9E9E"));
+            holder.cardsubtitle.setTextColor(Color.parseColor("#9E9E9E"));
+            holder.cardmins.setTextColor(Color.parseColor("#9E9E9E"));
+        }
         //holder.cardimage.setImageResource(list.get(position).id);
     }
 
