@@ -130,28 +130,43 @@ public class SmartTimer_Service extends Service {
         nextIntent.setAction("next");
         PendingIntent pnextIntent = PendingIntent.getService(this, 0,
                 nextIntent, 0);
+
+        String notTitle = "Current Event";
+        if (TimelineList.get(nextEventindex).getName() != "") {
+            notTitle = TimelineList.get(nextEventindex).getName();
+        }
+        String littleText = "Finishes in " + timerText;
+
+        String bigText = "Finishes in " + timerText + "\n\n" + TimelineList.get(nextEventindex + 1).getName() + " is up next!";
+        if (TimelineList.get(nextEventindex + 1).getName() == "") {
+            bigText = "Finishes in " + timerText;
+        }
+
         if (timerActive) {
             if (nextEventindex + 1 == TimelineList.size()) {
                 if (timerPaused) {
                     Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(TimelineList.get(nextEventindex).getName())
+                            .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
-                            .setContentText("Finishes in " + timerText)
+                            .setContentText(littleText)
                             .setSmallIcon(R.drawable.cookingicon512px)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
                             .setColor(notiColour)
-                            .addAction(android.R.drawable.ic_media_play, "Play",
+                            .addAction(android.R.drawable.ic_media_play, "Resume",
                                     pplayIntent)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent).build();
+                                    pnextIntent)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(bigText))
+                            .build();
                     startForeground(1,
                             notification);
                 } else {
                     Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(TimelineList.get(nextEventindex).getName())
+                            .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
-                            .setContentText("Finishes in " + timerText)
+                            .setContentText(littleText)
                             .setSmallIcon(R.drawable.cookingicon512px)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
@@ -159,31 +174,37 @@ public class SmartTimer_Service extends Service {
                             .addAction(android.R.drawable.ic_media_pause,
                                     "Pause", ppauseIntent)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent).build();
+                                    pnextIntent)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(bigText))
+                            .build();
                     startForeground(1,
                             notification);
                 }
             } else {
                 if (timerPaused) {
                     Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(TimelineList.get(nextEventindex).getName())
+                            .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
-                            .setContentText("Starts in " + timerText)
+                            .setContentText(littleText)
                             .setSmallIcon(R.drawable.cookingicon512px)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
                             .setColor(notiColour)
-                            .addAction(android.R.drawable.ic_media_play, "Play",
+                            .addAction(android.R.drawable.ic_media_play, "Resume",
                                     pplayIntent)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent).build();
+                                    pnextIntent)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(bigText))
+                            .build();
                     startForeground(1,
                             notification);
                 } else {
                     Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(TimelineList.get(nextEventindex).getName())
+                            .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
-                            .setContentText("Starts in " + timerText)
+                            .setContentText(littleText)
                             .setSmallIcon(R.drawable.cookingicon512px)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
@@ -191,7 +212,10 @@ public class SmartTimer_Service extends Service {
                             .addAction(android.R.drawable.ic_media_pause,
                                     "Pause", ppauseIntent)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent).build();
+                                    pnextIntent)
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText(bigText))
+                            .build();
                     startForeground(1,
                             notification);
                 }
@@ -199,7 +223,7 @@ public class SmartTimer_Service extends Service {
             }
         } else {
             Notification notification = new NotificationCompat.Builder(this)
-                    .setContentTitle("BBQ Buddy Buddy")
+                    .setContentTitle("BBQ Buddy")
                             //.setTicker("Truiton Music Player")
                     .setContentText("Smart Timer is Idle...")
                     .setSmallIcon(R.drawable.cookingicon512px)
@@ -287,10 +311,6 @@ public class SmartTimer_Service extends Service {
 
                     cancel();
                     updateNotification();
-                    /*
-                    NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                    notificationManager.cancel(1);
-                    */
                 }
             }
 
