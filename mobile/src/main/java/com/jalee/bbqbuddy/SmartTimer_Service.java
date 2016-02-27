@@ -70,10 +70,11 @@ public class SmartTimer_Service extends Service {
                 stopSelf();
             }
         } else {
-            //if no in intnet, service must have crashed, relaunch with last known data
+            //if no in intent, service must have crashed, relaunch with last known data
             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
             smartTimerCurrentMax = sharedPreferences.getLong("curMilli", 0);
             nextEventindex = sharedPreferences.getInt("curIndex", 0);
+            loadTimeLine(this);
             intTimer();
         }
 
