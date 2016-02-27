@@ -1,12 +1,8 @@
 package com.jalee.bbqbuddy;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -26,7 +22,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -110,6 +105,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /*
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -121,7 +117,7 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
+    */
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
@@ -147,8 +143,8 @@ public class MainActivity extends AppCompatActivity
                     Intent stopIntent = new Intent(MainActivity.this, SmartTimer_Service.class);
                     stopIntent.setAction("stop");
                     startService(stopIntent);
-                    //finish();
-
+                    finish();
+                    System.exit(0);
                 }
             });
 

@@ -159,6 +159,8 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                         System.out.println(newSmartTimerValue);
                     }
                     SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                    SmartTimer_Service  ST= new SmartTimer_Service();
+                    ST.saveTimeline(context);
                 }
             });
 
@@ -186,6 +188,8 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                                 System.out.println(newSmartTimerValue);
                             }
                             SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                            SmartTimer_Service  ST= new SmartTimer_Service();
+                            ST.saveTimeline(context);
                         }
                     });
 

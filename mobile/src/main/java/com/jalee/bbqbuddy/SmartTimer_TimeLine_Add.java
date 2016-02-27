@@ -1,10 +1,16 @@
 package com.jalee.bbqbuddy;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +31,8 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
         minutes = 0;
         hours = 0;
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         final ListView listHours = (ListView)findViewById(R.id.listHours);
         ArrayAdapter adapterHours=ArrayAdapter.createFromResource(this,R.array.timerHours,android.R.layout.simple_list_item_activated_1);
@@ -59,18 +67,23 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity {
                 TextView txtTitle = (TextView)findViewById(R.id.txtTitle);
                 TextView txtDesc = (TextView)findViewById(R.id.txtDesc);
 
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
-                SmartTimer_TimeLine.adapter.notifyDataSetChanged();
-                Integer newSmartTimerValue = 0;
-                for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
-                    newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
-                    System.out.println(newSmartTimerValue);
-                }
-                SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                if (hours == 0 & minutes == 0) {
+                    //Creating dialogue in a Method as unable to get context from here
+                    nothingSelAlert();
+                } else {
+                    SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
+                    SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                    Integer newSmartTimerValue = 0;
+                    for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                        newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
+                        System.out.println(newSmartTimerValue);
+                    }
+                    SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
 
-                SmartTimer_Service  ST= new SmartTimer_Service();
-                ST.saveTimeline(getApplicationContext());
-                finish();
+                    SmartTimer_Service ST = new SmartTimer_Service();
+                    ST.saveTimeline(getApplicationContext());
+                    finish();
+                }
             }
         });
         final Button btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -80,6 +93,24 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity {
             }
         });
     }
+
+
+    public void nothingSelAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("You haven't selected valid Hours or Minutes, please try again.");
+
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                Log.i("Selected", "You salected Ok");
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 
     @Override
     public void finish() {

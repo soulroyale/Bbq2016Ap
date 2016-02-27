@@ -1,7 +1,6 @@
 package com.jalee.bbqbuddy;
 
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,15 +8,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import java.util.ArrayList;
@@ -141,13 +136,23 @@ public class SmartTimer_Service extends Service {
                 nextIntent, 0);
 
         String notTitle = "Current Event";
-        if (TimelineList.get(nextEventindex).getName() != "") {
-            notTitle = TimelineList.get(nextEventindex).getName();
-        }
-        String littleText = "Finishes in " + timerText;
+        String littleText = "";
+        String bigText = "";
+        if (nextEventindex + 1 != TimelineList.size()) {
+            if (TimelineList.get(nextEventindex).getName() != "") {
+                notTitle = TimelineList.get(nextEventindex).getName();
+            }
+            littleText = "Finishes in " + timerText;
 
-        String bigText = "Finishes in " + timerText + "\n\n" + TimelineList.get(nextEventindex + 1).getName() + " is up next!";
-        if (TimelineList.get(nextEventindex + 1).getName() == "") {
+            bigText = "Finishes in " + timerText + "\n\n" + TimelineList.get(nextEventindex + 1).getName() + " is up next!";
+            if (TimelineList.get(nextEventindex + 1).getName() == "") {
+                bigText = "Finishes in " + timerText;
+            }
+        } else {
+            if (TimelineList.get(nextEventindex).getName() != "") {
+                notTitle = TimelineList.get(nextEventindex).getName();
+            }
+            littleText = "Finishes in " + timerText;
             bigText = "Finishes in " + timerText;
         }
 
@@ -419,7 +424,6 @@ public class SmartTimer_Service extends Service {
 
     @Override
     public void onDestroy() {
-
         Log.i(TAG, "Timer cancelled");
         super.onDestroy();
     }
@@ -444,7 +448,7 @@ public class SmartTimer_Service extends Service {
 
         //initialise timeline data
         TimelineList = new ArrayList<>();
-        if (timeLineSize < 1) {
+        if (timeLineSize == 0) {
             //Populate Sample data
             TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2));
             TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7));
