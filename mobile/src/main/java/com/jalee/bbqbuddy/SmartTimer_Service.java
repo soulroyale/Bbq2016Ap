@@ -71,10 +71,15 @@ public class SmartTimer_Service extends Service {
             }
         } else {
             //if no in intent, service must have crashed, relaunch with last known data
+            loadTimeLine(this);
+            Integer newSmartTimerValue = 0;
+            for (int i = 0; i < TimelineList.size(); i++) {
+                newSmartTimerValue = newSmartTimerValue + (Integer) TimelineList.get(i).id;
+            }
+            smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
             smartTimerCurrentMax = sharedPreferences.getLong("curMilli", 0);
             nextEventindex = sharedPreferences.getInt("curIndex", 0);
-            loadTimeLine(this);
             intTimer();
         }
 
@@ -277,12 +282,12 @@ public class SmartTimer_Service extends Service {
                 minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
 
 
+                //Format String for Next event timer
                 if (seconds < 10) {
                     secondsString = "0" + String.valueOf(seconds);
                 } else {
                     secondsString = String.valueOf(seconds);
                 }
-
                 if (minutes < 10) {
                     minutesString = "0" + String.valueOf(minutes);
                 } else {
