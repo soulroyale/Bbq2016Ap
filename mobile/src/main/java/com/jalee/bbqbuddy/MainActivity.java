@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
-        cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron  \n \n \n \n \n \n \n \n test data For Scroll test", "Introducing BBQ Buddy", R.drawable.sample));
+        cardUIList.add(new cardUI("Thankyou for trying BBQ buddy, BBQ buddy has been developed to deliver all the features that are currently missing from existing BBQ companion Apps. \n \nIf you have any suggestions for the app please forward them to support@jalee-dev.com.au \n \nI hope you enjoy BBQ Buddy, \nAaron", "Introducing BBQ Buddy", R.drawable.sample));
         //cardUIList.add(new cardUI("About 20 minutes before grilling, remove the steaks from the refrigerator and let sit, covered, at room temperature. \n\nHeat your grill to high. Brush the steaks on both sides with oil and season liberally with salt and pepper.\nPlace the steaks on the grill and cook until golden brown and slightly charred, 4 to 5 minutes. Turn the steaks over and continue to grill:\n\n3 to 5 minutes for medium-rare (an internal temperature of 57 degrees Celsius or 135 degrees F)\n5 to 7 minutes for medium (60 degrees Celsius or 140 degrees F)\n8 to 10 minutes for medium-well (65 degrees Celsius or 150 degrees F)\n\nTransfer the steaks to a cutting board or platter, tent loosely with foil and let rest 5 minutes before slicing.", "Medium Rare Steak", R.raw.steak));
     }
 
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
             i.putExtra(Intent.EXTRA_SUBJECT, "Check Out BBQ Buddy");
-            i.putExtra(Intent.EXTRA_TEXT, "Check Out BBQ Buddy, Join the below Google Plus group to gain access to the Alpha or Beta Realese of BBQ Buddy: https://plus.google.com/u/0/communities/111930892923034410128");
+            i.putExtra(Intent.EXTRA_TEXT, "Check Out BBQ Buddy, Join the below Google Plus group to gain access to the Beta release of BBQ Buddy: https://play.google.com/store/apps/details?id=com.jalee.bbqbuddy&hl=en");
             try {
                 startActivity(Intent.createChooser(i, "Share BBQ Buddy:"));
             } catch (android.content.ActivityNotFoundException ex) {

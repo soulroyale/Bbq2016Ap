@@ -8,15 +8,15 @@
             android:title="Dashboard" />
         <item
             android:id="@+id/nav_recipes"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_crop"
             android:title="Recipes" />
         <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_recent_history"
             android:title="History" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_preferences"
             android:title="Tools" />
     </group>
 
@@ -25,7 +25,7 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Invite your friends to the Alpha" />
+                android:title="Invite your friends to the Beta" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
