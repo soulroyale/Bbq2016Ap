@@ -11,7 +11,8 @@
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jalee.bbqbuddy.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+    android:background="#e0e0e0">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"

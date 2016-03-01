@@ -25,6 +25,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import java.util.concurrent.TimeUnit;
 
@@ -159,7 +160,7 @@ public class SmartTimer extends AppCompatActivity {
             /*
             AdView adView = (AdView) findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice("910E556A53EAB4998843E3E84C3F313F")
+                    .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
                     .build();
             adView.loadAd(adRequest);
             */

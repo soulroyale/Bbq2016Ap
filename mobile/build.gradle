@@ -7,7 +7,7 @@ android {
         applicationId "com.jalee.bbqbuddy"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 43
+        versionCode 44
         versionName "0.43"
     }
     buildTypes {
