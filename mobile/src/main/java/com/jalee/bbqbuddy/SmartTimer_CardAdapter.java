@@ -132,27 +132,28 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     }
 
     public void increaseMin(int increaseVar, int adapterPos, Context context) {
-        if (!SmartTimer_Service.timerActive) {
-            SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() + increaseVar));
-            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
-            SmartTimer_Service ST = new SmartTimer_Service();
-            ST.saveTimeline(context);
-            Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " increased by " + increaseVar + " minute", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Pause Smart Timer to adjust Events", Toast.LENGTH_SHORT).show();
+        SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() + increaseVar));
+        SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+        SmartTimer_Service ST = new SmartTimer_Service();
+        ST.saveTimeline(context);
+        Log.i("info", String.valueOf(adapterPos));
+        Log.i("info",String.valueOf(SmartTimer_Service.nextEventindex));
+        if (SmartTimer_Service.timerActive & adapterPos == SmartTimer_Service.nextEventindex ) {
+            SmartTimer_Service.timerExtend = true;
+            Log.i("info", "TImerextend");
         }
+        Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " increased by " + increaseVar + " minute", Toast.LENGTH_SHORT).show();
     }
 
     public void decreaseMin(int decreaseVar, int adapterPos, Context context) {
-        if (!SmartTimer_Service.timerActive) {
-            SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() - decreaseVar));
-            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
-            SmartTimer_Service ST = new SmartTimer_Service();
-            ST.saveTimeline(context);
-            Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " decreased by " + decreaseVar + " minute", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Pause Smart Timer to adjust Events", Toast.LENGTH_SHORT).show();
+        SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() - decreaseVar));
+        SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+        SmartTimer_Service ST = new SmartTimer_Service();
+        ST.saveTimeline(context);
+        if (SmartTimer_Service.timerActive & adapterPos == SmartTimer_Service.nextEventindex) {
+            SmartTimer_Service.timerExtend = true;
         }
+        Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " decreased by " + decreaseVar + " minute", Toast.LENGTH_SHORT).show();
     }
 
     public void remTimeline (final Context context, final int adapterPos) {

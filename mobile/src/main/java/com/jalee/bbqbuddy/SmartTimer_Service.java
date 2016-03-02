@@ -32,6 +32,8 @@ public class SmartTimer_Service extends Service {
     public static Boolean timerCancel = false;
     public static Boolean timerComplete = false;
     public static Boolean timerSkip = false;
+    public static Boolean timerExtend = false;
+    public static Long timerExtendBy = 60000L;
     public static String timerText = "0";
     public static Integer nextEventindex = 0;
     public static Long minsRemaining = 0L;
@@ -308,13 +310,23 @@ public class SmartTimer_Service extends Service {
                 //Update Notification
                 updateNotification();
 
+                if (timerExtend) {
+                    timerExtend = false;
+                    updateNotification();
+                    //timerActive = false;
+                    smartTimerCurrentMax = millisecondsUntilDone + 60000;
+                    timerPaused = true;
+                    startTimer = true;
+                    cancel();
+                }
+
                 if (timerSkip) {
                     timerSkip = false;
                     cancel();
                     curTimerEnd();
                 }
 
-                if (timerPaused) {
+                if (timerPaused & !timerExtend) {
                     updateNotification();
                     timerActive = false;
                     smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);

@@ -5,25 +5,6 @@
     android:background="#e0e0e0">
 
     <TextView
-        android:id="@+id/tvFragSecond"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="26dp"
-        android:text="Notes"
-        android:paddingTop="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/scrollView3"
-        android:layout_toEndOf="@+id/scrollView3" />
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView3"
-        android:layout_below="@+id/tvFragSecond"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"

@@ -44,9 +44,9 @@ public class SmartTimer extends AppCompatActivity {
         @Override
         public void run() {
             //checking if activity has started to close and if so bypassing
-            try {
-                if (!closingActivity) {
 
+            if (!closingActivity) {
+                try {
                     final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
                     if (!onTimeline) {
                         if (SmartTimer_Service.timerActive) {
@@ -80,10 +80,10 @@ public class SmartTimer extends AppCompatActivity {
 
                     }
 
-                    handler.postDelayed(this, 300);
+                } catch (Throwable e) {
+                    //e.printStackTrace();
                 }
-            } catch (Throwable e) {
-                //e.printStackTrace();
+                handler.postDelayed(this, 300);
             }
         }
     };
