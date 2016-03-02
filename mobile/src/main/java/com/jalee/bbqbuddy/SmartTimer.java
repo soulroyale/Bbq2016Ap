@@ -44,42 +44,46 @@ public class SmartTimer extends AppCompatActivity {
         @Override
         public void run() {
             //checking if activity has started to close and if so bypassing
-            if (!closingActivity) {
+            try {
+                if (!closingActivity) {
 
-                final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                if (!onTimeline) {
+                    final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                    if (!onTimeline) {
+                        if (SmartTimer_Service.timerActive) {
+                            fab.setImageResource(R.drawable.ic_media_pause);
+                        } else {
+                            fab.setImageResource(R.drawable.ic_media_play);
+                        }
+                    }
+                    TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
+                    TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
+                    if (SmartTimer_Service.timerComplete) {
+                        txtSmartTimer.setText("0");
+                        txtSmartTimerNext.setText("0");
+                    }
                     if (SmartTimer_Service.timerActive) {
-                        fab.setImageResource(R.drawable.ic_media_pause);
-                    } else {
-                        fab.setImageResource(R.drawable.ic_media_play);
-                    }
-                }
-                TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-                TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
-                if (SmartTimer_Service.timerComplete) {
-                    txtSmartTimer.setText("0");
-                    txtSmartTimerNext.setText("0");
-                }
-                if (SmartTimer_Service.timerActive) {
-                    if (txtSmartTimer != null) {
-                        txtSmartTimer.setText(String.valueOf(SmartTimer_Service.timerEventsRem) + ":" + SmartTimer_Service.secondsString);
-                        txtSmartTimerNext.setText(SmartTimer_Service.timerText);
-                    }
-                    TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
-                    if (SmartTimer_Service.nextEventindex + 1 < SmartTimer_Service.TimelineList.size()) {
-                        if (SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() != "") {
-                            txtuntilnext.setText(SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() + " starts in");
+                        if (txtSmartTimer != null) {
+                            txtSmartTimer.setText(String.valueOf(SmartTimer_Service.timerEventsRem) + ":" + SmartTimer_Service.secondsString);
+                            txtSmartTimerNext.setText(SmartTimer_Service.timerText);
+                        }
+                        TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
+                        if (SmartTimer_Service.nextEventindex + 1 < SmartTimer_Service.TimelineList.size()) {
+                            if (SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() != "") {
+                                txtuntilnext.setText(SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() + " starts in");
+                            } else {
+                                txtuntilnext.setText("Next event starts in");
+                            }
                         } else {
                             txtuntilnext.setText("Next event starts in");
                         }
                     } else {
-                        txtuntilnext.setText("Next event starts in");
+
                     }
-                } else {
 
+                    handler.postDelayed(this, 300);
                 }
-
-                handler.postDelayed(this, 300);
+            } catch (Throwable e) {
+                //e.printStackTrace();
             }
         }
     };
@@ -299,7 +303,7 @@ public class SmartTimer extends AppCompatActivity {
                 case 1:
                     return "Timeline";
                 case 2:
-                    return "Notes";
+                    return "Log";
             }
             return null;
         }

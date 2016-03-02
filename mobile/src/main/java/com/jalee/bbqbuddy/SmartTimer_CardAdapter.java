@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -111,8 +112,14 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             cardmins.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    remTimeline(context,getAdapterPosition());
+                    decreaseMin(1, getAdapterPosition(), context);
                     return true;
+                }
+            });
+
+            cardmins.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    increaseMin(1, getAdapterPosition(), context);
                 }
             });
 
@@ -121,7 +128,30 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 @Override
         public void onClick(View v) {
 
+        }
+    }
 
+    public void increaseMin(int increaseVar, int adapterPos, Context context) {
+        if (!SmartTimer_Service.timerActive) {
+            SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() + increaseVar));
+            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+            SmartTimer_Service ST = new SmartTimer_Service();
+            ST.saveTimeline(context);
+            Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " increased by " + increaseVar + " minute", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Pause Smart Timer to adjust Events", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void decreaseMin(int decreaseVar, int adapterPos, Context context) {
+        if (!SmartTimer_Service.timerActive) {
+            SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() - decreaseVar));
+            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+            SmartTimer_Service ST = new SmartTimer_Service();
+            ST.saveTimeline(context);
+            Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " decreased by " + decreaseVar + " minute", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Pause Smart Timer to adjust Events", Toast.LENGTH_SHORT).show();
         }
     }
 
