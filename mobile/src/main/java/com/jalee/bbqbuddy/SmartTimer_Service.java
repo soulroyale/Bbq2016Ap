@@ -310,16 +310,6 @@ public class SmartTimer_Service extends Service {
                 //Update Notification
                 updateNotification();
 
-                if (timerExtend) {
-                    timerExtend = false;
-                    updateNotification();
-                    //timerActive = false;
-                    smartTimerCurrentMax = millisecondsUntilDone + 60000;
-                    timerPaused = true;
-                    startTimer = true;
-                    cancel();
-                }
-
                 if (timerSkip) {
                     timerSkip = false;
                     cancel();
@@ -331,6 +321,7 @@ public class SmartTimer_Service extends Service {
                     timerActive = false;
                     smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
                     cancel();
+                    Log.i("info", "paused");
 
                 }
                 if (timerCancel) {
@@ -348,6 +339,16 @@ public class SmartTimer_Service extends Service {
 
                     cancel();
                     updateNotification();
+                }
+
+                if (timerExtend) {
+                    timerExtend = false;
+                    updateNotification();
+                    //timerActive = false;
+                    smartTimerCurrentMax = millisecondsUntilDone + 60000;
+                    timerPaused = true;
+                    startTimer = true;
+                    cancel();
                 }
             }
 
@@ -438,6 +439,12 @@ public class SmartTimer_Service extends Service {
                 }
             }
         }
+        try {
+            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+        } catch (Throwable e) {
+            //e.printStackTrace();
+        }
+
     }
 
     @Override

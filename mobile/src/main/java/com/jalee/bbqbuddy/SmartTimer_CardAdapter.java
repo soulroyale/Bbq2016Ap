@@ -51,11 +51,18 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.cardtitle.setText(list.get(position).name);
         holder.cardsubtitle.setText(list.get(position).subTitle);
         holder.cardmins.setText(String.valueOf(list.get(position).id));
-        if (position < SmartTimer_Service.nextEventindex) {
-            holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
-            holder.cardtitle.setTextColor(Color.parseColor("#9E9E9E"));
-            holder.cardsubtitle.setTextColor(Color.parseColor("#9E9E9E"));
-            holder.cardmins.setTextColor(Color.parseColor("#9E9E9E"));
+        if (SmartTimer_Service.timerActive) {
+            if (position < SmartTimer_Service.nextEventindex) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
+                holder.cardtitle.setTextColor(Color.parseColor("#9E9E9E"));
+                holder.cardsubtitle.setTextColor(Color.parseColor("#9E9E9E"));
+                holder.cardmins.setTextColor(Color.parseColor("#9E9E9E"));
+            }
+            if (position == SmartTimer_Service.nextEventindex) {
+                holder.cardtitle.setTextColor(Color.parseColor("#D32F2F"));
+                holder.cardsubtitle.setTextColor(Color.parseColor("#D32F2F"));
+                holder.cardmins.setTextColor(Color.parseColor("#D32F2F"));
+            }
         }
         //holder.cardimage.setImageResource(list.get(position).id);
     }
