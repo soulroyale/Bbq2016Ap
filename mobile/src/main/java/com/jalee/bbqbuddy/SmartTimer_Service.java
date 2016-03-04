@@ -33,7 +33,8 @@ public class SmartTimer_Service extends Service {
     public static Boolean timerComplete = false;
     public static Boolean timerSkip = false;
     public static Boolean timerExtend = false;
-    public static Long timerExtendBy = 60000L;
+    public static Boolean timerReduce = false;
+    public static Long timerChangeBy = 1000L;
     public static String timerText = "0";
     public static Integer nextEventindex = 0;
     public static Long minsRemaining = 0L;
@@ -65,6 +66,10 @@ public class SmartTimer_Service extends Service {
             } else if (intent.getAction().equals("next")) {
                 Log.i(TAG, "Clicked Skip");
                 timerSkip = true;
+            } else if (intent.getAction().equals("increase")) {
+                SmartTimer_Service.timerChangeBy = 60000L;
+                SmartTimer_Service.timerExtend = true;
+                Log.i("info", "Timerextend");
             } else if (intent.getAction().equals(
                     "stop")) {
                 Log.i(TAG, "Received Stop Foreground Intent");
@@ -143,6 +148,11 @@ public class SmartTimer_Service extends Service {
         PendingIntent pnextIntent = PendingIntent.getService(this, 0,
                 nextIntent, 0);
 
+        Intent Increase = new Intent(this, SmartTimer_Service.class);
+        Increase.setAction("increase");
+        PendingIntent pIncrease = PendingIntent.getService(this, 0,
+                Increase, 0);
+
         String notTitle = "Current Event";
         String littleText = "";
         String bigText = "";
@@ -177,6 +187,8 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_play, "Resume",
                                     pplayIntent)
+                            .addAction(android.R.drawable.ic_input_add, "",
+                                    pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -195,6 +207,8 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_pause,
                                     "Pause", ppauseIntent)
+                            .addAction(android.R.drawable.ic_input_add, "",
+                                    pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -215,6 +229,8 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_play, "Resume",
                                     pplayIntent)
+                            .addAction(android.R.drawable.ic_input_add, "",
+                                    pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -233,6 +249,8 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_pause,
                                     "Pause", ppauseIntent)
+                            .addAction(android.R.drawable.ic_input_add, "",
+                                    pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
                             .setStyle(new NotificationCompat.BigTextStyle()
@@ -344,12 +362,29 @@ public class SmartTimer_Service extends Service {
                 if (timerExtend) {
                     timerExtend = false;
                     updateNotification();
-                    //timerActive = false;
-                    smartTimerCurrentMax = millisecondsUntilDone + 60000;
+                    int NewMins = TimelineList.get(nextEventindex).getId() + (int) TimeUnit.MILLISECONDS.toMinutes(timerChangeBy);
+                    smartTimerCurrentMax = millisecondsUntilDone + timerChangeBy;
+                    TimelineList.set(nextEventindex, new SmartTimer_cardUI(TimelineList.get(nextEventindex).getsubTitle(), TimelineList.get(nextEventindex).getName(), NewMins));
+                    try {
+                        SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                    } catch (Throwable e) {
+                        //e.printStackTrace();
+                    }
+
                     timerPaused = true;
                     startTimer = true;
                     cancel();
                 }
+
+                if (timerReduce) {
+                    timerReduce = false;
+                    updateNotification();
+                    smartTimerCurrentMax = millisecondsUntilDone - timerChangeBy;
+                    timerPaused = true;
+                    startTimer = true;
+                    cancel();
+                }
+
             }
 
 

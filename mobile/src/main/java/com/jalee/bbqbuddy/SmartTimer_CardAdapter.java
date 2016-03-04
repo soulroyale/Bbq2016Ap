@@ -146,8 +146,9 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         Log.i("info", String.valueOf(adapterPos));
         Log.i("info",String.valueOf(SmartTimer_Service.nextEventindex));
         if (SmartTimer_Service.timerActive & adapterPos == SmartTimer_Service.nextEventindex ) {
+            SmartTimer_Service.timerChangeBy = 60000L;
             SmartTimer_Service.timerExtend = true;
-            Log.i("info", "TImerextend");
+            Log.i("info", "Timerextend");
         }
         Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " increased by " + increaseVar + " minute", Toast.LENGTH_SHORT).show();
     }
@@ -158,7 +159,8 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         SmartTimer_Service ST = new SmartTimer_Service();
         ST.saveTimeline(context);
         if (SmartTimer_Service.timerActive & adapterPos == SmartTimer_Service.nextEventindex) {
-            SmartTimer_Service.timerExtend = true;
+            SmartTimer_Service.timerChangeBy = 60000L;
+            SmartTimer_Service.timerReduce = true;
         }
         Toast.makeText(context, SmartTimer_Service.TimelineList.get(adapterPos).getName() + " decreased by " + decreaseVar + " minute", Toast.LENGTH_SHORT).show();
     }
