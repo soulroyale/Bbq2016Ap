@@ -253,6 +253,8 @@ public class SmartTimer extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SmartTimer_Settings.class);
+            startActivity(intent);
             return true;
         }
 

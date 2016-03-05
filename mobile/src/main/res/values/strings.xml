@@ -85,4 +85,5 @@
         <item>58</item>
         <item>59</item>
     </string-array>
+    <string name="title_activity_smart_timer__settings">SmartTimer Settings</string>
 </resources>

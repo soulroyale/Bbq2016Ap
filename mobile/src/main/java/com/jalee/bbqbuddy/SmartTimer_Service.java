@@ -67,8 +67,10 @@ public class SmartTimer_Service extends Service {
                 Log.i(TAG, "Clicked Skip");
                 timerSkip = true;
             } else if (intent.getAction().equals("increase")) {
-                SmartTimer_Service.timerChangeBy = 60000L;
-                SmartTimer_Service.timerExtend = true;
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+                int notiExtend = sharedPreferences.getInt("notiExtendInterval", 1);
+                timerChangeBy = TimeUnit.MINUTES.toMillis(notiExtend);
+                timerExtend = true;
                 Log.i("info", "Timerextend");
             } else if (intent.getAction().equals(
                     "stop")) {
@@ -187,7 +189,7 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_play, "Resume",
                                     pplayIntent)
-                            .addAction(android.R.drawable.ic_input_add, "",
+                            .addAction(android.R.drawable.ic_input_add, "Extend",
                                     pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
@@ -207,7 +209,7 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_pause,
                                     "Pause", ppauseIntent)
-                            .addAction(android.R.drawable.ic_input_add, "",
+                            .addAction(android.R.drawable.ic_input_add, "Extend",
                                     pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
@@ -229,7 +231,7 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_play, "Resume",
                                     pplayIntent)
-                            .addAction(android.R.drawable.ic_input_add, "",
+                            .addAction(android.R.drawable.ic_input_add, "Extend",
                                     pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
@@ -249,7 +251,7 @@ public class SmartTimer_Service extends Service {
                             .setColor(notiColour)
                             .addAction(android.R.drawable.ic_media_pause,
                                     "Pause", ppauseIntent)
-                            .addAction(android.R.drawable.ic_input_add, "",
+                            .addAction(android.R.drawable.ic_input_add, "Extend",
                                     pIncrease)
                             .addAction(android.R.drawable.ic_media_next, "Skip",
                                     pnextIntent)
