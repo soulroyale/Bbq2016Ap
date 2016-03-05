@@ -44,6 +44,7 @@ public class SmartTimer_Service extends Service {
     public static Long smartTimerMax;
     public static Long smartTimerCurrentMax;
     public static Integer timerEventsRem = 0;
+    public static Boolean timelineCanIncrease = true;
 
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";
@@ -99,6 +100,16 @@ public class SmartTimer_Service extends Service {
     public void onCreate() {
         super.onCreate();
 
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+        try {
+            if (sharedPreferences.getBoolean("TimelineCanIncrease", true)) {
+                timelineCanIncrease = true;
+            } else
+                timelineCanIncrease = false;
+        } catch(NumberFormatException nfe) {
+
+        }
+
         final Handler handler = new Handler();
 
         Runnable run = new Runnable() {
@@ -128,10 +139,10 @@ public class SmartTimer_Service extends Service {
 
     public void updateNotification() {
         int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
-        Intent notificationIntent = new Intent(getApplicationContext(), SmartTimer.class);
-        notificationIntent.setAction("Start Foreground");
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+        //notificationIntent.setAction("Start Foreground");
+       // notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+        //       | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
                 notificationIntent, 0);
 
@@ -183,7 +194,7 @@ public class SmartTimer_Service extends Service {
                             .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
                             .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .setSmallIcon(R.drawable.cookingicon_512px_white)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
                             .setColor(notiColour)
@@ -203,7 +214,7 @@ public class SmartTimer_Service extends Service {
                             .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
                             .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .setSmallIcon(R.drawable.cookingicon_512px_white)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
                             .setColor(notiColour)
@@ -225,7 +236,7 @@ public class SmartTimer_Service extends Service {
                             .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
                             .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .setSmallIcon(R.drawable.cookingicon_512px_white)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
                             .setColor(notiColour)
@@ -245,7 +256,7 @@ public class SmartTimer_Service extends Service {
                             .setContentTitle(notTitle)
                                     //.setTicker("Truiton Music Player")
                             .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon512px)
+                            .setSmallIcon(R.drawable.cookingicon_512px_white)
                             .setContentIntent(pendingIntent)
                             .setOngoing(true)
                             .setColor(notiColour)
@@ -268,7 +279,7 @@ public class SmartTimer_Service extends Service {
                     .setContentTitle("BBQ Buddy")
                             //.setTicker("Truiton Music Player")
                     .setContentText("Smart Timer is Idle...")
-                    .setSmallIcon(R.drawable.cookingicon512px)
+                    .setSmallIcon(R.drawable.cookingicon_512px_white)
                     .setContentIntent(pendingIntent)
                     .setOngoing(true)
                     .setColor(notiColour)
@@ -451,7 +462,7 @@ public class SmartTimer_Service extends Service {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
                     .setOngoing(false)
-                    .setSmallIcon(R.drawable.cookingicon512px)
+                    .setSmallIcon(R.drawable.cookingicon_512px_white)
                     .setColor(notiColour)
                     .build();
 

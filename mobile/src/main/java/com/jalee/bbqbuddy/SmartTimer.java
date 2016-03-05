@@ -258,6 +258,11 @@ public class SmartTimer extends AppCompatActivity {
             return true;
         }
 
+        if (id == android.R.id.home) {
+            Log.i("info", "Home clicked");
+
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

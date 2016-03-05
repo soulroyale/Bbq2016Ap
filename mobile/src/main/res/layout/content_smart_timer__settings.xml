@@ -10,54 +10,80 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.jalee.bbqbuddy.SmartTimer_Settings"
-    tools:showIn="@layout/activity_smart_timer__settings"
-    android:onClick="saveSettings">
+    tools:showIn="@layout/activity_smart_timer__settings">
 
-    <EditText
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/txtNotiExtend"
-        android:text="0"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="65dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+Min action increment:"
-        android:id="@+id/textView3"
-        android:textSize="18sp"
-        android:layout_alignTop="@+id/txtNotiExtend"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Notification Settings"
-        android:id="@+id/textView4"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/btnSave"
-        android:layout_marginBottom="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Allow increase/decrease timeline mins by Press/Long Press"
-        android:id="@+id/timelineINcreseChkBox"
-        android:layout_below="@+id/txtNotiExtend"
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView"
         android:layout_alignParentStart="true"
-        android:checked="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Notification Settings"
+                android:id="@+id/txtNotificationHead"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/txtNotiExtend"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:layout_alignTop="@+id/textView3"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Extend button increment:"
+                android:id="@+id/textView3"
+                android:textSize="18sp"
+                android:paddingTop="12dp"
+                android:layout_below="@+id/txtNotificationHead"
+                android:layout_alignParentStart="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="When notification icon pressed, Auto Open Smart Timer"
+                android:id="@+id/chkAutoOpen"
+                android:layout_below="@+id/txtNotiExtend"
+                android:layout_alignParentStart="true"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Time Line Settings"
+                android:id="@+id/txtTimelineHead"
+                android:layout_marginTop="170dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allow increase/decrease timeline mins by Press/Long Press"
+                android:id="@+id/chkTimelineIncrease"
+                android:checked="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="209dp" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

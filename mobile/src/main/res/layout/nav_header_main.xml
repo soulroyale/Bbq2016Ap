@@ -17,7 +17,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/imageView"
         android:layout_margin="0dp"
-        android:src="@drawable/drawerimage1"
+        android:src="@drawable/drawerimage"
         android:scaleType="centerCrop" />
 
     <TextView

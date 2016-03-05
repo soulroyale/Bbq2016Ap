@@ -14,7 +14,7 @@
         android:id="@+id/bannerImage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/cookingicon_new"
+        android:src="@drawable/cookingicon_fab"
         android:scaleType="centerCrop" />
 
     <TextView

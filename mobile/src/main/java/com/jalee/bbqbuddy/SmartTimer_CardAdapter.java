@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -116,17 +117,23 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     return true;
                 }
             });
+
+
             cardmins.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    decreaseMin(1, getAdapterPosition(), context);
+                    if (SmartTimer_Service.timelineCanIncrease) {
+                        decreaseMin(1, getAdapterPosition(), context);
+                    }
                     return true;
                 }
             });
 
             cardmins.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    increaseMin(1, getAdapterPosition(), context);
+                    if (SmartTimer_Service.timelineCanIncrease) {
+                        increaseMin(1, getAdapterPosition(), context);
+                    }
                 }
             });
 

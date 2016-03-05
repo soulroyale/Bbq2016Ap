@@ -2,6 +2,7 @@ package com.jalee.bbqbuddy;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -105,19 +106,23 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    /*
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //If Timer already active, display it
+        try {
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+            if (sharedPreferences.getBoolean("STAutoOpen", true)) {
+                if (SmartTimer_Service.timerActive) {
+                    Intent reloadIntent = new Intent(this, SmartTimer.class);
+                    startActivity(reloadIntent);
+                }
+            }
+        } catch(NumberFormatException nfe) {
 
-        if (SmartTimer_Service.timerActive) {
-            Intent reloadIntent = new Intent(this, SmartTimer.class);
-            startActivity(reloadIntent);
         }
-
     }
-    */
+
 
     private void initializeData() {
         cardUIList = new ArrayList<>();
