@@ -200,23 +200,9 @@ public class SmartTimer extends AppCompatActivity {
                         SmartTimer_Service.timerPaused = true;
                     }
                 } else {
-                    if (SmartTimer_Service.timerActive == true) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SmartTimer.this);
-                        alertDialogBuilder.setMessage("Cannot currently edit timeline while timer is active");
-                        alertDialogBuilder.setCancelable(false);
-                        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-
-                            }
-                        });
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-                    } else {
-                        //Launch add activity
-                        Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
-                        startActivity(intent);
-                    }
+                    //Launch add activity
+                    Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
+                    startActivity(intent);
                 }
             }
         });

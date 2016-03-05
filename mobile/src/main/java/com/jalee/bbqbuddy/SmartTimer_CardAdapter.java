@@ -174,9 +174,9 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
     public void remTimeline (final Context context, final int adapterPos) {
         Log.i("Button Click", "Button Pressed at: " + adapterPos);
-        if (SmartTimer_Service.timerActive == true) {
+        if (SmartTimer_Service.timerActive == true & adapterPos <= SmartTimer_Service.nextEventindex) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-            alertDialogBuilder.setMessage("Cannot currently edit timeline while timer is active");
+            alertDialogBuilder.setMessage("Cannot delete the current event, or en event that has already occured!");
             alertDialogBuilder.setCancelable(false);
             alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
@@ -206,7 +206,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                         System.out.println(newSmartTimerValue);
                     }
                     SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
-                    SmartTimer_Service  ST= new SmartTimer_Service();
+                    SmartTimer_Service ST = new SmartTimer_Service();
                     ST.saveTimeline(context);
                 }
             });
@@ -219,43 +219,66 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
             });
             alertDialogBuilder.setNeutralButton("Delete All", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    AlertDialog.Builder alertDialogBuilderdelAll = new AlertDialog.Builder(context);
-                    alertDialogBuilderdelAll.setMessage("WARNING!! This will clear the entire timeline, are you sure?");
-                    alertDialogBuilderdelAll.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            Log.i("Selected", "You salected yes");
-                            SmartTimer_Service.TimelineList.clear();
-                            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
-                            Integer newSmartTimerValue = 0;
-                            for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
-                                newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
-                                System.out.println(newSmartTimerValue);
-                            }
-                            SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
-                            SmartTimer_Service  ST= new SmartTimer_Service();
-                            ST.saveTimeline(context);
-                        }
-                    });
 
-                    alertDialogBuilderdelAll.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.i("Selected", "You salected no");
+                            AlertDialog.Builder alertDialogBuilderdelAll = new AlertDialog.Builder(context);
+                            alertDialogBuilderdelAll.setMessage("WARNING!! This will clear the entire timeline, are you sure?");
+                            alertDialogBuilderdelAll.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            Log.i("Selected", "You salected yes");
+                                            if (!SmartTimer_Service.timerActive) {
+                                                SmartTimer_Service.TimelineList.clear();
+                                                SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                                                Integer newSmartTimerValue = 0;
+                                                for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                                                    newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
+                                                    System.out.println(newSmartTimerValue);
+                                                }
+                                                SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                                                SmartTimer_Service ST = new SmartTimer_Service();
+                                                ST.saveTimeline(context);
+                                            } else {
+                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                                                alertDialogBuilder.setMessage("Cannot delete all while timer is active!");
+                                                alertDialogBuilder.setCancelable(false);
+                                                alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface arg0, int arg1) {
+
+                                                    }
+                                                });
+                                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                                alertDialog.show();
+                                            }
+
+                                        }
+                                    }
+                            );
+
+                            alertDialogBuilderdelAll.setNegativeButton("No", new DialogInterface.OnClickListener()
+
+                                    {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Log.i("Selected", "You salected no");
+                                        }
+
+                                    }
+
+                            );
+                            AlertDialog alertDialog = alertDialogBuilderdelAll.create();
+                            alertDialog.show();
                         }
+                    }
 
-                    });
-                    AlertDialog alertDialog = alertDialogBuilderdelAll.create();
-                    alertDialog.show();
-                }
-            });
+            );
 
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         }
-    }
 
 
 }
