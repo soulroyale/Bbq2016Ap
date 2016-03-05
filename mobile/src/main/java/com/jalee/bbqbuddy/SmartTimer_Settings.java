@@ -101,6 +101,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
         if (id == android.R.id.home) {
             //save settings when home pressed
             saveSettings();
+            overridePendingTransition(R.anim.stationary, R.anim.slide_down);
         }
 
         return super.onOptionsItemSelected(item);

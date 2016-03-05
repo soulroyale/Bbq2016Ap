@@ -57,7 +57,7 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="When notification icon pressed, Auto Open Smart Timer"
+                android:text="When notification pressed, Auto Open Smart Timer"
                 android:id="@+id/chkAutoOpen"
                 android:layout_below="@+id/txtNotiExtend"
                 android:layout_alignParentStart="true"
@@ -76,11 +76,11 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Allow increase/decrease timeline mins by Press/Long Press"
+                android:text="Change Timeline mins by Press/Long Press"
                 android:id="@+id/chkTimelineIncrease"
                 android:checked="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="209dp" />
 
         </RelativeLayout>
