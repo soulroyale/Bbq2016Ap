@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity
                     stopIntent.setAction("stop");
                     startService(stopIntent);
                     finish();
-                    System.exit(0);
                 }
             });
 
@@ -165,6 +164,7 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity
             i.setType("message/rfc822");
             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
             i.putExtra(Intent.EXTRA_SUBJECT, "Check Out BBQ Buddy");
-            i.putExtra(Intent.EXTRA_TEXT, "Check Out BBQ Buddy, Join the below Google Plus group to gain access to the Beta release of BBQ Buddy: https://play.google.com/store/apps/details?id=com.jalee.bbqbuddy&hl=en");
+            i.putExtra(Intent.EXTRA_TEXT, "Check Out BBQ Buddy, Dowload BBQ buddy from the Play Store: https://play.google.com/store/apps/details?id=com.jalee.bbqbuddy&hl=en");
             try {
                 startActivity(Intent.createChooser(i, "Share BBQ Buddy:"));
             } catch (android.content.ActivityNotFoundException ex) {

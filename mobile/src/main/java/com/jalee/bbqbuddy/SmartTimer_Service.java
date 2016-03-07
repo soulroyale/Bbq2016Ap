@@ -59,13 +59,13 @@ public class SmartTimer_Service extends Service {
                 Log.i(TAG, "Received Start Foreground Intent ");
                 updateNotification();
             } else if (intent.getAction().equals("pause")) {
-                Log.i(TAG, "Clicked Previous");
+                Log.i(TAG, "Clicked Pause");
                 timerPaused = true;
             } else if (intent.getAction().equals("play")) {
-                Log.i(TAG, "Clicked Play");
+                Log.i(TAG, "Clicked Resume");
                 startTimer = true;
             } else if (intent.getAction().equals("next")) {
-                Log.i(TAG, "Clicked Skip");
+                Log.i(TAG, "Clicked Next Event");
                 timerSkip = true;
             } else if (intent.getAction().equals("increase")) {
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
@@ -78,7 +78,9 @@ public class SmartTimer_Service extends Service {
                 Log.i(TAG, "Received Stop Foreground Intent");
                 stopForeground(true);
                 stopSelf();
+                System.exit(0);
             }
+
         } else {
             //if no in intent, service must have crashed, relaunch with last known data
             loadTimeLine(this);
@@ -165,6 +167,11 @@ public class SmartTimer_Service extends Service {
         Increase.setAction("increase");
         PendingIntent pIncrease = PendingIntent.getService(this, 0,
                 Increase, 0);
+
+        Intent shutdown = new Intent(this, SmartTimer_Service.class);
+        shutdown.setAction("stop");
+        PendingIntent pshutdown = PendingIntent.getService(this, 0,
+                shutdown, 0);
 
         String notTitle = "Current Event";
         String littleText = "";
@@ -282,6 +289,8 @@ public class SmartTimer_Service extends Service {
                     .setSmallIcon(R.drawable.cookingicon_512px_white)
                     .setContentIntent(pendingIntent)
                     .setOngoing(true)
+                    .addAction(R.drawable.places_ic_clear, "Exit BBQ Buddy",
+                            pshutdown)
                     .setColor(notiColour)
                     .build();
             startForeground(1,
