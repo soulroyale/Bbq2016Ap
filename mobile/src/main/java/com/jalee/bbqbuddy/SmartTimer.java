@@ -3,6 +3,8 @@ package com.jalee.bbqbuddy;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -104,6 +106,9 @@ public class SmartTimer extends AppCompatActivity {
 
         // Start Runable for updating timerText
         handler.post(run);
+
+
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -222,6 +227,8 @@ public class SmartTimer extends AppCompatActivity {
         closingActivity = false;
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

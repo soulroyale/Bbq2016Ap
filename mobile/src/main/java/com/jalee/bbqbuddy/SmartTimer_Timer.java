@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
@@ -32,14 +33,26 @@ public class SmartTimer_Timer extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
-        View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
-        AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
-        AdRequest bannerAdRequest = new AdRequest.Builder()
-                .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
-                .build();
-        bannerAdView.loadAd(bannerAdRequest);
-        return v;
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            View v = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
+            AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
+            AdRequest bannerAdRequest = new AdRequest.Builder()
+                    .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
+                    .build();
+            bannerAdView.loadAd(bannerAdRequest);
+            return v;
+        } else {
+            View v = inflater.inflate(R.layout.fragment_smart_timer_timer_landscape, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer_landscape, container, false);
+            AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
+            AdRequest bannerAdRequest = new AdRequest.Builder()
+                    .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
+                    .build();
+            bannerAdView.loadAd(bannerAdRequest);
+            return v;
+        }
     }
 
     public static SmartTimer_Timer newInstance(String text) {
