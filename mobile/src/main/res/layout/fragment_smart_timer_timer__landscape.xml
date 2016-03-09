@@ -26,8 +26,9 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="0dp"
                 android:layout_column="0"
+                android:layout_weight="100"
 
                 xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -42,6 +43,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:paddingTop="40dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:textAlignment="center"
                     android:paddingBottom="15dp"
                     />
@@ -70,10 +73,11 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginRight="10dp"
                 android:layout_column="1"
                 android:layout_gravity="right|bottom"
+                android:layout_weight="100"
                 >
 
                 <TextView
@@ -87,6 +91,8 @@
                     android:layout_alignStart="@+id/txtSmartTimerNext"
                     android:layout_centerVertical="true"
                     android:paddingTop="40dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:textAlignment="center"
                     android:paddingBottom="15dp"
                     />
@@ -108,7 +114,6 @@
         </TableRow>
 
     </TableLayout>
-
     <com.google.android.gms.ads.AdView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -90,6 +90,7 @@ public class SmartTimer extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,8 +167,9 @@ public class SmartTimer extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         if(Constants.type == Constants.Type.FREE) {
+
             /*
-            AdView adView = (AdView) findViewById(R.id.adView);
+            AdView adView = (AdView) findViewById(R.id.adViewTimer);
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
                     .build();
