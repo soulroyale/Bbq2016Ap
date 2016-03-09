@@ -160,6 +160,9 @@ public class SmartTimer extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 // if listener is set - when using an indicator, must update that here
+                Animation fab360 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate360);
+                Animation fab180 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate180);
+                fab.startAnimation(fab180);
                 if (position == 0) {
                     if (SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = false;
@@ -186,6 +189,7 @@ public class SmartTimer extends AppCompatActivity {
                     SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                     fab.setImageResource(R.drawable.plus64);
                     fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                    SmartTimer_TimeLine.fabHidden = false;
                     onTimeline = true;
                 }
                 if (position == 2) {
@@ -196,8 +200,9 @@ public class SmartTimer extends AppCompatActivity {
                     if (isFabOpen) {
                         animateFAB();
                     }
-                    onTimeline = true;
+                    onTimeline = false;
                 }
+                fab.startAnimation(fab360);
                 String msg = "onPageSelected - position: " + position;
                 Log.i("debug1", "Page = " + position);
             }
