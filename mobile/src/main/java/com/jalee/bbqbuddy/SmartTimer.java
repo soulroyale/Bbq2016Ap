@@ -24,6 +24,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
@@ -40,6 +42,7 @@ public class SmartTimer extends AppCompatActivity {
     private InterstitialAd mInterstitialAd;
     final Handler handler = new Handler();
     private Boolean closingActivity = false;
+    private Boolean isFabOpen = false;
 
     //Setup runnable for updating timer text
     private Runnable run = new Runnable() {
@@ -90,6 +93,42 @@ public class SmartTimer extends AppCompatActivity {
         }
     };
 
+    public void animateFAB(){
+        Animation fab_open,fab_close,rotate_forward,rotate_backward;
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        FloatingActionButton fab1 = (FloatingActionButton)findViewById(R.id.fab1);
+        FloatingActionButton fab2 = (FloatingActionButton)findViewById(R.id.fab2);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+
+
+        if(isFabOpen){
+
+            fab.startAnimation(rotate_backward);
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(false);
+            fab2.setClickable(false);
+            isFabOpen = false;
+            Log.d("Raj", "close");
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
+            Log.d("Raj","open");
+
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +137,8 @@ public class SmartTimer extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_up, R.anim.stationary);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -135,6 +176,10 @@ public class SmartTimer extends AppCompatActivity {
                             fab.setImageResource(R.drawable.ic_media_play);
                         }
                     }
+                    if (isFabOpen) {
+                        animateFAB();
+                    }
+
                     onTimeline = false;
                 }
                 if (position == 1) {
@@ -146,7 +191,10 @@ public class SmartTimer extends AppCompatActivity {
                 if (position == 2) {
                     if (!SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = true;
-                        fab.animate().translationY(fab.getHeight() + 70).setInterpolator(new AccelerateInterpolator(2)).start();
+                        fab.animate().translationY(fab.getHeight() + 100).setInterpolator(new AccelerateInterpolator(2)).start();
+                    }
+                    if (isFabOpen) {
+                        animateFAB();
                     }
                     onTimeline = true;
                 }
@@ -207,10 +255,19 @@ public class SmartTimer extends AppCompatActivity {
                         SmartTimer_Service.timerPaused = true;
                     }
                 } else {
-                    //Launch add activity
-                    Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
-                    startActivity(intent);
+                    //open additional FABs
+                    animateFAB();
                 }
+            }
+        });
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animateFAB();
+                Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
+                startActivity(intent);
+
             }
         });
 
