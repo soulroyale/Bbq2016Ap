@@ -272,7 +272,14 @@ public class SmartTimer extends AppCompatActivity {
                 animateFAB();
                 Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
                 startActivity(intent);
-
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animateFAB();
+                Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Builder.class);
+                startActivity(intent);
             }
         });
 

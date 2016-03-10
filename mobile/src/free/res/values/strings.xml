@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BBQ Buddy Free</string>
+    <string name="title_activity_smart_timer__time_line__builder">SmartTimer_TimeLine_Builder
+    </string>
 </resources>

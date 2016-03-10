@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name="com.jalee.bbqbuddy.SmartTimer_TimeLine_Builder"
+            android:label="@string/title_activity_smart_timer__time_line__builder"
+            android:parentActivityName="com.jalee.bbqbuddy.SmartTimer"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jalee.bbqbuddy.SmartTimer" />
+        </activity>
+    </application>
+</manifest>
