@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     xmlns:ads="http://schemas.android.com/tools"
     android:id="@+id/cv"
-    android:layout_marginBottom="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginBottom="1dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
@@ -58,15 +58,15 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="mins"
             android:id="@+id/mins"
-            android:paddingRight="6dp"
+            android:paddingRight="0dp"
             android:textSize="10sp"
             android:layout_alignBaseline="@+id/cardmins"
             android:layout_alignBottom="@+id/cardmins"
             android:layout_alignEnd="@+id/cardimage" />
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/cardimage"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"

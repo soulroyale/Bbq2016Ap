@@ -345,17 +345,12 @@ public class SmartTimer extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             switch(position) {
                 case 0:
-                    //fab.show();
                     return SmartTimer_Timer.newInstance("");
                 case 1:
-                    //fab.hide();
-
                     return SmartTimer_TimeLine.newInstance("");
                 case 2:
-                    //fab.hide();
                     return SmartTimer_Notes.newInstance("");
                 default:
-                    //fab.show();
                     return SmartTimer_Timer.newInstance("");
             }
         }
