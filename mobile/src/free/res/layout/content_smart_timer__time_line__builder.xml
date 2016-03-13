@@ -24,7 +24,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerMeats"
         android:layout_below="@+id/txtSelMeat"
         android:layout_alignParentStart="true" />
 
@@ -34,44 +34,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Cooked:"
         android:id="@+id/txtCooked"
-        android:layout_below="@+id/spinner2"
-        android:layout_alignEnd="@+id/radioButton3" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rare"
-        android:id="@+id/radioButton"
-        android:layout_below="@+id/txtCooked"
-        android:layout_alignParentStart="true"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medium Rare"
-        android:id="@+id/radioButton2"
-        android:layout_alignTop="@+id/radioButton"
-        android:layout_alignEnd="@+id/spinner"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medium"
-        android:id="@+id/radioButton3"
-        android:layout_below="@+id/radioButton"
-        android:layout_alignParentStart="true"
-        android:checked="false" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Well Done"
-        android:id="@+id/radioButton4"
-        android:layout_alignTop="@+id/radioButton3"
-        android:layout_alignStart="@+id/radioButton2"
-        android:checked="false" />
+        android:layout_below="@+id/spinnerThick" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,24 +42,78 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Thickness/Weight"
         android:id="@+id/txtThickness"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/spinnerMeats"
         android:layout_alignParentStart="true" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner2"
+        android:id="@+id/spinnerThick"
         android:layout_below="@+id/txtThickness"
         android:layout_alignStart="@+id/txtCooked" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView3"
+        android:layout_below="@+id/txtCooked"
+        android:layout_alignParentStart="true"
+        android:fillViewport="false"
+        android:layout_alignParentBottom="true">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/radioCookType">
+
+            <RadioButton
+                android:id="@+id/radioRare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rare"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/radioMRare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium Rare"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/radioMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/radioMWell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium Well"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/radioWell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Well Done"
+                android:checked="false" />
+
+
+
+        </RadioGroup>
+    </ScrollView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Estimate"
         android:id="@+id/txtEstimate"
-        android:layout_below="@+id/radioButton4"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textSize="100sp" />
+        android:layout_marginBottom="46dp"
+        android:layout_alignBottom="@+id/scrollView3"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
