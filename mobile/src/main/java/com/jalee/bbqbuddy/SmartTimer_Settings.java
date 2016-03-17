@@ -25,7 +25,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        overridePendingTransition(R.anim.slide_up, R.anim.stationary);
+        overridePendingTransition(R.anim.slide_inright, R.anim.stationary);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -101,7 +101,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
         if (id == android.R.id.home) {
             //save settings when home pressed
             saveSettings();
-            overridePendingTransition(R.anim.stationary, R.anim.slide_down);
+            overridePendingTransition(R.anim.stationary, R.anim.slide_outright);
         }
 
         return super.onOptionsItemSelected(item);
@@ -111,7 +111,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
     public void finish() {
         //save settings when back pressed
         saveSettings();
-        overridePendingTransition(R.anim.stationary, R.anim.slide_down);
+        overridePendingTransition(R.anim.stationary, R.anim.slide_outright);
         super.finish();
     }
 }

@@ -86,4 +86,5 @@
         <item>59</item>
     </string-array>
     <string name="title_activity_smart_timer__settings">SmartTimer Settings</string>
+    <string name="title_activity_v1_bbq_buddy">v1_bbq_buddy</string>
 </resources>

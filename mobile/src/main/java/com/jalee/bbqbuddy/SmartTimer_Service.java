@@ -8,7 +8,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
@@ -57,6 +59,7 @@ public class SmartTimer_Service extends Service {
         if(intent != null && intent.getAction() != null) {
             if (intent.getAction().equals("Start Foreground")) {
                 Log.i(TAG, "Received Start Foreground Intent ");
+                loadTimeLine(getApplicationContext());
                 updateNotification();
             } else if (intent.getAction().equals("pause")) {
                 Log.i(TAG, "Clicked Pause");
@@ -141,10 +144,8 @@ public class SmartTimer_Service extends Service {
 
     public void updateNotification() {
         int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
-        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
-        //notificationIntent.setAction("Start Foreground");
-       // notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-        //       | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent notificationIntent = new Intent(getApplicationContext(), v1_bbq_buddy.class);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
                 notificationIntent, 0);
 
@@ -197,104 +198,170 @@ public class SmartTimer_Service extends Service {
         if (timerActive) {
             if (nextEventindex + 1 == TimelineList.size()) {
                 if (timerPaused) {
-                    Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(notTitle)
-                                    //.setTicker("Truiton Music Player")
-                            .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon_512px_white)
-                            .setContentIntent(pendingIntent)
-                            .setOngoing(true)
-                            .setColor(notiColour)
-                            .addAction(android.R.drawable.ic_media_play, "Resume",
-                                    pplayIntent)
-                            .addAction(android.R.drawable.ic_input_add, "Extend",
-                                    pIncrease)
-                            .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent)
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(bigText))
-                            .build();
-                    startForeground(1,
-                            notification);
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Notification notification = new NotificationCompat.Builder(this)
+                                .setContentTitle(notTitle)
+                                .setContentText(littleText)
+                                .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setContentIntent(pendingIntent)
+                                .setOngoing(true)
+                                .setColor(notiColour)
+                                .addAction(android.R.drawable.ic_media_play,
+                                        "Resume", pplayIntent)
+                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                        pIncrease)
+                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                        pnextIntent)
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(bigText))
+                                .build();
+                        startForeground(1,
+                                notification);
+                    } else {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                        builder.setSmallIcon(getApplicationInfo().icon);
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setContentTitle(notTitle);
+                        builder.setContentText(littleText);
+                        builder.setContentIntent(pendingIntent);
+                        builder.addAction(android.R.drawable.ic_media_play, "Resume", pplayIntent);
+                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
+                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.setColor(notiColour);
+
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        startForeground(1, builder.build());
+                    }
                 } else {
-                    Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(notTitle)
-                                    //.setTicker("Truiton Music Player")
-                            .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon_512px_white)
-                            .setContentIntent(pendingIntent)
-                            .setOngoing(true)
-                            .setColor(notiColour)
-                            .addAction(android.R.drawable.ic_media_pause,
-                                    "Pause", ppauseIntent)
-                            .addAction(android.R.drawable.ic_input_add, "Extend",
-                                    pIncrease)
-                            .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent)
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(bigText))
-                            .build();
-                    startForeground(1,
-                            notification);
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Notification notification = new NotificationCompat.Builder(this)
+                                .setContentTitle(notTitle)
+                                .setContentText(littleText)
+                                .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setContentIntent(pendingIntent)
+                                .setOngoing(true)
+                                .setColor(notiColour)
+                                .addAction(android.R.drawable.ic_media_pause,
+                                        "Pause", ppauseIntent)
+                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                        pIncrease)
+                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                        pnextIntent)
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(bigText))
+                                .build();
+                        startForeground(1,
+                                notification);
+                    } else {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                        builder.setSmallIcon(getApplicationInfo().icon);
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setContentTitle(notTitle);
+                        builder.setContentText(littleText);
+                        builder.setContentIntent(pendingIntent);
+                        builder.addAction(android.R.drawable.ic_media_pause,"Pause", ppauseIntent);
+                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
+                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.setColor(notiColour);
+
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        startForeground(1, builder.build());
+                    }
                 }
             } else {
                 if (timerPaused) {
-                    Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(notTitle)
-                                    //.setTicker("Truiton Music Player")
-                            .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon_512px_white)
-                            .setContentIntent(pendingIntent)
-                            .setOngoing(true)
-                            .setColor(notiColour)
-                            .addAction(android.R.drawable.ic_media_play, "Resume",
-                                    pplayIntent)
-                            .addAction(android.R.drawable.ic_input_add, "Extend",
-                                    pIncrease)
-                            .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent)
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(bigText))
-                            .build();
-                    startForeground(1,
-                            notification);
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Notification notification = new NotificationCompat.Builder(this)
+                                .setContentTitle(notTitle)
+                                .setContentText(littleText)
+                                .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setContentIntent(pendingIntent)
+                                .setOngoing(true)
+                                .setColor(notiColour)
+                                .addAction(android.R.drawable.ic_media_play,
+                                        "Resume", pplayIntent)
+                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                        pIncrease)
+                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                        pnextIntent)
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(bigText))
+                                .build();
+                        startForeground(1,
+                                notification);
+                    } else {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                        builder.setSmallIcon(getApplicationInfo().icon);
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setContentTitle(notTitle);
+                        builder.setContentText(littleText);
+                        builder.setContentIntent(pendingIntent);
+                        builder.addAction(android.R.drawable.ic_media_play, "Resume", pplayIntent);
+                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
+                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.setColor(notiColour);
+
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        startForeground(1, builder.build());
+                    }
+
                 } else {
-                    Notification notification = new NotificationCompat.Builder(this)
-                            .setContentTitle(notTitle)
-                                    //.setTicker("Truiton Music Player")
-                            .setContentText(littleText)
-                            .setSmallIcon(R.drawable.cookingicon_512px_white)
-                            .setContentIntent(pendingIntent)
-                            .setOngoing(true)
-                            .setColor(notiColour)
-                            .addAction(android.R.drawable.ic_media_pause,
-                                    "Pause", ppauseIntent)
-                            .addAction(android.R.drawable.ic_input_add, "Extend",
-                                    pIncrease)
-                            .addAction(android.R.drawable.ic_media_next, "Skip",
-                                    pnextIntent)
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(bigText))
-                            .build();
-                    startForeground(1,
-                            notification);
+
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Notification notification = new NotificationCompat.Builder(this)
+                                .setContentTitle(notTitle)
+                                .setContentText(littleText)
+                                .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setContentIntent(pendingIntent)
+                                .setOngoing(true)
+                                .setColor(notiColour)
+                                .addAction(android.R.drawable.ic_media_pause,
+                                        "Pause", ppauseIntent)
+                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                        pIncrease)
+                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                        pnextIntent)
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(bigText))
+                                .build();
+                        startForeground(1,
+                                notification);
+                    } else {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                        builder.setSmallIcon(getApplicationInfo().icon);
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setContentTitle(notTitle);
+                        builder.setContentText(littleText);
+                        builder.setContentIntent(pendingIntent);
+                        builder.addAction(android.R.drawable.ic_media_pause,"Pause", ppauseIntent);
+                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
+                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.setColor(notiColour);
+
+                        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        startForeground(1, builder.build());
+                    }
                 }
 
             }
         } else {
-            Notification notification = new NotificationCompat.Builder(this)
-                    .setContentTitle("BBQ Buddy")
-                            //.setTicker("Truiton Music Player")
-                    .setContentText("Smart Timer is Idle...")
-                    .setSmallIcon(R.drawable.cookingicon_512px_white)
-                    .setContentIntent(pendingIntent)
-                    .setOngoing(true)
-                    .addAction(R.drawable.places_ic_clear, "Exit BBQ Buddy",
-                            pshutdown)
-                    .setColor(notiColour)
-                    .build();
-            startForeground(1,
-                    notification);
+            if (!timerPaused) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder.setSmallIcon(R.drawable.cookingicon_512px_white);
+                } else {
+                    builder.setSmallIcon(getApplicationInfo().icon);
+                }
+                builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                builder.setContentTitle("BBQ Buddy");
+                builder.setContentText("Smart Timer is Idle...");
+                builder.setContentIntent(pendingIntent);
+                builder.addAction(R.drawable.places_ic_clear, "Exit BBQ Buddy", pshutdown);
+                builder.setColor(notiColour);
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                startForeground(1, builder.build());
+            }
         }
     }
 
