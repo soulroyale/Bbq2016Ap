@@ -5,9 +5,9 @@
     xmlns:ads="http://schemas.android.com/tools"
     android:id="@+id/cv"
     android:layout_marginBottom="1dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="2dp"
         android:paddingBottom="0dp"
+
         >
 
         <TextView
@@ -72,7 +73,7 @@
             android:layout_alignParentTop="true"
             android:paddingLeft="5dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/ic_reorder_grey" />
+            android:src="@android:drawable/ic_menu_delete" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

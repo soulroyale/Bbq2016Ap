@@ -23,7 +23,6 @@ android {
         paid {
             applicationId "com.jalee.bbqbuddy.paid"
         }
-
     }
 }
 

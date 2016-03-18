@@ -39,18 +39,8 @@ public class SmartTimer_Settings extends AppCompatActivity {
         }
         TextView txtNotiInt = (TextView) findViewById(R.id.txtNotiExtend);
         txtNotiInt.setText(String.valueOf(notiExtend));
-        CheckBox chkautoopen,chktimelineincrease;
-        chkautoopen =(CheckBox)findViewById(R.id.chkAutoOpen);
+        CheckBox chktimelineincrease;
 
-        try {
-            if (sharedPreferences.getBoolean("STAutoOpen", true)) {
-                chkautoopen.setChecked(true);
-            } else {
-                chkautoopen.setChecked(false);
-            }
-        } catch(NumberFormatException nfe) {
-
-        }
 
         chktimelineincrease =(CheckBox)findViewById(R.id.chkTimelineIncrease);
         try {
@@ -78,12 +68,8 @@ public class SmartTimer_Settings extends AppCompatActivity {
         sharedPreferences.edit().putInt("notiExtendInterval", myNum).apply();
 
         CheckBox chkautoopen,chktimelineincrease;
-        chkautoopen =(CheckBox)findViewById(R.id.chkAutoOpen);
-        if (chkautoopen.isChecked()) {
-            sharedPreferences.edit().putBoolean("STAutoOpen", true).apply();
-        } else {
-            sharedPreferences.edit().putBoolean("STAutoOpen", false).apply();
-        }
+
+
         chktimelineincrease =(CheckBox)findViewById(R.id.chkTimelineIncrease);
         if (chktimelineincrease.isChecked()) {
             sharedPreferences.edit().putBoolean("TimelineCanIncrease", true).apply();

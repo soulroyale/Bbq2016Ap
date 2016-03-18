@@ -12,4 +12,10 @@
     tools:context="com.jalee.bbqbuddy.v1_bbq_buddy"
     tools:showIn="@layout/app_bar_v1_bbq_buddy">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/v1_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

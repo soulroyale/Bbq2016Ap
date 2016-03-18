@@ -54,15 +54,6 @@
                 android:layout_below="@+id/txtNotificationHead"
                 android:layout_alignParentStart="true" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="When notification pressed, Auto Open Smart Timer"
-                android:id="@+id/chkAutoOpen"
-                android:layout_below="@+id/txtNotiExtend"
-                android:layout_alignParentStart="true"
-                android:checked="true" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
