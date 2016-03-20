@@ -19,6 +19,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,6 +37,8 @@ public class SmartTimer_Service extends Service {
     public static Boolean timerSkip = false;
     public static Boolean timerExtend = false;
     public static Boolean timerReduce = false;
+    public static Boolean timerAutoPause = true;
+    public static Boolean timerLooped = false;
     public static Long timerChangeBy = 1000L;
     public static String timerText = "0";
     public static Integer nextEventindex = 0;
@@ -368,8 +371,10 @@ public class SmartTimer_Service extends Service {
     public void intTimer() {
         Log.i(TAG, "Starting timer...");
         timerComplete =false;
+
         new CountDownTimer(smartTimerCurrentMax, 1000) {
             public void onTick(long millisecondsUntilDone) {
+
 
                 //saving current state
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
@@ -418,20 +423,21 @@ public class SmartTimer_Service extends Service {
                 updateNotification();
 
                 if (timerSkip) {
+                    this.cancel();
                     timerSkip = false;
-                    cancel();
                     curTimerEnd();
                 }
 
                 if (timerPaused & !timerExtend) {
+                    this.cancel();
                     updateNotification();
                     timerActive = false;
                     smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
-                    cancel();
                     Log.i("info", "paused");
 
                 }
                 if (timerCancel) {
+                    this.cancel();
                     timerActive = false;
                     timerPaused = false;
                     timerCancel = false;
@@ -444,11 +450,11 @@ public class SmartTimer_Service extends Service {
                     minutesString = "0";
                     timerText = "0";
 
-                    cancel();
                     updateNotification();
                 }
 
                 if (timerExtend) {
+                    this.cancel();
                     timerExtend = false;
                     updateNotification();
                     int NewMins = TimelineList.get(nextEventindex).getId() + (int) TimeUnit.MILLISECONDS.toMinutes(timerChangeBy);
@@ -462,16 +468,26 @@ public class SmartTimer_Service extends Service {
 
                     timerPaused = true;
                     startTimer = true;
-                    cancel();
                 }
 
                 if (timerReduce) {
+                    this.cancel();
                     timerReduce = false;
                     updateNotification();
                     smartTimerCurrentMax = millisecondsUntilDone - timerChangeBy;
                     timerPaused = true;
                     startTimer = true;
-                    cancel();
+
+                }
+
+                if (timerAutoPause & timerLooped) {
+                    this.cancel();
+                    timerPaused = true;
+                    updateNotification();
+                    timerActive = false;
+                    timerLooped = false;
+                    smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
+                    Log.i("info", "Autopaused");
                 }
 
             }
@@ -529,7 +545,7 @@ public class SmartTimer_Service extends Service {
             timerEventsRem = 0;
 
             updateNotification();
-            Intent intent = new Intent(getApplicationContext(), SmartTimer.class);
+            Intent intent = new Intent(getApplicationContext(), v1_bbq_buddy.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 2, intent, 0);
             int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
             Notification timerNotification = new Notification.Builder(getApplicationContext())
@@ -568,6 +584,7 @@ public class SmartTimer_Service extends Service {
         } catch (Throwable e) {
             //e.printStackTrace();
         }
+        timerLooped = true;
 
     }
 

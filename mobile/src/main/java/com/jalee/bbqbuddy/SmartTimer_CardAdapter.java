@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -54,7 +55,9 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.cardmins.setText(String.valueOf(list.get(position).id));
         if (SmartTimer_Service.timerActive) {
             if (position < SmartTimer_Service.nextEventindex) {
-                holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
+                }
                 holder.cardtitle.setTextColor(Color.parseColor("#9E9E9E"));
                 holder.cardsubtitle.setTextColor(Color.parseColor("#9E9E9E"));
                 holder.cardmins.setTextColor(Color.parseColor("#9E9E9E"));
@@ -64,6 +67,14 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 holder.cardsubtitle.setTextColor(Color.parseColor("#D32F2F"));
                 holder.cardmins.setTextColor(Color.parseColor("#D32F2F"));
             }
+        } else {
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            holder.cardtitle.setTextColor(Color.parseColor("#757575"));
+            holder.cardsubtitle.setTextColor(Color.parseColor("#757575"));
+            holder.cardmins.setTextColor(Color.parseColor("#757575"));
+
         }
         //holder.cardimage.setImageResource(list.get(position).id);
     }

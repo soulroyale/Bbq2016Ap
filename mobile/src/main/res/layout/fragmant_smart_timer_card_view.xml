@@ -52,7 +52,8 @@
             android:text="120"
             android:textSize="44sp"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/cardimage"/>
+            android:layout_toLeftOf="@id/cardimage"
+            android:textColor="#757575" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -2,6 +2,7 @@ package com.jalee.bbqbuddy;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -25,9 +26,11 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.concurrent.TimeUnit;
@@ -36,6 +39,8 @@ public class v1_bbq_buddy extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Boolean onTimeline = false;
+    Boolean onSmartTimer = true;
+    Boolean onLogs = false;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private InterstitialAd mInterstitialAd;
@@ -58,13 +63,12 @@ public class v1_bbq_buddy extends AppCompatActivity
 
         if(Constants.type == Constants.Type.FREE) {
 
-            /*
+
             AdView adView = (AdView) findViewById(R.id.adViewTimer);
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
                     .build();
             adView.loadAd(adRequest);
-            */
 
             mInterstitialAd = new InterstitialAd(this);
             mInterstitialAd.setAdUnitId("ca-app-pub-6523970465102586/4340248157");
@@ -138,6 +142,8 @@ public class v1_bbq_buddy extends AppCompatActivity
         });
         closingActivity = false;
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -146,6 +152,8 @@ public class v1_bbq_buddy extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -159,8 +167,18 @@ public class v1_bbq_buddy extends AppCompatActivity
                 // if listener is set - when using an indicator, must update that here
                 Animation fab360 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate360);
                 Animation fab180 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate180);
-                fab.startAnimation(fab180);
+                Button btnsmarttimer = (Button) findViewById(R.id.btnST);
+                Button btntimeline = (Button) findViewById(R.id.btnTL);
+                Button btnlog = (Button) findViewById(R.id.btnLog);
+
                 if (position == 0) {
+                    btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.BOLD);
+                    btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
+                    btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
+                    if (!onLogs) {
+                        fab.startAnimation(fab180);
+                        fab.startAnimation(fab360);
+                    }
                     if (SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = false;
                         if (SmartTimer_Service.timerActive) {
@@ -179,27 +197,41 @@ public class v1_bbq_buddy extends AppCompatActivity
                     if (isFabOpen) {
                         animateFAB();
                     }
-
+                    onSmartTimer = true;
                     onTimeline = false;
+                    onLogs = false;
                 }
                 if (position == 1) {
+                    btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
+                    btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.BOLD);
+                    btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
+                    if (!onLogs) {
+                        fab.startAnimation(fab180);
+                        fab.startAnimation(fab360);
+                    }
                     SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                     fab.setImageResource(R.drawable.plus64);
                     fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     SmartTimer_TimeLine.fabHidden = false;
                     onTimeline = true;
+                    onSmartTimer = false;
+                    onLogs = false;
                 }
                 if (position == 2) {
+                    btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
+                    btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
+                    btnlog.setTypeface(btnlog.getTypeface(), Typeface.BOLD);
                     if (!SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = true;
-                        fab.animate().translationY(fab.getHeight() + 100).setInterpolator(new AccelerateInterpolator(2)).start();
+                        fab.animate().translationY(fab.getHeight() + 180).setInterpolator(new AccelerateInterpolator(2)).start();
                     }
                     if (isFabOpen) {
                         animateFAB();
                     }
                     onTimeline = false;
+                    onSmartTimer = false;
+                    onLogs = true;
                 }
-                fab.startAnimation(fab360);
                 String msg = "onPageSelected - position: " + position;
                 Log.i("debug1", "Page = " + position);
             }
@@ -213,7 +245,27 @@ public class v1_bbq_buddy extends AppCompatActivity
             }
         });
 
-
+        Button btnsmarttimer = (Button) findViewById(R.id.btnST);
+        btnsmarttimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(0);
+            }
+        });
+        Button btntimeline = (Button) findViewById(R.id.btnTL);
+        btntimeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(1);
+            }
+        });
+        Button btnlog = (Button) findViewById(R.id.btnLog);
+        btnlog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewPager.setCurrentItem(2);
+            }
+        });
 
         //start runnable for uopdating icon and timertext
         handler.post(run);
@@ -226,13 +278,15 @@ public class v1_bbq_buddy extends AppCompatActivity
             if (!closingActivity) {
                 try {
                     final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.v1_fab);
-                    if (!onTimeline) {
+
+                    if (onSmartTimer) {
                         if (SmartTimer_Service.timerActive) {
                             fab.setImageResource(R.drawable.ic_media_pause);
                         } else {
                             fab.setImageResource(R.drawable.ic_media_play);
                         }
                     }
+
                     TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);
                     if (SmartTimer_Service.timerComplete) {
@@ -280,14 +334,12 @@ public class v1_bbq_buddy extends AppCompatActivity
 
 
         if(isFabOpen){
-
             fab.startAnimation(rotate_backward);
             fab1.startAnimation(fab_close);
             fab2.startAnimation(fab_close);
             fab1.setClickable(false);
             fab2.setClickable(false);
             isFabOpen = false;
-            Log.d("Raj", "close");
 
         } else {
 
@@ -297,12 +349,9 @@ public class v1_bbq_buddy extends AppCompatActivity
             fab1.setClickable(true);
             fab2.setClickable(true);
             isFabOpen = true;
-            Log.d("Raj","open");
 
         }
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -374,13 +423,33 @@ public class v1_bbq_buddy extends AppCompatActivity
             Intent intent = new Intent(this, SmartTimer_Settings.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{""});
+            i.putExtra(Intent.EXTRA_SUBJECT, "Check Out BBQ Buddy");
+            i.putExtra(Intent.EXTRA_TEXT, "Check Out BBQ Buddy, Dowload BBQ buddy from the Play Store: https://play.google.com/store/apps/details?id=com.jalee.bbqbuddy&hl=en");
+            try {
+                startActivity(Intent.createChooser(i, "Share BBQ Buddy:"));
+            } catch (android.content.ActivityNotFoundException ex) {
+
+            }
 
         } else if (id == R.id.nav_send) {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("message/rfc822");
+            i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"support@jalee-dev.com"});
+            i.putExtra(Intent.EXTRA_SUBJECT, "BBQ Buddy Feedback");
+            i.putExtra(Intent.EXTRA_TEXT, "I tried BBQ Buddy and have the following thoughts:");
+            try {
+                startActivity(Intent.createChooser(i, "BBQ Buddy Feedback:"));
+            } catch (android.content.ActivityNotFoundException ex) {
+
+            }
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 

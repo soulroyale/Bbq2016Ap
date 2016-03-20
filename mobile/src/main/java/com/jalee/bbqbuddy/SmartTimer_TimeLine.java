@@ -44,15 +44,15 @@ public class SmartTimer_TimeLine extends Fragment {
                     if (fabHidden == false) {
                         Log.i("scroll", "Scrolling up");
                         fabHidden = true;
-                        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-                        floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 70).setInterpolator(new AccelerateInterpolator(2)).start();
+                        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.v1_fab);
+                        floatingActionButton.animate().translationY(floatingActionButton.getHeight() + 180).setInterpolator(new AccelerateInterpolator(2)).start();
                     }
 
                 } else {
                     if (fabHidden == true) {
                         Log.i("scroll", "SCrolling down");
                         fabHidden = false;
-                        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.v1_fab);
                         floatingActionButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     }
                 }

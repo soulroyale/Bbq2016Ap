@@ -27,20 +27,10 @@ public class SmartTimer_Timer extends Fragment {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             View v = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
             View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer, container, false);
-            AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
-            AdRequest bannerAdRequest = new AdRequest.Builder()
-                    .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
-                    .build();
-            bannerAdView.loadAd(bannerAdRequest);
             return v;
         } else {
             View v = inflater.inflate(R.layout.fragment_smart_timer_timer__landscape, container, false);
             View rootView = inflater.inflate(R.layout.fragment_smart_timer_timer__landscape, container, false);
-            AdView bannerAdView = (AdView) rootView.findViewById(R.id.adViewTimer);
-            AdRequest bannerAdRequest = new AdRequest.Builder()
-                    .addTestDevice("63477755EE05E10016CC8C5A71F18B64")
-                    .build();
-            bannerAdView.loadAd(bannerAdRequest);
             return v;
         }
     }

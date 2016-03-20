@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         SmartTimer_Service  ST= new SmartTimer_Service();
         ST.loadTimeLine(getApplicationContext());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.v1_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
