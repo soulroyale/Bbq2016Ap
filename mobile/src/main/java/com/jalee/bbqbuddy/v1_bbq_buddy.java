@@ -210,7 +210,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                         fab.startAnimation(fab360);
                     }
                     SmartTimer_TimeLine.adapter.notifyDataSetChanged();
-                    fab.setImageResource(R.drawable.plus64);
+                    fab.setImageResource(R.drawable.plus_white);
                     fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                     SmartTimer_TimeLine.fabHidden = false;
                     onTimeline = true;

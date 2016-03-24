@@ -74,7 +74,7 @@
             android:layout_alignParentTop="true"
             android:paddingLeft="5dp"
             android:layout_marginRight="5dp"
-            android:src="@android:drawable/ic_menu_delete" />
+            android:src="@drawable/ic_reorder_grey" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
