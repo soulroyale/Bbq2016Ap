@@ -27,31 +27,19 @@
         </activity>
 
         <activity android:name=".About" />
-        <activity
-            android:name=".SmartTimer"
-            android:label="@string/title_activity_smart_timer"
-            android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jalee.bbqbuddy.MainActivity" />
-        </activity>
         <activity android:name="com.google.android.gms.ads.AdActivity" />
         <activity android:name=".SmartTimer_TimeLine_Add" />
-
         <service android:name=".SmartTimer_Service" />
 
         <activity
             android:name=".SmartTimer_Settings"
             android:label="@string/title_activity_smart_timer__settings"
-            android:parentActivityName=".SmartTimer"
+            android:parentActivityName=".v1_bbq_buddy"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jalee.bbqbuddy.SmartTimer" />
+                android:value="com.jalee.bbqbuddy.v1_bbq_buddy" />
         </activity>
-
     </application>
 
 </manifest>
