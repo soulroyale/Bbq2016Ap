@@ -118,6 +118,15 @@ public class SmartTimer_Service extends Service {
 
         }
 
+        try {
+            if (sharedPreferences.getBoolean("timerAutoPause", true)) {
+                timerAutoPause = true;
+            } else
+                timerAutoPause = false;
+        } catch(NumberFormatException nfe) {
+
+        }
+
         final Handler handler = new Handler();
 
         Runnable run = new Runnable() {

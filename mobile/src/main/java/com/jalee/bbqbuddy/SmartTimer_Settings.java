@@ -39,7 +39,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
         }
         TextView txtNotiInt = (TextView) findViewById(R.id.txtNotiExtend);
         txtNotiInt.setText(String.valueOf(notiExtend));
-        CheckBox chktimelineincrease;
+        CheckBox chkautopause,chktimelineincrease;
 
 
         chktimelineincrease =(CheckBox)findViewById(R.id.chkTimelineIncrease);
@@ -48,6 +48,17 @@ public class SmartTimer_Settings extends AppCompatActivity {
                 chktimelineincrease.setChecked(true);
             } else {
                 chktimelineincrease.setChecked(false);
+            }
+        } catch(NumberFormatException nfe) {
+
+        }
+
+        chkautopause =(CheckBox)findViewById(R.id.chkAutoPause);
+        try {
+            if (sharedPreferences.getBoolean("timerAutoPause", true)) {
+                chkautopause.setChecked(true);
+            } else {
+                chkautopause.setChecked(false);
             }
         } catch(NumberFormatException nfe) {
 
@@ -67,7 +78,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
 
         sharedPreferences.edit().putInt("notiExtendInterval", myNum).apply();
 
-        CheckBox chkautoopen,chktimelineincrease;
+        CheckBox chkautopause,chktimelineincrease;
 
 
         chktimelineincrease =(CheckBox)findViewById(R.id.chkTimelineIncrease);
@@ -78,6 +89,18 @@ public class SmartTimer_Settings extends AppCompatActivity {
             sharedPreferences.edit().putBoolean("TimelineCanIncrease", false).apply();
             SmartTimer_Service.timelineCanIncrease = false;
         }
+
+        chkautopause =(CheckBox)findViewById(R.id.chkAutoPause);
+        if (chkautopause.isChecked()) {
+            sharedPreferences.edit().putBoolean("timerAutoPause", true).apply();
+            SmartTimer_Service.timerAutoPause = true;
+        } else {
+            sharedPreferences.edit().putBoolean("timerAutoPause", false).apply();
+            SmartTimer_Service.timerAutoPause = false;
+        }
+
+
+
     }
 
     @Override
