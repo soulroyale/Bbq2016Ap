@@ -103,7 +103,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardimage = (ImageView) itemView.findViewById(R.id.cardimage);
+            cardimage = (ImageView) itemView.findViewById(R.id.reorderImage);
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
             cardmins = (TextView) itemView.findViewById(R.id.cardmins);

@@ -51,9 +51,10 @@
             android:id="@+id/cardmins"
             android:text="120"
             android:textSize="44sp"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/cardimage"
-            android:textColor="#757575" />
+
+            android:textColor="#757575"
+            android:layout_alignBottom="@+id/carddesc"
+            android:layout_toStartOf="@+id/mins" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,12 +65,12 @@
             android:textSize="10sp"
             android:layout_alignBaseline="@+id/cardmins"
             android:layout_alignBottom="@+id/cardmins"
-            android:layout_alignEnd="@+id/cardimage" />
+            android:layout_alignEnd="@+id/reorderImage" />
 
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/cardimage"
+            android:id="@+id/reorderImage"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:paddingLeft="5dp"
