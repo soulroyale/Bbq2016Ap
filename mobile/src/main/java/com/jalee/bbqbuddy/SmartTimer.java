@@ -250,7 +250,6 @@ public class SmartTimer extends AppCompatActivity {
                     }
 
                     final TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
-                    MainActivity mainActivity = new MainActivity();
                     if (!SmartTimer_Service.timerActive) {
                         if (SmartTimer_Service.TimelineList.size() > 0) {
                             SmartTimer_Service.startTimer = true;
