@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -294,6 +295,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                     }
                     if (SmartTimer_Service.timerActive) {
                         if (txtSmartTimer != null) {
+                            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                             txtSmartTimer.setText(String.valueOf(SmartTimer_Service.timerEventsRem) + ":" + SmartTimer_Service.secondsString);
                             txtSmartTimerNext.setText(SmartTimer_Service.timerText);
                         }
@@ -308,7 +310,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                             txtuntilnext.setText("Next event starts in");
                         }
                     } else {
-
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                     }
 
                 } catch (Throwable e) {
