@@ -53,7 +53,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.cardtitle.setText(list.get(position).name);
         holder.cardsubtitle.setText(list.get(position).subTitle);
         holder.cardmins.setText(String.valueOf(list.get(position).id));
-        if (SmartTimer_Service.timerActive) {
+        if (SmartTimer_Service.timerActive || SmartTimer_Service.timerPaused) {
             if (position < SmartTimer_Service.nextEventindex) {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     holder.itemView.setBackgroundColor(Color.parseColor("#E0E0E0"));
