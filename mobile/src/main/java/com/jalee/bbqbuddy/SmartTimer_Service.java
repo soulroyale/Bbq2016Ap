@@ -50,6 +50,7 @@ public class SmartTimer_Service extends Service {
     public static Long smartTimerCurrentMax;
     public static Integer timerEventsRem = 0;
     public static Boolean timelineCanIncrease = true;
+    public static Boolean KeepScreenOn = true;
 
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";
@@ -123,6 +124,15 @@ public class SmartTimer_Service extends Service {
                 timerAutoPause = true;
             } else
                 timerAutoPause = false;
+        } catch(NumberFormatException nfe) {
+
+        }
+
+        try {
+            if (sharedPreferences.getBoolean("KeepScreenOn", true)) {
+                KeepScreenOn = true;
+            } else
+                KeepScreenOn = false;
         } catch(NumberFormatException nfe) {
 
         }
@@ -218,11 +228,11 @@ public class SmartTimer_Service extends Service {
                                 .setContentIntent(pendingIntent)
                                 .setOngoing(true)
                                 .setColor(notiColour)
-                                .addAction(android.R.drawable.ic_media_play,
+                                .addAction(0,
                                         "Resume", pplayIntent)
-                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                .addAction(0, "Extend",
                                         pIncrease)
-                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                .addAction(0, "Skip",
                                         pnextIntent)
                                 .setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(bigText))
@@ -236,9 +246,9 @@ public class SmartTimer_Service extends Service {
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
-                        builder.addAction(android.R.drawable.ic_media_play, "Resume", pplayIntent);
-                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
-                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.addAction(0, "Resume", pplayIntent);
+                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -253,11 +263,11 @@ public class SmartTimer_Service extends Service {
                                 .setContentIntent(pendingIntent)
                                 .setOngoing(true)
                                 .setColor(notiColour)
-                                .addAction(android.R.drawable.ic_media_pause,
+                                .addAction(0,
                                         "Pause", ppauseIntent)
-                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                .addAction(0, "Extend",
                                         pIncrease)
-                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                .addAction(0, "Skip",
                                         pnextIntent)
                                 .setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(bigText))
@@ -271,9 +281,9 @@ public class SmartTimer_Service extends Service {
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
-                        builder.addAction(android.R.drawable.ic_media_pause,"Pause", ppauseIntent);
-                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
-                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.addAction(0,"Pause", ppauseIntent);
+                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -290,11 +300,11 @@ public class SmartTimer_Service extends Service {
                                 .setContentIntent(pendingIntent)
                                 .setOngoing(true)
                                 .setColor(notiColour)
-                                .addAction(android.R.drawable.ic_media_play,
+                                .addAction(0,
                                         "Resume", pplayIntent)
-                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                .addAction(0, "Extend",
                                         pIncrease)
-                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                .addAction(0, "Skip",
                                         pnextIntent)
                                 .setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(bigText))
@@ -308,9 +318,9 @@ public class SmartTimer_Service extends Service {
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
-                        builder.addAction(android.R.drawable.ic_media_play, "Resume", pplayIntent);
-                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
-                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.addAction(0, "Resume", pplayIntent);
+                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -327,11 +337,11 @@ public class SmartTimer_Service extends Service {
                                 .setContentIntent(pendingIntent)
                                 .setOngoing(true)
                                 .setColor(notiColour)
-                                .addAction(android.R.drawable.ic_media_pause,
+                                .addAction(0,
                                         "Pause", ppauseIntent)
-                                .addAction(android.R.drawable.ic_input_add, "Extend",
+                                .addAction(0, "Extend",
                                         pIncrease)
-                                .addAction(android.R.drawable.ic_media_next, "Skip",
+                                .addAction(0, "Skip",
                                         pnextIntent)
                                 .setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(bigText))
@@ -345,9 +355,9 @@ public class SmartTimer_Service extends Service {
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
-                        builder.addAction(android.R.drawable.ic_media_pause,"Pause", ppauseIntent);
-                        builder.addAction(android.R.drawable.ic_input_add, "Extend", pIncrease);
-                        builder.addAction(android.R.drawable.ic_media_next, "Skip", pnextIntent);
+                        builder.addAction(0,"Pause", ppauseIntent);
+                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
                         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -368,7 +378,7 @@ public class SmartTimer_Service extends Service {
                 builder.setContentTitle("BBQ Buddy");
                 builder.setContentText("Smart Timer is Idle...");
                 builder.setContentIntent(pendingIntent);
-                builder.addAction(R.drawable.places_ic_clear, "Exit BBQ Buddy", pshutdown);
+                builder.addAction(0, "Exit BBQ Buddy", pshutdown);
                 builder.setColor(notiColour);
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

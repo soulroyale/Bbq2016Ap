@@ -49,6 +49,7 @@ public class v1_bbq_buddy extends AppCompatActivity
     private Boolean closingActivity = false;
     private Boolean isFabOpen = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -294,8 +295,11 @@ public class v1_bbq_buddy extends AppCompatActivity
                         txtSmartTimerNext.setText("0");
                     }
                     if (SmartTimer_Service.timerActive) {
-                        if (txtSmartTimer != null) {
+                        if (SmartTimer_Service.KeepScreenOn) {
                             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        }
+
+                        if (txtSmartTimer != null) {
                             txtSmartTimer.setText(String.valueOf(SmartTimer_Service.timerEventsRem) + ":" + SmartTimer_Service.secondsString);
                             txtSmartTimerNext.setText(SmartTimer_Service.timerText);
                         }
@@ -310,7 +314,9 @@ public class v1_bbq_buddy extends AppCompatActivity
                             txtuntilnext.setText("Next event starts in");
                         }
                     } else {
-                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        if (SmartTimer_Service.KeepScreenOn) {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        }
                     }
 
                 } catch (Throwable e) {

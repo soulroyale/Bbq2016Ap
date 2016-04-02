@@ -22,7 +22,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,9 +72,9 @@
                 android:text="Change Timeline mins by Press/Long Press"
                 android:id="@+id/chkTimelineIncrease"
                 android:checked="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="209dp" />
+                android:layout_marginTop="21dp"
+                android:layout_below="@+id/txtTimelineHead"
+                android:layout_alignStart="@+id/chkScreenOn" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,11 +88,20 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Autopause timer at each new Timeline event"
+                android:text="Autopause timer at each new Timeline event - Beta"
                 android:id="@+id/chkAutoPause"
                 android:checked="true"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/txtNotiExtend" />
+                android:layout_below="@+id/txtTimerSettings"
+                android:layout_centerHorizontal="true" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keep screen on while timer is running"
+                android:id="@+id/chkScreenOn"
+                android:checked="true"
+                android:layout_below="@+id/chkAutoPause"
+                android:layout_alignStart="@+id/chkAutoPause" />
 
         </RelativeLayout>
     </ScrollView>
