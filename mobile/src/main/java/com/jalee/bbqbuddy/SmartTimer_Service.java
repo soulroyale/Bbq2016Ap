@@ -73,6 +73,8 @@ public class SmartTimer_Service extends Service {
                 timerPaused = true;
             } else if (intent.getAction().equals("play")) {
                 Log.i(TAG, "Clicked Resume");
+                NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.cancel(3);
                 startTimer = true;
             } else if (intent.getAction().equals("next")) {
                 Log.i(TAG, "Clicked Next Event");
@@ -136,6 +138,15 @@ public class SmartTimer_Service extends Service {
                 KeepScreenOn = true;
             } else
                 KeepScreenOn = false;
+        } catch(NumberFormatException nfe) {
+
+        }
+
+        try {
+            if (sharedPreferences.getBoolean("ExtraNotification", false)) {
+                ExtraNotification = true;
+            } else
+                ExtraNotification = false;
         } catch(NumberFormatException nfe) {
 
         }
@@ -394,6 +405,7 @@ public class SmartTimer_Service extends Service {
         Log.i(TAG, "Starting timer...");
         timerComplete =false;
 
+
         new CountDownTimer(smartTimerCurrentMax, 1000) {
             public void onTick(long millisecondsUntilDone) {
 
@@ -564,20 +576,28 @@ public class SmartTimer_Service extends Service {
                 Intent intent = new Intent(getApplicationContext(), v1_bbq_buddy.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 2, intent, 0);
                 int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
+
+                NotificationCompat.Action action =
+                        new NotificationCompat.Action.Builder(R.drawable.ic_media_play,
+                                "Resume", pplayIntent)
+                                .build();
+
                 Notification intervalnotification = new NotificationCompat.Builder(this)
                         .setContentTitle("Timeline Autopaused")
                         .setContentText("Select Resume to continue")
                         .setSmallIcon(R.drawable.cookingicon_512px_white)
+                        .setVibrate(new long[]{1000, 200, 1000})
                         .setContentIntent(pendingIntent)
                         .setColor(notiColour)
                         .setAutoCancel(true)
                         .addAction(0,
                                 "Resume", pplayIntent)
                         //.addAction(0, "Extend",
-                        //        pIncrease)
+                                //        pIncrease)
                         //.addAction(0, "Skip",
                          //       pnextIntent)
-
+                        .extend(new WearableExtender().addAction(action))
+                        //.setDefaults(Notification.DEFAULT_ALL)
                         .build();
 
                 NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
@@ -600,6 +620,7 @@ public class SmartTimer_Service extends Service {
                     vibrator.vibrate(pattern, -1);
                 }
             }
+
             smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(nextEventindex).getId()));
             Log.i(TAG, "Launch timerStarter");
 
@@ -665,6 +686,8 @@ public class SmartTimer_Service extends Service {
     @Override
     public void onDestroy() {
         Log.i(TAG, "Timer cancelled");
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(3);
         super.onDestroy();
     }
 

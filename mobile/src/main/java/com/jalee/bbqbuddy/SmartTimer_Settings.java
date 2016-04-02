@@ -39,7 +39,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
         }
         TextView txtNotiInt = (TextView) findViewById(R.id.txtNotiExtend);
         txtNotiInt.setText(String.valueOf(notiExtend));
-        CheckBox chkscreenon,chkautopause,chktimelineincrease;
+        CheckBox chkextranoti,chkscreenon,chkautopause,chktimelineincrease;
 
 
         chktimelineincrease =(CheckBox)findViewById(R.id.chkTimelineIncrease);
@@ -73,6 +73,16 @@ public class SmartTimer_Settings extends AppCompatActivity {
         } catch(NumberFormatException nfe) {
 
         }
+
+        chkextranoti =(CheckBox)findViewById(R.id.chkExtraNoti);
+        try {
+            if (sharedPreferences.getBoolean("ExtraNotification", true)) {
+                chkextranoti.setChecked(true);
+            } else
+                chkextranoti.setChecked(false);
+        } catch(NumberFormatException nfe) {
+
+        }
     }
 
     public void saveSettings() {
@@ -88,7 +98,7 @@ public class SmartTimer_Settings extends AppCompatActivity {
 
         sharedPreferences.edit().putInt("notiExtendInterval", myNum).apply();
 
-        CheckBox chkscreenon,chkautopause,chktimelineincrease;
+        CheckBox chkextranoti,chkscreenon,chkautopause,chktimelineincrease;
 
 
         chktimelineincrease =(CheckBox)findViewById(R.id.chkTimelineIncrease);
@@ -116,6 +126,15 @@ public class SmartTimer_Settings extends AppCompatActivity {
         } else {
             sharedPreferences.edit().putBoolean("KeepScreenOn", false).apply();
             SmartTimer_Service.KeepScreenOn = false;
+        }
+
+        chkextranoti =(CheckBox)findViewById(R.id.chkExtraNoti);
+        if (chkextranoti.isChecked()) {
+            sharedPreferences.edit().putBoolean("ExtraNotification", true).apply();
+            SmartTimer_Service.ExtraNotification = true;
+        } else {
+            sharedPreferences.edit().putBoolean("ExtraNotification", false).apply();
+            SmartTimer_Service.ExtraNotification = false;
         }
 
 

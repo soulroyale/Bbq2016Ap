@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.jalee.bbqbuddy"
-        minSdkVersion 17
+        minSdkVersion 20
         targetSdkVersion 23
         versionCode 54
         versionName "0.51"
