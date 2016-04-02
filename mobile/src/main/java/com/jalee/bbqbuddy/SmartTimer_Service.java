@@ -15,12 +15,14 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
 
 /**
  * Created by Aaron on 20/02/2016.
@@ -51,6 +53,7 @@ public class SmartTimer_Service extends Service {
     public static Integer timerEventsRem = 0;
     public static Boolean timelineCanIncrease = true;
     public static Boolean KeepScreenOn = true;
+    public static Boolean ExtraNotification = true;
 
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";
@@ -226,7 +229,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
                                 .setContentIntent(pendingIntent)
-                                .setOngoing(true)
+                                //.setOngoing(true)
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Resume", pplayIntent)
@@ -261,7 +264,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
                                 .setContentIntent(pendingIntent)
-                                .setOngoing(true)
+                                //.setOngoing(true)
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Pause", ppauseIntent)
@@ -298,7 +301,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
                                 .setContentIntent(pendingIntent)
-                                .setOngoing(true)
+                                //.setOngoing(true)
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Resume", pplayIntent)
@@ -335,7 +338,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
                                 .setContentIntent(pendingIntent)
-                                .setOngoing(true)
+                                //.setOngoing(true)
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Pause", ppauseIntent)
@@ -529,6 +532,58 @@ public class SmartTimer_Service extends Service {
             MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.ding);
             mplayer.start();
 
+            if (ExtraNotification & timerAutoPause) {
+
+                Intent pauseIntent = new Intent(this, SmartTimer_Service.class);
+                pauseIntent.setAction("pause");
+                PendingIntent ppauseIntent = PendingIntent.getService(this, 0,
+                        pauseIntent, 0);
+
+                Intent playIntent = new Intent(this, SmartTimer_Service.class);
+                playIntent.setAction("play");
+                PendingIntent pplayIntent = PendingIntent.getService(this, 0,
+                        playIntent, 0);
+
+                Intent nextIntent = new Intent(this, SmartTimer_Service.class);
+                nextIntent.setAction("next");
+                PendingIntent pnextIntent = PendingIntent.getService(this, 0,
+                        nextIntent, 0);
+
+                Intent Increase = new Intent(this, SmartTimer_Service.class);
+                Increase.setAction("increase");
+                PendingIntent pIncrease = PendingIntent.getService(this, 0,
+                        Increase, 0);
+
+                Intent shutdown = new Intent(this, SmartTimer_Service.class);
+                shutdown.setAction("stop");
+                PendingIntent pshutdown = PendingIntent.getService(this, 0,
+                        shutdown, 0);
+
+
+
+                Intent intent = new Intent(getApplicationContext(), v1_bbq_buddy.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 2, intent, 0);
+                int notiColour = getApplicationContext().getResources().getColor(R.color.colorPrimary);
+                Notification intervalnotification = new NotificationCompat.Builder(this)
+                        .setContentTitle("Timeline Autopaused")
+                        .setContentText("Select Resume to continue")
+                        .setSmallIcon(R.drawable.cookingicon_512px_white)
+                        .setContentIntent(pendingIntent)
+                        .setColor(notiColour)
+                        .setAutoCancel(true)
+                        .addAction(0,
+                                "Resume", pplayIntent)
+                        //.addAction(0, "Extend",
+                        //        pIncrease)
+                        //.addAction(0, "Skip",
+                         //       pnextIntent)
+
+                        .build();
+
+                NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(3, intervalnotification);
+            }
+
 
             Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrator.hasVibrator()) {
@@ -572,7 +627,7 @@ public class SmartTimer_Service extends Service {
                     .setContentText("Your Smart Timer timeline has completed")
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
-                    .setOngoing(false)
+                    //.setOngoing(false)
                     .setSmallIcon(R.drawable.cookingicon_512px_white)
                     .setColor(notiColour)
                     .build();
