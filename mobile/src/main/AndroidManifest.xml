@@ -17,7 +17,7 @@
             android:value="@integer/google_play_services_version" />
         <activity
             android:name=".v1_bbq_buddy"
-            android:label="BBQ Buddy Free"
+            android:label="BBQ Buddy"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -50,5 +50,4 @@
                 android:value="com.jalee.bbqbuddy.v1_bbq_buddy" />
         </activity>
     </application>
-
 </manifest>
