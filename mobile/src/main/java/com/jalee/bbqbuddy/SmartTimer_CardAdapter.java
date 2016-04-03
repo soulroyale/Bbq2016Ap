@@ -33,6 +33,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
     public static Integer cardIndex;
     List<SmartTimer_cardUI> list = new ArrayList<>();
+    Boolean PrevActive = false;
 
     public SmartTimer_CardAdapter(List<SmartTimer_cardUI> list) {
         this.list = list;
@@ -52,7 +53,12 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.SmartTimer_cardUI = getItem(position);
         holder.cardtitle.setText(list.get(position).name);
         holder.cardsubtitle.setText(list.get(position).subTitle);
-        holder.cardmins.setText(String.valueOf(list.get(position).id));
+        if (list.get(position).id == 0) {
+            holder.cardmins.setText("-");
+        } else {
+            holder.cardmins.setText(String.valueOf(list.get(position).id));
+        }
+
         if (SmartTimer_Service.timerActive || SmartTimer_Service.timerPaused) {
             if (position < SmartTimer_Service.nextEventindex) {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -62,12 +68,31 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 holder.cardsubtitle.setTextColor(Color.parseColor("#9E9E9E"));
                 holder.cardmins.setTextColor(Color.parseColor("#9E9E9E"));
             }
-            if (position == SmartTimer_Service.nextEventindex) {
+
+            if (PrevActive & list.get(position).id == 0) {
                 holder.cardtitle.setTextColor(Color.parseColor("#D32F2F"));
                 holder.cardsubtitle.setTextColor(Color.parseColor("#D32F2F"));
                 holder.cardmins.setTextColor(Color.parseColor("#D32F2F"));
             }
+
+            if (position == SmartTimer_Service.nextEventindex) {
+                holder.cardtitle.setTextColor(Color.parseColor("#D32F2F"));
+                holder.cardsubtitle.setTextColor(Color.parseColor("#D32F2F"));
+                holder.cardmins.setTextColor(Color.parseColor("#D32F2F"));
+                PrevActive = true;
+            } else {
+                if (PrevActive & list.get(position).id == 0) {
+                    holder.cardtitle.setTextColor(Color.parseColor("#D32F2F"));
+                    holder.cardsubtitle.setTextColor(Color.parseColor("#D32F2F"));
+                    holder.cardmins.setTextColor(Color.parseColor("#D32F2F"));
+                    PrevActive = true;
+                } else {
+                    PrevActive = false;
+                }
+            }
+
         } else {
+            PrevActive = false;
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
