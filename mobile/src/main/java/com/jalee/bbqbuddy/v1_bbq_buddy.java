@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -63,8 +64,19 @@ public class v1_bbq_buddy extends AppCompatActivity
         startService(startIntent);
         Log.i("info", "post start service");
 
+
+
         if(Constants.type == Constants.Type.FREE) {
 
+            //set padding of content view to allow for ad
+            //padding in dp
+            int padding_in_dp = 95;
+            //convert to px
+            final float scale = getResources().getDisplayMetrics().density;
+            int padding_in_px = (int) (padding_in_dp * scale + 0.5f);
+            View content = findViewById(R.id.v1_content);
+            //set padding
+            content.setPadding(0,0,0,padding_in_px);
 
             AdView adView = (AdView) findViewById(R.id.adViewTimer);
             AdRequest adRequest = new AdRequest.Builder()
