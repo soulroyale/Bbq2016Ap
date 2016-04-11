@@ -158,7 +158,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             cardmins.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if (SmartTimer_Service.timelineCanIncrease) {
+                    if (SmartTimer_Service.timelineCanIncrease & !SmartTimer_Service.timerExtend) {
                         decreaseMin(1, getAdapterPosition(), context);
                     }
                     return true;
@@ -167,7 +167,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
             cardmins.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    if (SmartTimer_Service.timelineCanIncrease) {
+                    if (SmartTimer_Service.timelineCanIncrease & !SmartTimer_Service.timerExtend) {
                         increaseMin(1, getAdapterPosition(), context);
                     }
                 }
@@ -188,7 +188,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         ST.saveTimeline(context);
         Log.i("info", String.valueOf(adapterPos));
         Log.i("info",String.valueOf(SmartTimer_Service.nextEventindex));
-        if (SmartTimer_Service.timerActive & adapterPos == SmartTimer_Service.nextEventindex ) {
+        if (SmartTimer_Service.timerActive & adapterPos == SmartTimer_Service.nextEventindex) {
             SmartTimer_Service.timerChangeBy = 60000L;
             SmartTimer_Service.timerExtend = true;
             Log.i("info", "Timerextend");

@@ -124,11 +124,15 @@ public class SmartTimer_Service extends Service {
 
         }
 
+
+
+
         try {
             if (sharedPreferences.getBoolean("timerAutoPause", true)) {
                 timerAutoPause = true;
             } else
                 timerAutoPause = false;
+
         } catch(NumberFormatException nfe) {
 
         }
@@ -231,6 +235,9 @@ public class SmartTimer_Service extends Service {
             bigText = "Finishes in " + timerText;
         }
 
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+        int notiExtend = sharedPreferences.getInt("notiExtendInterval", 1);
+
         if (timerActive) {
             if (nextEventindex + 1 == TimelineList.size()) {
                 if (timerPaused) {
@@ -244,7 +251,7 @@ public class SmartTimer_Service extends Service {
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Resume", pplayIntent)
-                                .addAction(0, "Extend",
+                                .addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")",
                                         pIncrease)
                                 .addAction(0, "Skip",
                                         pnextIntent)
@@ -261,7 +268,7 @@ public class SmartTimer_Service extends Service {
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
                         builder.addAction(0, "Resume", pplayIntent);
-                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")", pIncrease);
                         builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
@@ -279,7 +286,7 @@ public class SmartTimer_Service extends Service {
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Pause", ppauseIntent)
-                                .addAction(0, "Extend",
+                                .addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")",
                                         pIncrease)
                                 .addAction(0, "Skip",
                                         pnextIntent)
@@ -296,7 +303,7 @@ public class SmartTimer_Service extends Service {
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
                         builder.addAction(0,"Pause", ppauseIntent);
-                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")", pIncrease);
                         builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
@@ -316,7 +323,7 @@ public class SmartTimer_Service extends Service {
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Resume", pplayIntent)
-                                .addAction(0, "Extend",
+                                .addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")",
                                         pIncrease)
                                 .addAction(0, "Skip",
                                         pnextIntent)
@@ -333,7 +340,7 @@ public class SmartTimer_Service extends Service {
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
                         builder.addAction(0, "Resume", pplayIntent);
-                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")", pIncrease);
                         builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
@@ -353,7 +360,7 @@ public class SmartTimer_Service extends Service {
                                 .setColor(notiColour)
                                 .addAction(0,
                                         "Pause", ppauseIntent)
-                                .addAction(0, "Extend",
+                                .addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")",
                                         pIncrease)
                                 .addAction(0, "Skip",
                                         pnextIntent)
@@ -370,7 +377,7 @@ public class SmartTimer_Service extends Service {
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
                         builder.addAction(0,"Pause", ppauseIntent);
-                        builder.addAction(0, "Extend", pIncrease);
+                        builder.addAction(0, "Extend (+" + String.valueOf(notiExtend) + ")", pIncrease);
                         builder.addAction(0, "Skip", pnextIntent);
                         builder.setColor(notiColour);
 
