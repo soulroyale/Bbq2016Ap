@@ -91,7 +91,7 @@
             android:id="@+id/btnST"
             android:textColor="#ffffff"
             android:textStyle="bold"
-            android:background="#00ffffff" />
+            android:background="@drawable/bottombar_bg" />
 
         <Button
             android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
             android:id="@+id/btnTL"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="#00ffffff"
+            android:background="@drawable/bottombar_bg"
             android:textStyle="italic"
             android:textColor="#ffffff" />
 
@@ -113,7 +113,7 @@
             android:textStyle="italic"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:background="#00ffffff"
+            android:background="@drawable/bottombar_bg"
             android:textColor="#ffffff" />
     </RelativeLayout>r
 
