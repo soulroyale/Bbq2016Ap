@@ -29,7 +29,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@+id/carddesc"
-            android:layout_alignEnd="@+id/carddesc" />
+            android:layout_alignEnd="@+id/carddesc"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +45,8 @@
             android:layout_alignParentStart="true"
             android:layout_toLeftOf="@+id/cardmins"
             android:layout_toStartOf="@+id/cardmins"
-            android:maxLines="1" />
+            android:maxLines="1"
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,10 +54,11 @@
             android:id="@+id/cardmins"
             android:text="120"
             android:textSize="44sp"
-
             android:textColor="#757575"
             android:layout_alignBottom="@+id/carddesc"
-            android:layout_toStartOf="@+id/mins" />
+            android:layout_toStartOf="@+id/mins"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +69,8 @@
             android:textSize="10sp"
             android:layout_alignBaseline="@+id/cardmins"
             android:layout_alignBottom="@+id/cardmins"
-            android:layout_alignEnd="@+id/reorderImage" />
+            android:layout_alignEnd="@+id/reorderImage"
+            />
 
         <ImageView
             android:layout_width="25dp"
@@ -76,7 +80,8 @@
             android:layout_alignParentTop="true"
             android:paddingLeft="5dp"
             android:layout_marginRight="5dp"
-            android:src="@drawable/ic_reorder_grey" />
+            android:src="@drawable/ic_reorder_grey"
+            />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
