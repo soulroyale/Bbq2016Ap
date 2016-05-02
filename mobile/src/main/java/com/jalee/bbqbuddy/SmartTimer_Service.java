@@ -73,8 +73,6 @@ public class SmartTimer_Service extends Service {
                 timerPaused = true;
             } else if (intent.getAction().equals("play")) {
                 Log.i(TAG, "Clicked Resume");
-                NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                notificationManager.cancel(3);
                 startTimer = true;
             } else if (intent.getAction().equals("next")) {
                 Log.i(TAG, "Clicked Next Event");
@@ -161,6 +159,8 @@ public class SmartTimer_Service extends Service {
             @Override
             public void run() {
                 if (startTimer) {
+                    NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.cancel(3);
                     Log.i(TAG, "Start variable found, starting timer");
                     if (!timerPaused) {
                         //rebuild start values
