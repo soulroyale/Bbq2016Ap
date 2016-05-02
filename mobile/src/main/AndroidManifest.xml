@@ -51,6 +51,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jalee.bbqbuddy.v1_bbq_buddy" />
         </activity>
+        <activity
+            android:name=".SmartTimer_Changelog"
+            android:label="@string/title_activity_smart_timer__changelog"
+            android:parentActivityName=".v1_bbq_buddy"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jalee.bbqbuddy.v1_bbq_buddy" />
+        </activity>
     </application>
 
 </manifest>
