@@ -35,6 +35,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.TimeUnit;
 
 public class v1_bbq_buddy extends AppCompatActivity
@@ -315,15 +317,19 @@ public class v1_bbq_buddy extends AppCompatActivity
                             txtSmartTimer.setText(String.valueOf(SmartTimer_Service.timerEventsRem) + ":" + SmartTimer_Service.secondsString);
                             txtSmartTimerNext.setText(SmartTimer_Service.timerText);
                         }
+                        TextView txtcurrent = (TextView) findViewById(R.id.txtCurrentEvent);
                         TextView txtuntilnext = (TextView) findViewById(R.id.txtUntilNext);
                         if (SmartTimer_Service.nextEventindex + 1 < SmartTimer_Service.TimelineList.size()) {
                             if (SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() != "") {
-                                txtuntilnext.setText(SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName() + " starts in");
+                                txtcurrent.setText(SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex).getName());
+                                txtuntilnext.setText(SmartTimer_Service.TimelineList.get(SmartTimer_Service.nextEventindex + 1).getName());
                             } else {
-                                txtuntilnext.setText("Next event starts in");
+                                txtcurrent.setText("Next event starts in");
+                                txtuntilnext.setText("");
                             }
                         } else {
-                            txtuntilnext.setText("Next event starts in");
+                            txtcurrent.setText("Next event starts in");
+                            txtuntilnext.setText("");
                         }
                     } else {
                         if (SmartTimer_Service.KeepScreenOn) {
