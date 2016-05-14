@@ -8,14 +8,17 @@
     android:layout_marginTop="3dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="2dp"
         android:paddingBottom="0dp"
-
         >
 
         <TextView
@@ -58,6 +61,7 @@
             android:textColor="#757575"
             android:layout_alignBottom="@+id/carddesc"
             android:layout_toStartOf="@+id/mins"
+            android:layout_marginRight="2dp"
             android:background="@drawable/card_ripple"/>
 
         <TextView
@@ -71,7 +75,7 @@
             android:layout_alignBaseline="@+id/cardmins"
             android:layout_alignBottom="@+id/cardmins"
             android:layout_alignEnd="@+id/reorderImage"
-            android:background="@drawable/card_ripple"/>
+            />
 
         <ImageView
             android:layout_width="25dp"
@@ -79,7 +83,8 @@
             android:id="@+id/reorderImage"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:paddingLeft="5dp"
+            android:paddingTop="0dp"
+            android:layout_marginTop="7dp"
             android:layout_marginRight="5dp"
             android:src="@android:drawable/ic_menu_delete"
             android:background="@drawable/card_ripple"/>

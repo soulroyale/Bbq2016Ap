@@ -5,16 +5,10 @@ package com.jalee.bbqbuddy;
  */
 
 import android.app.Application;
-import android.app.Dialog;
 import android.content.Context;
-
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,10 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.jalee.bbqbuddy.helper.ItemTouchHelperAdapter;
 import com.jalee.bbqbuddy.helper.ItemTouchHelperViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -59,7 +51,9 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition > SmartTimer_Service.nextEventindex && toPosition > SmartTimer_Service.nextEventindex) {
+            Log.i("Info",String.valueOf(SmartTimer_Service.TimelineList.size()));
             SmartTimer_Service.TimelineList.add(toPosition, SmartTimer_Service.TimelineList.get(fromPosition));
+            Log.i("Info",String.valueOf(SmartTimer_Service.TimelineList.size()));
             Log.i("Info", "Item moving");
             if (fromPosition > toPosition) {
                 Log.i("Info", "from higher than to");
@@ -68,9 +62,8 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 Log.i("Info", "to higher than from");
                 SmartTimer_Service.TimelineList.remove(fromPosition);
             }
-
+            Log.i("Info",String.valueOf(SmartTimer_Service.TimelineList.size()));
             SmartTimer_TimeLine.adapter.notifyItemMoved(fromPosition, toPosition);
-
 
             Integer newSmartTimerValue = 0;
             for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
@@ -78,10 +71,10 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 System.out.println(newSmartTimerValue);
             }
             SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
-        /*
-        SmartTimer_Service ST = new SmartTimer_Service();
-        ST.saveTimeline();
-           */
+
+            SmartTimer_Service ST = new SmartTimer_Service();
+            ST.saveTimeline(SmartTimer_Service.pubContext);
+
         }
 
     }
@@ -175,7 +168,6 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     }
 
 
-
     public SmartTimer_cardUI getItem(int i) {
         return list.get(i);
     }
@@ -217,7 +209,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     return true;
                 }
             });
-
+            */
 
             cardmins.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -236,7 +228,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     }
                 }
             });
-            */
+
         }
 
                 @Override

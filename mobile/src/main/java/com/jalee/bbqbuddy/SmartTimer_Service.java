@@ -54,6 +54,7 @@ public class SmartTimer_Service extends Service {
     public static Boolean timelineCanIncrease = true;
     public static Boolean KeepScreenOn = true;
     public static Boolean ExtraNotification = true;
+    public static Context pubContext;
 
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";
@@ -112,6 +113,8 @@ public class SmartTimer_Service extends Service {
     public void onCreate() {
         super.onCreate();
 
+
+        pubContext = getApplicationContext();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
         try {
             if (sharedPreferences.getBoolean("TimelineCanIncrease", true)) {
