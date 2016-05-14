@@ -4,6 +4,7 @@ package com.jalee.bbqbuddy;
  * Created by Aaron on 25/01/2016.
  */
 
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 
@@ -57,11 +58,33 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-        SmartTimer_Service.TimelineList.add(toPosition,SmartTimer_Service.TimelineList.get(fromPosition));
-        SmartTimer_Service.TimelineList.remove(fromPosition);
-        notifyItemMoved(fromPosition, toPosition);
-    }
+        if (fromPosition > SmartTimer_Service.nextEventindex && toPosition > SmartTimer_Service.nextEventindex) {
+            SmartTimer_Service.TimelineList.add(toPosition, SmartTimer_Service.TimelineList.get(fromPosition));
+            Log.i("Info", "Item moving");
+            if (fromPosition > toPosition) {
+                Log.i("Info", "from higher than to");
+                SmartTimer_Service.TimelineList.remove(fromPosition - 1);
+            } else {
+                Log.i("Info", "to higher than from");
+                SmartTimer_Service.TimelineList.remove(fromPosition);
+            }
 
+            SmartTimer_TimeLine.adapter.notifyItemMoved(fromPosition, toPosition);
+
+
+            Integer newSmartTimerValue = 0;
+            for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
+                System.out.println(newSmartTimerValue);
+            }
+            SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+        /*
+        SmartTimer_Service ST = new SmartTimer_Service();
+        ST.saveTimeline();
+           */
+        }
+
+    }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -171,7 +194,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
             cardmins = (TextView) itemView.findViewById(R.id.cardmins);
-            /*
+
             cardimage.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -179,6 +202,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     return true;
                 }
             });
+            /*
             cardtitle.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
