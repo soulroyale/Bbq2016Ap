@@ -24,12 +24,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jalee.bbqbuddy.helper.ItemTouchHelperAdapter;
+import com.jalee.bbqbuddy.helper.ItemTouchHelperViewHolder;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
-public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_CardAdapter.ViewHolder> {
+public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_CardAdapter.ViewHolder> implements ItemTouchHelperAdapter {
 
     public static Integer cardIndex;
     List<SmartTimer_cardUI> list = new ArrayList<>();
@@ -44,6 +47,19 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragmant_smart_timer_card_view, parent, false);
         return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        SmartTimer_Service.TimelineList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        SmartTimer_Service.TimelineList.add(toPosition,SmartTimer_Service.TimelineList.get(fromPosition));
+        SmartTimer_Service.TimelineList.remove(fromPosition);
+        notifyItemMoved(fromPosition, toPosition);
     }
 
 
@@ -114,6 +130,29 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         return list.size();
     }
 
+    public static class ItemViewHolder extends RecyclerView.ViewHolder implements
+            ItemTouchHelperViewHolder {
+
+        public final TextView textView;
+
+        public ItemViewHolder(View itemView) {
+            super(itemView);
+            textView = (TextView) itemView;
+        }
+
+        @Override
+        public void onItemSelected() {
+            itemView.setBackgroundColor(Color.LTGRAY);
+        }
+
+        @Override
+        public void onItemClear() {
+            itemView.setBackgroundColor(0);
+        }
+    }
+
+
+
     public SmartTimer_cardUI getItem(int i) {
         return list.get(i);
     }
@@ -132,6 +171,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
             cardmins = (TextView) itemView.findViewById(R.id.cardmins);
+            /*
             cardimage.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -172,7 +212,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                     }
                 }
             });
-
+            */
         }
 
                 @Override

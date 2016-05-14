@@ -2,11 +2,13 @@ package com.jalee.bbqbuddy;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
+
+import com.jalee.bbqbuddy.helper.SimpleItemTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,8 @@ import java.util.concurrent.TimeUnit;
  * Created by Aaron on 1/02/2016.
  */
 public class SmartTimer_TimeLine extends Fragment {
+
+    private ItemTouchHelper mItemTouchHelper;
 
     public static Boolean fabHidden = false;
 
@@ -69,9 +75,12 @@ public class SmartTimer_TimeLine extends Fragment {
 
         adapter = new SmartTimer_CardAdapter(SmartTimer_Service.TimelineList);
         recyclerView.setAdapter(adapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
+
         return v;
     }
-
 
 
 
