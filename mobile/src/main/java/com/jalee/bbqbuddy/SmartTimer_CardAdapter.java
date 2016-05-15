@@ -51,29 +51,24 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition > SmartTimer_Service.nextEventindex && toPosition > SmartTimer_Service.nextEventindex) {
-            Log.i("Info",String.valueOf(SmartTimer_Service.TimelineList.size()));
-            SmartTimer_Service.TimelineList.add(toPosition, SmartTimer_Service.TimelineList.get(fromPosition));
-            Log.i("Info",String.valueOf(SmartTimer_Service.TimelineList.size()));
-            Log.i("Info", "Item moving");
-            if (fromPosition > toPosition) {
-                Log.i("Info", "from higher than to");
-                SmartTimer_Service.TimelineList.remove(fromPosition - 1);
-            } else {
-                Log.i("Info", "to higher than from");
-                SmartTimer_Service.TimelineList.remove(fromPosition);
-            }
-            Log.i("Info",String.valueOf(SmartTimer_Service.TimelineList.size()));
-            SmartTimer_TimeLine.adapter.notifyItemMoved(fromPosition, toPosition);
 
-            Integer newSmartTimerValue = 0;
-            for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
-                newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
-                System.out.println(newSmartTimerValue);
+            String tTitle = SmartTimer_Service.TimelineList.get(fromPosition).getName();
+            String tDesc = SmartTimer_Service.TimelineList.get(fromPosition).getsubTitle();
+            Integer tMins = SmartTimer_Service.TimelineList.get(fromPosition).getId();
+
+            SmartTimer_Service.TimelineList.remove(fromPosition);
+
+            if (toPosition > fromPosition) {
+                SmartTimer_Service.TimelineList.add(toPosition, new SmartTimer_cardUI(tDesc, tTitle, tMins));
+            } else {
+                SmartTimer_Service.TimelineList.add(toPosition, new SmartTimer_cardUI(tDesc, tTitle, tMins));
             }
-            SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
 
             SmartTimer_Service ST = new SmartTimer_Service();
             ST.saveTimeline(SmartTimer_Service.pubContext);
+
+            SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+            //SmartTimer_TimeLine.adapter.notifyItemMoved(fromPosition, toPosition);
 
         }
 
