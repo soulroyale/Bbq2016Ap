@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -328,16 +329,30 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                                         public void onClick(DialogInterface arg0, int arg1) {
                                             Log.i("Selected", "You salected yes");
                                             if (!SmartTimer_Service.timerActive) {
-                                                SmartTimer_TimeLine.adapter.notifyItemRangeRemoved(0,SmartTimer_Service.TimelineList.size());
-                                                SmartTimer_Service.TimelineList.clear();
-                                                Integer newSmartTimerValue = 0;
-                                                for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
-                                                    newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
-                                                    System.out.println(newSmartTimerValue);
-                                                }
-                                                SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
-                                                SmartTimer_Service ST = new SmartTimer_Service();
-                                                ST.saveTimeline(context);
+                                                final Handler handler = new Handler();
+                                                Runnable run = new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        SmartTimer_Service.TimelineList.remove(0);
+                                                        SmartTimer_TimeLine.adapter.notifyItemRemoved(0);
+                                                        if (SmartTimer_Service.TimelineList.size() > 0) {
+                                                            handler.postDelayed(this,400);
+                                                        } else {
+                                                            SmartTimer_Service.TimelineList.clear();
+                                                            Integer newSmartTimerValue = 0;
+                                                            for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {
+                                                                newSmartTimerValue = newSmartTimerValue + (Integer) SmartTimer_Service.TimelineList.get(i).id;
+                                                                System.out.println(newSmartTimerValue);
+                                                            }
+                                                            SmartTimer_Service.smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
+                                                            SmartTimer_Service ST = new SmartTimer_Service();
+                                                            ST.saveTimeline(context);
+                                                        }
+                                                    }
+                                                };
+                                                handler.post(run);
+
+
                                             } else {
                                                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                                                 alertDialogBuilder.setMessage("Cannot delete all while timer is active!");
