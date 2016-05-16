@@ -185,6 +185,7 @@ public class SmartTimer_Service extends Service {
             }
         };
         handler.post(run);
+
     }
 
     public void updateNotification() {
@@ -409,6 +410,15 @@ public class SmartTimer_Service extends Service {
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 startForeground(1, builder.build());
+            }
+        }
+    }
+
+    public void calcMinsRem(){
+        timerEventsRem = 0;
+        for (int i = 0; i < TimelineList.size(); i++) {
+            if (i > nextEventindex) {
+                timerEventsRem = timerEventsRem + (Integer) TimelineList.get(i).id;
             }
         }
     }

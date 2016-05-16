@@ -15,8 +15,7 @@ public class SmartTimer_Changelog extends AppCompatActivity {
         setContentView(R.layout.activity_smart_timer__changelog);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
+        getSupportActionBar().setTitle("Change Log");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

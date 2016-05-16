@@ -37,6 +37,10 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.concurrent.TimeUnit;
 
 public class v1_bbq_buddy extends AppCompatActivity
@@ -61,6 +65,7 @@ public class v1_bbq_buddy extends AppCompatActivity
         setContentView(R.layout.activity_v1_bbq_buddy);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
         Log.i("info","pre start service");
         Intent startIntent = new Intent(v1_bbq_buddy.this, SmartTimer_Service.class);
@@ -305,7 +310,7 @@ public class v1_bbq_buddy extends AppCompatActivity
             if (!closingActivity) {
                 try {
                     final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.v1_fab);
-
+                    //Set play or pause on FAB
                     if (onSmartTimer) {
                         if (SmartTimer_Service.timerActive) {
                             fab.setImageResource(R.drawable.ic_media_pause);
@@ -348,6 +353,17 @@ public class v1_bbq_buddy extends AppCompatActivity
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                         }
                     }
+                    if (!SmartTimer_Service.timerActive) {
+                        SmartTimer_Service ST = new SmartTimer_Service();
+                        ST.calcMinsRem();
+                    }
+                    Calendar estimateD = Calendar.getInstance();
+                    estimateD.add(Calendar.MINUTE,SmartTimer_Service.timerEventsRem +1);
+                    SimpleDateFormat estimate = new SimpleDateFormat("HH:mm");
+                    String formatted = estimate.format(estimateD.getTime());
+                    TextView toolbarestimate = (TextView) findViewById(R.id.toolbarEstimate);
+                    toolbarestimate.setText("Estimated Ready at\n " + formatted);
+
 
                 } catch (Throwable e) {
                     //e.printStackTrace();
