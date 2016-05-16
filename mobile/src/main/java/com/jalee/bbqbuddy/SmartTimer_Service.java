@@ -55,6 +55,8 @@ public class SmartTimer_Service extends Service {
     public static Boolean KeepScreenOn = true;
     public static Boolean ExtraNotification = true;
     public static Context pubContext;
+    public static Boolean editing = false;
+    public static Boolean editingDel = false;
 
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";

@@ -3,6 +3,8 @@ package com.jalee.bbqbuddy.helper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import com.jalee.bbqbuddy.SmartTimer_Service;
+
 
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
@@ -14,12 +16,20 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isLongPressDragEnabled() {
-        return true;
+        if (SmartTimer_Service.editing) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return false;
+        if (SmartTimer_Service.editingDel) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

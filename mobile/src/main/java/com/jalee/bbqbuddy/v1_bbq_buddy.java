@@ -51,6 +51,8 @@ public class v1_bbq_buddy extends AppCompatActivity
     final Handler handler = new Handler();
     private Boolean closingActivity = false;
     private Boolean isFabOpen = false;
+    Menu mainMenu;
+
 
 
     @Override
@@ -187,6 +189,10 @@ public class v1_bbq_buddy extends AppCompatActivity
                 Button btnlog = (Button) findViewById(R.id.btnLog);
 
                 if (position == 0) {
+                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                    mainMenu.getItem(1).setVisible(false);
+                    mainMenu.getItem(2).setVisible(false);
+                    SmartTimer_Service.editing = false;
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.BOLD);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
@@ -217,6 +223,8 @@ public class v1_bbq_buddy extends AppCompatActivity
                     onLogs = false;
                 }
                 if (position == 1) {
+                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                    mainMenu.getItem(2).setVisible(true);
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.BOLD);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
@@ -233,6 +241,10 @@ public class v1_bbq_buddy extends AppCompatActivity
                     onLogs = false;
                 }
                 if (position == 2) {
+                    SmartTimer_Service.editing = false;
+                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                    mainMenu.getItem(1).setVisible(false);
+                    mainMenu.getItem(2).setVisible(false);
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.BOLD);
@@ -416,6 +428,9 @@ public class v1_bbq_buddy extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.v1_bbq_buddy, menu);
+        mainMenu = menu;
+        mainMenu.getItem(1).setVisible(false);
+        mainMenu.getItem(2).setVisible(false);
         return true;
     }
 
@@ -430,6 +445,30 @@ public class v1_bbq_buddy extends AppCompatActivity
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, About.class);
             startActivity(intent);
+            return true;
+        }
+        if (id == R.id.action_edit) {
+            if (!SmartTimer_Service.editing) {
+                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_close_clear_cancel);
+                mainMenu.getItem(1).setVisible(true);
+                SmartTimer_Service.editing = true;
+            } else {
+                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                mainMenu.getItem(1).setVisible(false);
+                SmartTimer_Service.editing = false;
+                SmartTimer_Service.editingDel = false;
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete);
+            }
+            return true;
+        }
+        if (id == R.id.action_delete) {
+            if (!SmartTimer_Service.editingDel) {
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_close_clear_cancel);
+                SmartTimer_Service.editingDel = true;
+            } else {
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete);
+                SmartTimer_Service.editingDel = false;
+            }
             return true;
         }
 
