@@ -224,6 +224,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                 }
                 if (position == 1) {
                     mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
+                    mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete_white);
                     mainMenu.getItem(2).setVisible(true);
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.BOLD);
