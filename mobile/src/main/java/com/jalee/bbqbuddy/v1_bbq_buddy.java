@@ -2,22 +2,16 @@ package com.jalee.bbqbuddy;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -40,12 +34,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Formatter;
 import java.util.concurrent.TimeUnit;
 
 public class v1_bbq_buddy extends AppCompatActivity
@@ -199,7 +189,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                 Button btnlog = (Button) findViewById(R.id.btnLog);
 
                 if (position == 0) {
-                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
                     mainMenu.getItem(1).setVisible(false);
                     mainMenu.getItem(2).setVisible(false);
                     SmartTimer_Service.editing = false;
@@ -233,7 +223,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                     onLogs = false;
                 }
                 if (position == 1) {
-                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
                     mainMenu.getItem(2).setVisible(true);
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.BOLD);
@@ -252,7 +242,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                 }
                 if (position == 2) {
                     SmartTimer_Service.editing = false;
-                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
                     mainMenu.getItem(1).setVisible(false);
                     mainMenu.getItem(2).setVisible(false);
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
@@ -474,24 +464,24 @@ public class v1_bbq_buddy extends AppCompatActivity
         }
         if (id == R.id.action_edit) {
             if (!SmartTimer_Service.editing) {
-                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_close_clear_cancel);
+                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_close_clear_cancel_white);
                 mainMenu.getItem(1).setVisible(true);
                 SmartTimer_Service.editing = true;
             } else {
-                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit);
+                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
                 mainMenu.getItem(1).setVisible(false);
                 SmartTimer_Service.editing = false;
                 SmartTimer_Service.editingDel = false;
-                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete);
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete_white);
             }
             return true;
         }
         if (id == R.id.action_delete) {
             if (!SmartTimer_Service.editingDel) {
-                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_close_clear_cancel);
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_close_clear_cancel_white);
                 SmartTimer_Service.editingDel = true;
             } else {
-                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete);
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete_white);
                 SmartTimer_Service.editingDel = false;
             }
             return true;
