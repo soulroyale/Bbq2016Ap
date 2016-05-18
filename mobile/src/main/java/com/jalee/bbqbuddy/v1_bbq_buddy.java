@@ -189,13 +189,23 @@ public class v1_bbq_buddy extends AppCompatActivity
                 Button btnlog = (Button) findViewById(R.id.btnLog);
 
                 if (position == 0) {
-                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
-                    mainMenu.getItem(1).setVisible(false);
-                    mainMenu.getItem(2).setVisible(false);
+                    mainMenu.getItem(1).setIcon(R.drawable.ic_menu_edit_white);
                     SmartTimer_Service.editing = false;
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.BOLD);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
+                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                    int noOfChild = toolbar.getChildCount();
+                    View view;
+                    for(int i = 0; i < noOfChild; i++ ){
+                        if (i == 2) {
+                            view = toolbar.getChildAt(i);
+                            view.setTranslationX(0);
+                            view.animate().setStartDelay(0).setDuration(500).translationX(+500);
+                            handler.postDelayed(hideEditMenu, 500);
+                        }
+                    }
+
                     if (!onLogs) {
                         fab.startAnimation(fab180);
                         fab.startAnimation(fab360);
@@ -223,9 +233,21 @@ public class v1_bbq_buddy extends AppCompatActivity
                     onLogs = false;
                 }
                 if (position == 1) {
-                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
-                    mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete_white);
-                    mainMenu.getItem(2).setVisible(true);
+                    mainMenu.getItem(1).setIcon(R.drawable.ic_menu_edit_white);
+                    mainMenu.getItem(0).setIcon(R.drawable.ic_menu_delete_white);
+
+                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                    int noOfChild = toolbar.getChildCount();
+                    View view;
+                    for(int i = 0; i < noOfChild; i++ ){
+                        if (i == 2) {
+                            view = toolbar.getChildAt(i);
+                            view.setTranslationX(+500);
+                            handler.post(showEditMenu);
+                            view.animate().setStartDelay(0).setDuration(500).translationX(0);
+                        }
+                    }
+
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.BOLD);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
@@ -243,12 +265,22 @@ public class v1_bbq_buddy extends AppCompatActivity
                 }
                 if (position == 2) {
                     SmartTimer_Service.editing = false;
-                    mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
-                    mainMenu.getItem(1).setVisible(false);
-                    mainMenu.getItem(2).setVisible(false);
+                    mainMenu.getItem(1).setIcon(R.drawable.ic_menu_edit_white);
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.BOLD);
+                    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                    int noOfChild = toolbar.getChildCount();
+                    View view;
+                    for(int i = 0; i < noOfChild; i++ ){
+                        if (i == 2) {
+                            view = toolbar.getChildAt(i);
+                            view.setTranslationX(0);
+                            view.animate().setStartDelay(0).setDuration(1000).translationX(+500);
+                            handler.postDelayed(hideEditMenu, 500);
+                        }
+                    }
+
                     if (!SmartTimer_TimeLine.fabHidden) {
                         SmartTimer_TimeLine.fabHidden = true;
                         fab.animate().translationY(fab.getHeight() + 180).setInterpolator(new AccelerateInterpolator(2)).start();
@@ -298,6 +330,24 @@ public class v1_bbq_buddy extends AppCompatActivity
         //start runnable for uopdating icon and timertext
         handler.post(run);
     }
+
+    private Runnable showEditMenu = new Runnable() {
+        @Override
+        public void run() {
+            mainMenu.getItem(0).setVisible(true);
+            mainMenu.getItem(1).setVisible(true);
+
+        }
+    };
+
+    private Runnable hideEditMenu = new Runnable() {
+        @Override
+        public void run() {
+            mainMenu.getItem(0).setVisible(false);
+            mainMenu.getItem(1).setVisible(false);
+
+        }
+    };
 
     private Runnable run = new Runnable() {
         @Override
@@ -445,8 +495,8 @@ public class v1_bbq_buddy extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.v1_bbq_buddy, menu);
         mainMenu = menu;
+        mainMenu.getItem(0).setVisible(false);
         mainMenu.getItem(1).setVisible(false);
-        mainMenu.getItem(2).setVisible(false);
         return true;
     }
 
@@ -458,31 +508,29 @@ public class v1_bbq_buddy extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        /*
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, About.class);
             startActivity(intent);
             return true;
         }
+        */
         if (id == R.id.action_edit) {
             if (!SmartTimer_Service.editing) {
-                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_close_clear_cancel_white);
-                mainMenu.getItem(1).setVisible(true);
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_close_clear_cancel_white);
                 SmartTimer_Service.editing = true;
             } else {
-                mainMenu.getItem(2).setIcon(R.drawable.ic_menu_edit_white);
-                mainMenu.getItem(1).setVisible(false);
+                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_edit_white);
                 SmartTimer_Service.editing = false;
-                SmartTimer_Service.editingDel = false;
-                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete_white);
             }
             return true;
         }
         if (id == R.id.action_delete) {
             if (!SmartTimer_Service.editingDel) {
-                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_close_clear_cancel_white);
+                mainMenu.getItem(0).setIcon(R.drawable.ic_menu_close_clear_cancel_white);
                 SmartTimer_Service.editingDel = true;
             } else {
-                mainMenu.getItem(1).setIcon(R.drawable.ic_menu_delete_white);
+                mainMenu.getItem(0).setIcon(R.drawable.ic_menu_delete_white);
                 SmartTimer_Service.editingDel = false;
             }
             return true;
