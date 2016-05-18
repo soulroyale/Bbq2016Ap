@@ -27,7 +27,7 @@
                 android:text="Estimated Ready at\n 18:25"
                 android:autoText="false"
                 android:textAlignment="center"
-                android:paddingTop="5dp"
+                android:paddingTop="0dp"
                 android:textColor="@color/background_floating_material_light" />
 
 

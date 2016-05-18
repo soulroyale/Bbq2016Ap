@@ -2,6 +2,7 @@ package com.jalee.bbqbuddy;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.Layout;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -362,7 +367,11 @@ public class v1_bbq_buddy extends AppCompatActivity
                     SimpleDateFormat estimate = new SimpleDateFormat("HH:mm");
                     String formatted = estimate.format(estimateD.getTime());
                     TextView toolbarestimate = (TextView) findViewById(R.id.toolbarEstimate);
-                    toolbarestimate.setText("Estimated Ready at\n " + formatted);
+                    String s= "Estimated Ready at\n" + formatted;
+                    SpannableString ss1=  new SpannableString(s);
+                    ss1.setSpan(new AbsoluteSizeSpan(60), 18,ss1.length(), 0); // set size
+
+                    toolbarestimate.setText(ss1);
 
 
                 } catch (Throwable e) {
