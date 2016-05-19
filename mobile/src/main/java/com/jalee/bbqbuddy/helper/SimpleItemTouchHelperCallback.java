@@ -25,7 +25,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isItemViewSwipeEnabled() {
-        if (SmartTimer_Service.editingDel) {
+        if (SmartTimer_Service.editing) {
             return true;
         } else {
             return false;

@@ -141,7 +141,14 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             holder.cardmins.setTextColor(Color.parseColor("#757575"));
 
         }
-        //holder.cardimage.setImageResource(list.get(position).id);
+        if (SmartTimer_Service.editing) {
+            holder.cardimage.setImageResource(R.drawable.ic_menu_delete_white);
+            holder.cardimage.setBackgroundColor(Color.parseColor("#D32F2F"));
+        } else {
+            holder.cardimage.setImageResource(R.drawable.common_google_signin_btn_icon_dark_normal);
+            holder.cardimage.setBackgroundColor(Color.TRANSPARENT);
+        }
+
     }
 
     @Override
@@ -195,13 +202,14 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
             cardmins = (TextView) itemView.findViewById(R.id.cardmins);
 
-            cardimage.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    remTimeline(context, getAdapterPosition());
-                    return true;
+            cardimage.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (SmartTimer_Service.editing) {
+                        remTimeline(context, getAdapterPosition());
+                    }
                 }
             });
+
             /*
             cardtitle.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

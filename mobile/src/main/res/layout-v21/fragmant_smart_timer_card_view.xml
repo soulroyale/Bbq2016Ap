@@ -18,10 +18,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:paddingTop="2dp"
         android:paddingBottom="0dp"
+        android:background="@drawable/card_ripple"
         >
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:id="@+id/reorderImage"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:scaleType="center"
+            android:background="@drawable/card_ripple"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,41 +42,36 @@
             android:id="@+id/cardtitle"
             android:text="Title"
             android:textSize="22sp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="2dp"
             android:paddingRight="5dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@+id/carddesc"
-            android:layout_alignEnd="@+id/carddesc"
-            android:background="@drawable/card_ripple"
-            />
+            android:layout_alignTop="@+id/reorderImage"
+            android:layout_toEndOf="@+id/reorderImage"
+            android:background="@drawable/card_ripple"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/carddesc"
             android:text="Roast Meat"
+            android:maxWidth="265dp"
             android:textSize="18sp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="2dp"
             android:paddingRight="5dp"
-            android:layout_below="@+id/cardtitle"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/cardmins"
-            android:layout_toStartOf="@+id/cardmins"
             android:maxLines="1"
-            android:background="@drawable/card_ripple"/>
+            android:layout_below="@+id/cardtitle"
+            android:background="@drawable/card_ripple"
+            android:layout_toEndOf="@+id/reorderImage" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cardmins"
             android:text="120"
-            android:textSize="44sp"
+            android:textSize="40sp"
             android:textColor="#757575"
+            android:paddingRight="2dp"
             android:layout_alignBottom="@+id/carddesc"
-            android:layout_toStartOf="@+id/mins"
-            android:layout_marginRight="2dp"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/card_ripple"/>
 
         <TextView
@@ -72,24 +80,12 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="mins"
             android:id="@+id/mins"
-            android:paddingRight="0dp"
+            android:paddingRight="4dp"
             android:textSize="10sp"
-            android:layout_alignBaseline="@+id/cardmins"
-            android:layout_alignBottom="@+id/cardmins"
-            android:layout_alignEnd="@+id/reorderImage"
-            />
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/reorderImage"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:paddingTop="0dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="5dp"
-            android:src="@android:drawable/ic_menu_delete"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/cardmins"
             android:background="@drawable/card_ripple"/>
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
