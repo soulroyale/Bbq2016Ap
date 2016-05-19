@@ -145,7 +145,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             holder.cardimage.setImageResource(R.drawable.ic_menu_delete_white);
             holder.cardimage.setBackgroundColor(Color.parseColor("#D32F2F"));
         } else {
-            holder.cardimage.setImageResource(R.drawable.common_google_signin_btn_icon_dark_normal);
+            holder.cardimage.setImageResource(R.drawable.cookingicon512px);
             holder.cardimage.setBackgroundColor(Color.TRANSPARENT);
         }
 

@@ -106,20 +106,7 @@ public class v1_bbq_buddy extends AppCompatActivity
         toolbaredit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if (SmartTimer_Service.editing) {
-                    toolbaredit.setImageResource(R.drawable.ic_menu_edit_white);
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-                    }
-                    SmartTimer_Service.editing = false;
-                } else {
-                    toolbaredit.setImageResource(R.drawable.ic_menu_close_clear_cancel_white);
-                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(getResources().getColor(R.color.colorFAB1));
-                    }
-                    SmartTimer_Service.editing = true;
-                }
-                SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                editingStartStop();
             }
         });
        toolbaredit.startAnimation(closeToolbar);
@@ -158,6 +145,7 @@ public class v1_bbq_buddy extends AppCompatActivity
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                editingStartStop();
                 animateFAB();
                 Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
                 startActivity(intent);
@@ -166,6 +154,7 @@ public class v1_bbq_buddy extends AppCompatActivity
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                editingStartStop();
                 animateFAB();
                 Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Builder.class);
                 startActivity(intent);
@@ -218,10 +207,11 @@ public class v1_bbq_buddy extends AppCompatActivity
                 //toolbardelete.setVisibility(View.VISIBLE);
                 if (position == 0) {
 
-                    SmartTimer_Service.editing = false;
-                    toolbaredit.setImageResource(R.drawable.ic_menu_edit_white);
-
+                    if (SmartTimer_Service.editing) {
+                        editingStartStop();
+                    }
                     toolbaredit.startAnimation(closeToolbar);
+
 
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.BOLD);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
@@ -254,6 +244,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                 }
                 if (position == 1) {
                     toolbaredit.startAnimation(openToolbar);
+
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.BOLD);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.ITALIC);
@@ -270,8 +261,10 @@ public class v1_bbq_buddy extends AppCompatActivity
                     onLogs = false;
                 }
                 if (position == 2) {
+                    if (SmartTimer_Service.editing) {
+                        editingStartStop();
+                    }
                     toolbaredit.startAnimation(closeToolbar);
-                    SmartTimer_Service.editing = false;
                     btnsmarttimer.setTypeface(btnsmarttimer.getTypeface(), Typeface.ITALIC);
                     btntimeline.setTypeface(btntimeline.getTypeface(), Typeface.ITALIC);
                     btnlog.setTypeface(btnlog.getTypeface(), Typeface.BOLD);
@@ -325,8 +318,23 @@ public class v1_bbq_buddy extends AppCompatActivity
         handler.post(run);
     }
 
-
-
+    public void editingStartStop() {
+        final ImageView toolbaredit = (ImageView) findViewById(R.id.toolbarEdit);
+        if (SmartTimer_Service.editing) {
+            toolbaredit.setImageResource(R.drawable.ic_menu_edit_white);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
+            SmartTimer_Service.editing = false;
+        } else {
+            toolbaredit.setImageResource(R.drawable.ic_menu_close_clear_cancel_white);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.common_plus_signin_btn_text_dark_disabled));
+            }
+            SmartTimer_Service.editing = true;
+        }
+        SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+    }
 
     private Runnable run = new Runnable() {
         @Override
@@ -336,13 +344,14 @@ public class v1_bbq_buddy extends AppCompatActivity
                 try {
                     final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.v1_fab);
                     //Set play or pause on FAB
-                    if (onSmartTimer) {
-                        if (SmartTimer_Service.timerActive) {
-                            fab.setImageResource(R.drawable.ic_media_pause);
-                        } else {
-                            fab.setImageResource(R.drawable.ic_media_play);
+                        if (onSmartTimer) {
+                            if (SmartTimer_Service.timerActive) {
+                                fab.setImageResource(R.drawable.ic_media_pause);
+                            } else {
+                                fab.setImageResource(R.drawable.ic_media_play);
+                            }
                         }
-                    }
+
 
                     TextView txtSmartTimer = (TextView) findViewById(R.id.txtSmartTimer);
                     TextView txtSmartTimerNext = (TextView) findViewById(R.id.txtSmartTimerNext);

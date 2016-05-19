@@ -33,7 +33,7 @@
             android:paddingLeft="0dp"
             android:layout_marginRight="0dp"
             android:src="@android:drawable/ic_menu_delete"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:background="@drawable/card_ripple"/>
 
         <TextView
