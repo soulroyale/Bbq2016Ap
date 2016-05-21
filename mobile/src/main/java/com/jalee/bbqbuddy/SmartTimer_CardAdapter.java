@@ -142,11 +142,21 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
         }
         if (SmartTimer_Service.editing) {
+            /*
             holder.cardimage.setImageResource(R.drawable.ic_menu_delete_white);
             holder.cardimage.setBackgroundColor(Color.parseColor("#D32F2F"));
+            */
+            holder.deleteImage.setBackgroundColor(Color.parseColor("#FF970808"));
+            holder.cardimage.setVisibility(View.INVISIBLE);
+            holder.deleteImage.setVisibility(View.VISIBLE);
+
         } else {
+            /*
             holder.cardimage.setImageResource(R.drawable.cookingicon512px);
             holder.cardimage.setBackgroundColor(Color.TRANSPARENT);
+            */
+            holder.cardimage.setVisibility(View.VISIBLE);
+            holder.deleteImage.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -189,6 +199,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView cardimage;
+        ImageView deleteImage;
         TextView cardtitle;
         TextView cardsubtitle;
         TextView cardmins;
@@ -198,11 +209,12 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         public ViewHolder(View itemView) {
             super(itemView);
             cardimage = (ImageView) itemView.findViewById(R.id.reorderImage);
+            deleteImage = (ImageView) itemView.findViewById(R.id.imageDelete);
             cardtitle = (TextView) itemView.findViewById(R.id.cardtitle);
             cardsubtitle = (TextView) itemView.findViewById(R.id.carddesc);
             cardmins = (TextView) itemView.findViewById(R.id.cardmins);
 
-            cardimage.setOnClickListener(new View.OnClickListener() {
+            deleteImage.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if (SmartTimer_Service.editing) {
                         remTimeline(context, getAdapterPosition());
