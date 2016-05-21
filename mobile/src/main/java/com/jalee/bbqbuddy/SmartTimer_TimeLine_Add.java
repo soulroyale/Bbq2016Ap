@@ -71,7 +71,7 @@ public class SmartTimer_TimeLine_Add extends AppCompatActivity {
                     //Creating dialogue in a Method as unable to get context from here
                     nothingSelAlert();
                 } else {
-                    SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes));
+                    SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(String.valueOf(txtDesc.getText()), String.valueOf(txtTitle.getText()), (hours * 60) + minutes,0));
                     SmartTimer_TimeLine.adapter.notifyDataSetChanged();
                     Integer newSmartTimerValue = 0;
                     for (int i = 0; i < SmartTimer_Service.TimelineList.size(); i++) {

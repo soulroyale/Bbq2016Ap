@@ -230,27 +230,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "1/2":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 2));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 2,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 3));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 3,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -258,27 +258,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "3/4":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 2,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -286,27 +286,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "1":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 3,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -314,27 +314,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "1 1/4":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 9));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 9,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -342,27 +342,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "1 1/2":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 4,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side",5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side",5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 10));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 10,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -370,27 +370,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "1 3/4":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 5,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 7));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 7,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 11));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 9));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 11,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 9,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -398,27 +398,27 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                     case "2":
                         switch (cooktype) {
                             case "Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side",6));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side",6,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium Rare":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 9));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 9,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Medium":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 10));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 8));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 10,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 8,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                             case "Well Done":
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 13));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 11));
-                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " First Side", 13,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Second Side", 11,0));
+                                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + activeThickness + " inch - " + cooktype, meatName + " Done - Rest", 3,0));
                                 saveToTimeLine();
                                 break;
                         }
@@ -426,31 +426,31 @@ public class SmartTimer_TimeLine_Builder extends AppCompatActivity {
                 }
                 break;
             case "Chicken":
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " place on grill", 3));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " rotate 45 degrees", 4));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " flip", 3));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " rotate 45 degrees", 2));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 3));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " place on grill", 3,0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " rotate 45 degrees", 4,0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " flip", 3,0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " rotate 45 degrees", 2,0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 3,0));
                 saveToTimeLine();
                 break;
             case "Fish":
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName, (int) (curWeight * 15.0)));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 10));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName, (int) (curWeight * 15.0),0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 10,0));
                 saveToTimeLine();
                 break;
             case "Roast Beef":
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + cooktype, meatName, (int) (curWeight * 55.0)));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + cooktype, meatName + " Done - Rest", 10));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + cooktype, meatName, (int) (curWeight * 55.0),0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat + " " + cooktype, meatName + " Done - Rest", 10,0));
                 saveToTimeLine();
                 break;
             case "Roast Chicken":
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName, (int) (curWeight * 45.0)));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 10));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName, (int) (curWeight * 45.0),0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 10,0));
                 saveToTimeLine();
                 break;
             case "Roast Pork":
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName, (int) (curWeight * 40.0)));
-                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 10));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName, (int) (curWeight * 40.0),0));
+                SmartTimer_Service.TimelineList.add(new SmartTimer_cardUI(meat, meatName + " Done - Rest", 10,0));
                 saveToTimeLine();
                 break;
         }

@@ -55,10 +55,11 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             String tTitle = SmartTimer_Service.TimelineList.get(fromPosition).getName();
             String tDesc = SmartTimer_Service.TimelineList.get(fromPosition).getsubTitle();
             Integer tMins = SmartTimer_Service.TimelineList.get(fromPosition).getId();
+            Integer tImageID = SmartTimer_Service.TimelineList.get(fromPosition).getimageId();
 
             SmartTimer_Service.TimelineList.remove(fromPosition);
 
-            SmartTimer_Service.TimelineList.add(toPosition, new SmartTimer_cardUI(tDesc, tTitle, tMins));
+            SmartTimer_Service.TimelineList.add(toPosition, new SmartTimer_cardUI(tDesc, tTitle, tMins,tImageID));
 
             SmartTimer_Service ST = new SmartTimer_Service();
             ST.saveTimeline(SmartTimer_Service.pubContext);
@@ -71,10 +72,11 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
                 String tTitle = SmartTimer_Service.TimelineList.get(fromPosition).getName();
                 String tDesc = SmartTimer_Service.TimelineList.get(fromPosition).getsubTitle();
                 Integer tMins = SmartTimer_Service.TimelineList.get(fromPosition).getId();
+                Integer tImageID = SmartTimer_Service.TimelineList.get(fromPosition).getimageId();
 
                 SmartTimer_Service.TimelineList.remove(fromPosition);
 
-                SmartTimer_Service.TimelineList.add(toPosition, new SmartTimer_cardUI(tDesc, tTitle, tMins));
+                SmartTimer_Service.TimelineList.add(toPosition, new SmartTimer_cardUI(tDesc, tTitle, tMins, tImageID));
 
                 SmartTimer_Service ST = new SmartTimer_Service();
                 ST.saveTimeline(SmartTimer_Service.pubContext);
@@ -93,6 +95,11 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.SmartTimer_cardUI = getItem(position);
         holder.cardtitle.setText(list.get(position).name);
         holder.cardsubtitle.setText(list.get(position).subTitle);
+        if (list.get(position).imageID == 0) {
+            holder.cardimage.setImageResource(R.drawable.cookingicon512px);
+        } else{
+
+        }
         if (list.get(position).id == 0) {
             holder.cardmins.setText("-");
         } else {
@@ -266,7 +273,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     }
 
     public void increaseMin(int increaseVar, int adapterPos, Context context) {
-        SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() + increaseVar));
+        SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() + increaseVar,SmartTimer_Service.TimelineList.get(adapterPos).getimageId()));
         SmartTimer_TimeLine.adapter.notifyDataSetChanged();
         SmartTimer_Service ST = new SmartTimer_Service();
         ST.saveTimeline(context);
@@ -281,7 +288,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     }
 
     public void decreaseMin(int decreaseVar, int adapterPos, Context context) {
-        SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() - decreaseVar));
+        SmartTimer_Service.TimelineList.set(adapterPos, new SmartTimer_cardUI(SmartTimer_Service.TimelineList.get(adapterPos).getsubTitle(), SmartTimer_Service.TimelineList.get(adapterPos).getName(), SmartTimer_Service.TimelineList.get(adapterPos).getId() - decreaseVar, SmartTimer_Service.TimelineList.get(adapterPos).getimageId()));
         SmartTimer_TimeLine.adapter.notifyDataSetChanged();
         SmartTimer_Service ST = new SmartTimer_Service();
         ST.saveTimeline(context);

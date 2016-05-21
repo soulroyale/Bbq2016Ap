@@ -7,6 +7,7 @@ public class SmartTimer_cardUI {
     String subTitle;
     String name;
     int id;
+    int imageID;
     public String getsubTitle() {
         return subTitle;
     }
@@ -25,9 +26,16 @@ public class SmartTimer_cardUI {
     public void setId(int id) {
         this.id = id;
     }
-    public SmartTimer_cardUI(String subTitle, String name, int id) {
+    public int getimageId() {
+        return imageID;
+    }
+    public void setimageId(int id) {
+        this.imageID = imageID;
+    }
+    public SmartTimer_cardUI(String subTitle, String name, int id,int imageID) {
         this.subTitle = subTitle;
         this.name = name;
         this.id = id;
+        this.imageID = imageID;
     }
 }
