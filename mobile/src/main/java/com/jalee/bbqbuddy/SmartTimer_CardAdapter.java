@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +92,7 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.SmartTimer_cardUI = getItem(position);
         holder.cardtitle.setText(list.get(position).name);
@@ -148,14 +150,30 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             holder.cardmins.setTextColor(Color.parseColor("#757575"));
 
         }
+
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(SmartTimer_Service.pubContext, R.anim.fade_in);
+        Animation fadeOutAnimation = AnimationUtils.loadAnimation(SmartTimer_Service.pubContext, R.anim.fade_out);
         if (SmartTimer_Service.editing) {
             /*
             holder.cardimage.setImageResource(R.drawable.ic_menu_delete_white);
             holder.cardimage.setBackgroundColor(Color.parseColor("#D32F2F"));
             */
-            holder.deleteImage.setBackgroundColor(Color.parseColor("#FF970808"));
-            holder.cardimage.setVisibility(View.INVISIBLE);
+            holder.deleteImage.setBackgroundColor(Color.GRAY);
+            holder.cardimage.setVisibility(View.VISIBLE);
             holder.deleteImage.setVisibility(View.VISIBLE);
+
+            fadeInAnimation.setAnimationListener(new Animation.AnimationListener(){
+                  @Override public void onAnimationStart(    Animation animation){
+                  }
+                  @Override public void onAnimationRepeat(    Animation animation){
+                  }
+                  @Override public void onAnimationEnd(    Animation animation){
+                      holder.cardimage.setVisibility(View.INVISIBLE);
+                  }
+              }
+            );
+            holder.deleteImage.startAnimation(fadeInAnimation);
+            holder.cardimage.startAnimation(fadeOutAnimation);
 
         } else {
             /*
@@ -163,7 +181,21 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             holder.cardimage.setBackgroundColor(Color.TRANSPARENT);
             */
             holder.cardimage.setVisibility(View.VISIBLE);
-            holder.deleteImage.setVisibility(View.INVISIBLE);
+            holder.deleteImage.setVisibility(View.VISIBLE);
+
+            holder.deleteImage.startAnimation(fadeOutAnimation);
+            fadeOutAnimation.setAnimationListener(new Animation.AnimationListener(){
+                      @Override public void onAnimationStart(    Animation animation){
+                                              }
+                      @Override public void onAnimationRepeat(    Animation animation){
+                                              }
+                      @Override public void onAnimationEnd(    Animation animation){
+                          holder.deleteImage.setVisibility(View.INVISIBLE);
+                          }
+                      }
+            );
+            holder.deleteImage.startAnimation(fadeOutAnimation);
+            holder.cardimage.startAnimation(fadeInAnimation);
         }
 
     }

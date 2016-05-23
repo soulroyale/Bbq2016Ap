@@ -145,7 +145,9 @@ public class v1_bbq_buddy extends AppCompatActivity
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editingStartStop();
+                if (SmartTimer_Service.editing) {
+                    editingStartStop();
+                }
                 animateFAB();
                 Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Add.class);
                 startActivity(intent);
@@ -154,7 +156,9 @@ public class v1_bbq_buddy extends AppCompatActivity
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editingStartStop();
+                if (SmartTimer_Service.editing) {
+                    editingStartStop();
+                }
                 animateFAB();
                 Intent intent = new Intent(getApplicationContext(), SmartTimer_TimeLine_Builder.class);
                 startActivity(intent);
@@ -325,6 +329,9 @@ public class v1_bbq_buddy extends AppCompatActivity
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
             }
+
+
+
             SmartTimer_Service.editing = false;
         } else {
             toolbaredit.setImageResource(R.drawable.ic_menu_close_clear_cancel_white);
