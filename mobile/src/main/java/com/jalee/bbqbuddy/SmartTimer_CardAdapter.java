@@ -180,22 +180,27 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
             holder.cardimage.setImageResource(R.drawable.cookingicon512px);
             holder.cardimage.setBackgroundColor(Color.TRANSPARENT);
             */
-            holder.cardimage.setVisibility(View.VISIBLE);
-            holder.deleteImage.setVisibility(View.VISIBLE);
 
-            holder.deleteImage.startAnimation(fadeOutAnimation);
-            fadeOutAnimation.setAnimationListener(new Animation.AnimationListener(){
-                      @Override public void onAnimationStart(    Animation animation){
-                                              }
-                      @Override public void onAnimationRepeat(    Animation animation){
-                                              }
-                      @Override public void onAnimationEnd(    Animation animation){
-                          holder.deleteImage.setVisibility(View.INVISIBLE);
+            if (holder.deleteImage.getVisibility() == View.VISIBLE) {
+
+
+                holder.cardimage.setVisibility(View.VISIBLE);
+                holder.deleteImage.setVisibility(View.VISIBLE);
+
+                holder.deleteImage.startAnimation(fadeOutAnimation);
+                fadeOutAnimation.setAnimationListener(new Animation.AnimationListener(){
+                          @Override public void onAnimationStart(    Animation animation){
+                                                  }
+                          @Override public void onAnimationRepeat(    Animation animation){
+                                                  }
+                          @Override public void onAnimationEnd(    Animation animation){
+                              holder.deleteImage.setVisibility(View.INVISIBLE);
+                              }
                           }
-                      }
-            );
-            holder.deleteImage.startAnimation(fadeOutAnimation);
-            holder.cardimage.startAnimation(fadeInAnimation);
+                );
+                holder.deleteImage.startAnimation(fadeOutAnimation);
+                holder.cardimage.startAnimation(fadeInAnimation);
+        }
         }
 
     }
