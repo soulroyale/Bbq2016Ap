@@ -109,6 +109,24 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         if (list.get(position).imageID == 3) {
             holder.cardimage.setImageResource(R.drawable.tlimage_rest);
         }
+        if (list.get(position).imageID == 4) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_chicken);
+        }
+        if (list.get(position).imageID == 5) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_fish);
+        }
+        if (list.get(position).imageID == 6) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_roast_chicken);
+        }
+        if (list.get(position).imageID == 7) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_beef);
+        }
+        if (list.get(position).imageID == 8) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_pork);
+        }
+        if (list.get(position).imageID == 9) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_vegies);
+        }
 
 
         if (list.get(position).id == 0) {
