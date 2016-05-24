@@ -723,6 +723,7 @@ public class SmartTimer_Service extends Service {
             sharedPreferences.edit().putInt("ID"+i,SmartTimer_Service.TimelineList.get(i).getId()).apply();
             sharedPreferences.edit().putString("title" + i, SmartTimer_Service.TimelineList.get(i).getName()).apply();
             sharedPreferences.edit().putString("desc" + i, SmartTimer_Service.TimelineList.get(i).getsubTitle()).apply();
+            sharedPreferences.edit().putInt("imageID" + i, SmartTimer_Service.TimelineList.get(i).getimageId()).apply();
         }
     }
 
@@ -735,15 +736,15 @@ public class SmartTimer_Service extends Service {
         TimelineList = new ArrayList<>();
         if (timeLineSize == 0) {
             //Populate Sample data
-            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2,0));
-            TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7,0));
-            TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 2",7,0));
-            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2,0));
-            TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",5,0));
-            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10,0));
+            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2,1));
+            TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 1",7,2));
+            TimelineList.add(new SmartTimer_cardUI("Cook on BBQ on Medium heat for 7 Minutes","Cook Steak - Side 2",7,2));
+            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes","Drink Beer",2,1));
+            TimelineList.add(new SmartTimer_cardUI("Let your meat rest, its tired","Rest Meat",5,3));
+            TimelineList.add(new SmartTimer_cardUI("Have a drink, preferably a James Squire 150 lashes", "Drink Beer", 10,1));
         } else {
             for (int i = 0; i < timeLineSize; i++) {
-                TimelineList.add(new SmartTimer_cardUI(sharedPreferences.getString("desc" + i,""), sharedPreferences.getString("title" + i,""), sharedPreferences.getInt("ID" + i,0),0));
+                TimelineList.add(new SmartTimer_cardUI(sharedPreferences.getString("desc" + i,""), sharedPreferences.getString("title" + i,""), sharedPreferences.getInt("ID" + i,0),sharedPreferences.getInt("imageID"+ i,0)));
             }
         }
     }

@@ -99,9 +99,18 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
         holder.cardsubtitle.setText(list.get(position).subTitle);
         if (list.get(position).imageID == 0) {
             holder.cardimage.setImageResource(R.drawable.cookingicon512px);
-        } else{
-
         }
+        if (list.get(position).imageID == 1) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_beer);
+        }
+        if (list.get(position).imageID == 2) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_steak);
+        }
+        if (list.get(position).imageID == 3) {
+            holder.cardimage.setImageResource(R.drawable.tlimage_rest);
+        }
+
+
         if (list.get(position).id == 0) {
             holder.cardmins.setText("-");
         } else {
