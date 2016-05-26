@@ -244,6 +244,36 @@ public class SmartTimer_Service extends Service {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
         int notiExtend = sharedPreferences.getInt("notiExtendInterval", 1);
 
+        int largimage = (R.drawable.cookingicon_512px_white);
+
+        if (TimelineList.get(nextEventindex).getimageId() == 1) {
+            largimage = (R.drawable.tlimage_beer);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 2) {
+            largimage = (R.drawable.tlimage_steak);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 3) {
+            largimage = (R.drawable.tlimage_rest);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 4) {
+            largimage = (R.drawable.tlimage_chicken);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 5) {
+            largimage = (R.drawable.tlimage_fish);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 6) {
+            largimage = (R.drawable.tlimage_roast_chicken);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 7) {
+            largimage = (R.drawable.tlimage_beef);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 8) {
+            largimage = (R.drawable.tlimage_pork);
+        }
+        if (TimelineList.get(nextEventindex).getimageId() == 9) {
+            largimage = (R.drawable.tlimage_vegies);
+        }
+
         if (timerActive) {
             if (nextEventindex + 1 == TimelineList.size()) {
                 if (timerPaused) {
@@ -252,6 +282,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentTitle(notTitle)
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage))
                                 .setContentIntent(pendingIntent)
                                 //.setOngoing(true)
                                 .setColor(notiColour)
@@ -269,7 +300,7 @@ public class SmartTimer_Service extends Service {
                     } else {
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
                         builder.setSmallIcon(getApplicationInfo().icon);
-                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage));
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
@@ -287,6 +318,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentTitle(notTitle)
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage))
                                 .setContentIntent(pendingIntent)
                                 //.setOngoing(true)
                                 .setColor(notiColour)
@@ -304,7 +336,7 @@ public class SmartTimer_Service extends Service {
                     } else {
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
                         builder.setSmallIcon(getApplicationInfo().icon);
-                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage));
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
@@ -324,6 +356,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentTitle(notTitle)
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage))
                                 .setContentIntent(pendingIntent)
                                 //.setOngoing(true)
                                 .setColor(notiColour)
@@ -341,7 +374,7 @@ public class SmartTimer_Service extends Service {
                     } else {
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
                         builder.setSmallIcon(getApplicationInfo().icon);
-                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage));
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
@@ -361,6 +394,7 @@ public class SmartTimer_Service extends Service {
                                 .setContentTitle(notTitle)
                                 .setContentText(littleText)
                                 .setSmallIcon(R.drawable.cookingicon_512px_white)
+                                .setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage))
                                 .setContentIntent(pendingIntent)
                                 //.setOngoing(true)
                                 .setColor(notiColour)
@@ -378,7 +412,7 @@ public class SmartTimer_Service extends Service {
                     } else {
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
                         builder.setSmallIcon(getApplicationInfo().icon);
-                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.cookingicon512px));
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), largimage));
                         builder.setContentTitle(notTitle);
                         builder.setContentText(littleText);
                         builder.setContentIntent(pendingIntent);
