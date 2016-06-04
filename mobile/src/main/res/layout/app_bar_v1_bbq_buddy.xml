@@ -24,6 +24,7 @@
                 android:id="@+id/toolbarEstimate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="17sp"
                 android:text="Estimated Ready at\n 18:25"
                 android:autoText="false"
                 android:layout_gravity="center"

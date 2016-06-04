@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="App Icon Credit: Icon made by Freepik from: \nhttp://www.freepik.com  \n&quot;Flaticon” is licensed under Creative Commons BY 3.0\n\n http://creativecommons.org/licenses/by/3.0/ \n\nDeveloped by Aaron Walker\nAll IP, except that mentioned on this page, belongs to Aaron Walker"
+            android:text="App and Timeline icons Credit: \n\nIcons made by Freepik from: \nhttp://www.freepik.com  \n&quot;Flaticon” is licensed under Creative Commons BY 3.0\n\n http://creativecommons.org/licenses/by/3.0/ \n\nDeveloped by Aaron Walker\nAll IP, except that mentioned on this page, belongs to Aaron Walker"
             android:id="@+id/creditAbout"
             android:textAlignment="center"
             android:layout_below="@+id/textCredit"

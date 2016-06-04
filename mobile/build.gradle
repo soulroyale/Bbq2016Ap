@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.jalee.bbqbuddy"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 72
+        versionCode 73
         versionName "0.5.72"
 
         multiDexEnabled true

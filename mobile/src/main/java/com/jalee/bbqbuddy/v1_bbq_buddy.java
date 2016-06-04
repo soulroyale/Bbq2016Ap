@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
@@ -404,10 +405,15 @@ public class v1_bbq_buddy extends AppCompatActivity
                     String formatted = estimate.format(estimateD.getTime());
                     TextView toolbarestimate = (TextView) findViewById(R.id.toolbarEstimate);
                     String s= "Estimated Ready at\n" + formatted;
-                    SpannableString ss1=  new SpannableString(s);
-                    ss1.setSpan(new AbsoluteSizeSpan(60), 18,ss1.length(), 0); // set size
+                    toolbarestimate.setText(Html.fromHtml("<small>" + "Estimated Ready at\n" + "</small>" + "<br />" + "<b>" + formatted + "</b>"));
 
-                    toolbarestimate.setText(ss1);
+                    //SpannableString ss1=  new SpannableString(s);
+                    //ss1.setSpan(new AbsoluteSizeSpan(60), 18,ss1.length(), 0); // set size
+                    //toolbarestimate.setText(ss1);
+
+
+
+
 
 
                 } catch (Throwable e) {
