@@ -57,7 +57,7 @@ public class SmartTimer_Service extends Service {
     public static Context pubContext;
     public static Boolean editing = false;
     public static Boolean editingDel = false;
-
+    final Handler timerHandler = new Handler();
 
     public static final String COUNTDOWN_BR = "com.jalee.bbqbuddy.countdown_br";
     Intent bi = new Intent(COUNTDOWN_BR);
@@ -103,8 +103,9 @@ public class SmartTimer_Service extends Service {
             }
             smartTimerMax = TimeUnit.MINUTES.toMillis(newSmartTimerValue);
             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
-            smartTimerCurrentMax = sharedPreferences.getLong("curMilli", 0);
+            //smartTimerCurrentMax = sharedPreferences.getLong("curMilli", 0);
             nextEventindex = sharedPreferences.getInt("curIndex", 0);
+            smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(nextEventindex).getId()));
             intTimer();
         }
 
@@ -462,6 +463,149 @@ public class SmartTimer_Service extends Service {
         timerComplete =false;
 
 
+        Runnable timerRun = new Runnable() {
+            long elapseMilli = 0;
+            Boolean exitRunnable = false;
+            long millisecondsUntilDone;
+            @Override
+            public void run() {
+                millisecondsUntilDone = smartTimerCurrentMax - elapseMilli;
+                Log.i("Timer Cur Max",String.valueOf(smartTimerCurrentMax));
+                Log.i("Timer elapsed",String.valueOf(elapseMilli));
+                Log.i("Timer",String.valueOf(millisecondsUntilDone));
+                //saving current state
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+                sharedPreferences.edit().putLong("curMilli", millisecondsUntilDone);
+                sharedPreferences.edit().putInt("curIndex", nextEventindex);
+
+                int hours = (int) TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone);
+                int minutes = (int) (TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecondsUntilDone)));
+                int seconds = (int) (TimeUnit.MILLISECONDS.toSeconds(millisecondsUntilDone) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
+
+                timerEventsRem = minutes;
+                for (int i = 0; i < TimelineList.size(); i++) {
+                    if (i > nextEventindex) {
+                        timerEventsRem = timerEventsRem + (Integer) TimelineList.get(i).id;
+                    }
+                }
+
+                //obtain remaining minutes
+                minsRemaining = (((TimelineList.get(nextEventindex).getId()) + minRemainingElapsed) - (TimeUnit.MILLISECONDS.toMinutes(smartTimerMax) - TimeUnit.MILLISECONDS.toMinutes(millisecondsUntilDone)));
+
+
+                //Format String for Next event timer
+                if (seconds < 10) {
+                    secondsString = "0" + String.valueOf(seconds);
+                } else {
+                    secondsString = String.valueOf(seconds);
+                }
+                if (minutes < 10) {
+                    minutesString = "0" + String.valueOf(minutes);
+                } else {
+                    minutesString = String.valueOf(minutes);
+                }
+
+                //Remove Minutes if no minutes left
+                if (minutes < 1) {
+                    timerText = secondsString;
+                } else {
+                    if (hours < 1) {
+                        timerText = minutesString + ":" + secondsString;
+                    } else {
+                        timerText = String.valueOf(hours) + ":" + minutesString + ":" + secondsString;
+                    }
+                }
+
+                //Update Notification
+                updateNotification();
+
+                if (timerSkip) {
+                    exitRunnable = true;
+                    //timerSkip = false;
+                    elapseMilli = 0;
+                    curTimerEnd();
+                }
+
+                if (timerPaused & !timerExtend) {
+                    exitRunnable = true;
+                    updateNotification();
+                    timerActive = false;
+                    smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
+                    Log.i("info", "paused");
+
+                }
+                if (timerCancel) {
+                    exitRunnable = true;
+                    timerActive = false;
+                    timerPaused = false;
+                    timerCancel = false;
+                    timerEventsRem = 0;
+                    nextEventindex = 0;
+                    minsRemaining = 0L;
+                    minRemainingElapsed = 0L;
+                    updateNotification();
+                    secondsString = "0";
+                    minutesString = "0";
+                    timerText = "0";
+
+                    updateNotification();
+                }
+
+                if (timerExtend) {
+                    exitRunnable = true;
+                    timerExtend = false;
+                    updateNotification();
+                    int NewMins = TimelineList.get(nextEventindex).getId() + (int) TimeUnit.MILLISECONDS.toMinutes(timerChangeBy);
+                    smartTimerCurrentMax = millisecondsUntilDone + timerChangeBy;
+                    TimelineList.set(nextEventindex, new SmartTimer_cardUI(TimelineList.get(nextEventindex).getsubTitle(), TimelineList.get(nextEventindex).getName(), NewMins,SmartTimer_Service.TimelineList.get(nextEventindex).getimageId()));
+                    try {
+                        SmartTimer_TimeLine.adapter.notifyDataSetChanged();
+                    } catch (Throwable e) {
+                        //e.printStackTrace();
+                    }
+
+                    timerPaused = true;
+                    startTimer = true;
+                }
+
+                if (timerReduce) {
+                    exitRunnable = true;
+                    timerReduce = false;
+                    updateNotification();
+                    smartTimerCurrentMax = millisecondsUntilDone - timerChangeBy;
+                    timerPaused = true;
+                    startTimer = true;
+
+                }
+
+                if (timerAutoPause & timerLooped) {
+                    exitRunnable = true;
+                    timerPaused = true;
+                    updateNotification();
+                    timerActive = false;
+                    timerLooped = false;
+                    smartTimerCurrentMax = smartTimerCurrentMax - (smartTimerCurrentMax - millisecondsUntilDone);
+                    Log.i("info", "Autopaused");
+                }
+
+
+                elapseMilli = elapseMilli + 1000;
+                if (elapseMilli == smartTimerCurrentMax) {
+                    curTimerEnd();
+                    elapseMilli = 0;
+                    exitRunnable = false;
+                } else {
+                    if (!exitRunnable) {
+                        timerHandler.postDelayed(this, 1000);
+                    } else {
+                        elapseMilli = 0;
+                        exitRunnable = false;
+                    }
+                }
+            }
+        };
+        timerHandler.post(timerRun);
+        /*
         new CountDownTimer(smartTimerCurrentMax, 1000) {
             public void onTick(long millisecondsUntilDone) {
 
@@ -588,6 +732,8 @@ public class SmartTimer_Service extends Service {
                 curTimerEnd();
             }
         }.start();
+
+        */
         timerActive = true;
     }
 
@@ -676,9 +822,13 @@ public class SmartTimer_Service extends Service {
                     vibrator.vibrate(pattern, -1);
                 }
             }
-
-            smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(nextEventindex).getId()));
-            Log.i(TAG, "Launch timerStarter");
+            if (timerSkip) {
+                smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(nextEventindex + 1).getId()));
+                timerSkip = false;
+            } else {
+                smartTimerCurrentMax = TimeUnit.MINUTES.toMillis((TimelineList.get(nextEventindex).getId()));
+            }
+                Log.i(TAG, "Launch timerStarter");
 
             Log.i(TAG, "timeStarter Launched");
 
