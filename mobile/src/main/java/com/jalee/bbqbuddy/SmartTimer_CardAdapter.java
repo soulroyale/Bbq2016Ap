@@ -47,8 +47,10 @@ public class SmartTimer_CardAdapter extends RecyclerView.Adapter<SmartTimer_Card
 
     @Override
     public void onItemDismiss(int position) {
-        SmartTimer_Service.TimelineList.remove(position);
-        notifyItemRemoved(position);
+        if (position > SmartTimer_Service.nextEventindex) {
+            SmartTimer_Service.TimelineList.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     @Override
