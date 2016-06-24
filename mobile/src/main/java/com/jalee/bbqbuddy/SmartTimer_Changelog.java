@@ -37,6 +37,9 @@ public class SmartTimer_Changelog extends AppCompatActivity {
         TextView version = (TextView) findViewById(R.id.txtVersion);
         version.setText("Version: " + versionName);
 
+        TextView versionBuild = (TextView) findViewById(R.id.txtBuild);
+        versionBuild.setText("Build: " + String.valueOf(versionCode));
+
         TextView logs = (TextView) findViewById(R.id.Logs);
         logs.setText(R.string.log);
     }
