@@ -114,6 +114,7 @@ public class v1_bbq_buddy extends AppCompatActivity
                 Boolean hideDozeModeAlert = sharedPreferences.getBoolean("hideDozeModeAlert", false);
                 if (!hideDozeModeAlert) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                    final Context passContext = (Context) this;
                     alertDialogBuilder.setMessage("Android Devices Marshmallow and higher, such as your device, have a feature called Doze mode and enhanced battery saving features. \n \nThese features can cause BBQ Buddy to exit unexpectedly.\n\nTo resolve this exclude BBQ Buddy from Battery optimisations. You can continue without completing this step but you may experience issues.");
                     alertDialogBuilder.setTitle("Important!");
                     alertDialogBuilder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
@@ -126,18 +127,30 @@ public class v1_bbq_buddy extends AppCompatActivity
                     alertDialogBuilder.setPositiveButton("Exclude", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
-                            Intent intent = new Intent();
-                            String packageName = SmartTimer_Service.pubContext.getPackageName();
-                            PowerManager pm = (PowerManager) SmartTimer_Service.pubContext.getSystemService(Context.POWER_SERVICE);
-                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                if (pm.isIgnoringBatteryOptimizations(packageName))
+
+
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(passContext);
+                            alertDialogBuilder.setMessage("On the next window select 'All Apps'\n\nThen from the drop down list, locate BBQ Buddy and select it.\n\nThen Select 'Don't Optimise'\n\n\nThis will ensure BBQ Buddy is not shutdown by Battery optimisation. ");
+                            alertDialogBuilder.setTitle("Complete the following");
+                            alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    Intent intent = new Intent();
                                     intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-                                else {
-                                    intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-                                    intent.setData(Uri.parse("package:" + packageName));
+
+                                    //Below will autoprompt exclude, requires permission in manifest, cause rejection from app store
+                                    //intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                                    //intent.setData(Uri.parse("package:" + packageName));
+
+                                    startActivity(intent);
+                                    sharedPreferences.edit().putBoolean("hideDozeModeAlert", true).apply();
                                 }
-                            }
-                            startActivity(intent);
+                            });
+
+                            AlertDialog alertDialog = alertDialogBuilder.create();
+                            alertDialog.show();
+
+
                         }
                     });
 

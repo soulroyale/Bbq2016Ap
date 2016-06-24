@@ -7,7 +7,7 @@ android {
         applicationId "com.jalee.bbqbuddy"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 76
+        versionCode 77
         versionName "0.5.80"
 
         multiDexEnabled true
