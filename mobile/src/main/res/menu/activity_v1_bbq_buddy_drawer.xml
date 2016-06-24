@@ -22,6 +22,12 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Feedback and Bug Reports" />
+            <item
+                android:id="@+id/nav_beta"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Join/Leave the Beta" />
+            @android:drawable/ic_menu_info_details
+
         </menu>
     </item>
 

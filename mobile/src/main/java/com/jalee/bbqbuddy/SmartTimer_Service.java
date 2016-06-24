@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
@@ -471,8 +473,8 @@ public class SmartTimer_Service extends Service {
 
         //saving current state
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
-        sharedPreferences.edit().putLong("curMilli", milliRemaining);
-        sharedPreferences.edit().putInt("curIndex", nextEventindex);
+        sharedPreferences.edit().putLong("curMilli", milliRemaining).apply();
+        sharedPreferences.edit().putInt("curIndex", nextEventindex).apply();
 
         int hours = (int) TimeUnit.MILLISECONDS.toHours(milliRemaining);
         int minutes = (int) (TimeUnit.MILLISECONDS.toMinutes(milliRemaining) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliRemaining)));

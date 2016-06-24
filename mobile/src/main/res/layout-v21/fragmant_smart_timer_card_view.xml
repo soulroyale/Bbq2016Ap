@@ -63,17 +63,17 @@
             />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/carddesc"
-            android:text="Roast Meat"
+            android:text="Roast Meat extra test af vl sj ndl fj nds  fl djfnslfnslf snflsndf lsjdfnls dfnsl dfjn"
             android:maxWidth="265dp"
             android:textSize="18sp"
             android:paddingLeft="2dp"
             android:paddingRight="5dp"
             android:maxLines="1"
-            android:layout_below="@+id/cardtitle"
             android:background="@drawable/card_ripple"
+            android:layout_below="@+id/cardtitle"
             android:layout_toEndOf="@+id/reorderImage" />
 
         <TextView

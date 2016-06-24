@@ -112,8 +112,7 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/btnAdd"
-        android:layout_alignBottom="@+id/scrollView3"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="47dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

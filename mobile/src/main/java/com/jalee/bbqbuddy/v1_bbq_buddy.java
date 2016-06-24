@@ -1,12 +1,17 @@
 package com.jalee.bbqbuddy;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -71,6 +76,85 @@ public class v1_bbq_buddy extends AppCompatActivity
         startService(startIntent);
         Log.i("info", "post start service");
 
+        // First run alerts
+
+
+        //Battery Optimisation alerts
+        if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            final SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+            Boolean hidekitkatalert = sharedPreferences.getBoolean("hidekitkatalert", false);
+            if (!hidekitkatalert) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setMessage("On Android KitKat (the android version you are running) Foreground Services, which BBQ Buddy relies on get exited if it is not open when the screen is turned off. To ensure your timer does not get cancelled ensure that BBQ Buddy is open before turning off your devices screen.");
+                alertDialogBuilder.setTitle("Important!");
+                alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+                alertDialogBuilder.setNegativeButton("Don't Show Again", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        sharedPreferences.edit().putBoolean("hidekitkatalert", true).apply();
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        }
+
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(getPackageName())) {
+                final SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.jalee.bbqbuddy", MODE_PRIVATE);
+                Boolean hideDozeModeAlert = sharedPreferences.getBoolean("hideDozeModeAlert", false);
+                if (!hideDozeModeAlert) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                    alertDialogBuilder.setMessage("Android Devices Marshmallow and higher, such as your device, have a feature called Doze mode and enhanced battery saving features. \n \nThese features can cause BBQ Buddy to exit unexpectedly.\n\nTo resolve this exclude BBQ Buddy from Battery optimisations. You can continue without completing this step but you may experience issues.");
+                    alertDialogBuilder.setTitle("Important!");
+                    alertDialogBuilder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                        }
+                    });
+
+                    alertDialogBuilder.setPositiveButton("Exclude", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Intent intent = new Intent();
+                            String packageName = SmartTimer_Service.pubContext.getPackageName();
+                            PowerManager pm = (PowerManager) SmartTimer_Service.pubContext.getSystemService(Context.POWER_SERVICE);
+                            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (pm.isIgnoringBatteryOptimizations(packageName))
+                                    intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                                else {
+                                    intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                                    intent.setData(Uri.parse("package:" + packageName));
+                                }
+                            }
+                            startActivity(intent);
+                        }
+                    });
+
+                    alertDialogBuilder.setNeutralButton("Don't Show Again", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            sharedPreferences.edit().putBoolean("hideDozeModeAlert", true).apply();
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+
+            }
+
+        }
 
 
         if(Constants.type == Constants.Type.FREE) {
@@ -547,6 +631,22 @@ public class v1_bbq_buddy extends AppCompatActivity
             i.putExtra(Intent.EXTRA_TEXT, "I tried BBQ Buddy and have the following thoughts:");
             try {
                 startActivity(Intent.createChooser(i, "BBQ Buddy Feedback:"));
+            } catch (android.content.ActivityNotFoundException ex) {
+
+            }
+
+        }  else if (id == R.id.nav_beta) {
+            String url;
+            if (getPackageName() == "com.jalee.bbqbuddy") {
+                url = "https://play.google.com/apps/testing/com.jalee.bbqbuddy";
+            } else {
+                url = "https://play.google.com/apps/testing/com.jalee.bbqbuddy.paid";
+            }
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+            try {
+                startActivity(i);
             } catch (android.content.ActivityNotFoundException ex) {
 
             }
